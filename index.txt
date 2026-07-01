@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WORD RACE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+        }
+        html, body { 
+            margin: 0; 
+            padding: 0; 
+            width: 100vw; 
+            height: 100vh;
+            overflow: hidden; 
+            background: #f0f9ff; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+        }
+        .hanging-indent {
+            padding-left: 22px; 
+            text-indent: -22px; 
+            line-height: 1.6;
+            word-break: keep-all;
+        }
+        .game-container {
+            width: 1200px; 
+            height: 800px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform-origin: center center;
+            transform: translate(-50%, -50%) scale(1); 
+            border: 8px solid #ffffff; 
+            border-radius: 16px; 
+            background-image: url('car.png');
+            background-size: 100% 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease-out;
+            box-sizing: border-box;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .menu-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 20px;
+            width: 100%;
+            margin-top: auto;      
+        }
+
+        /* 대분류/소분류 통합 선택 버튼 스타일 */
+        .selection-heading {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: #1e293b;
+            margin-bottom: 25px;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+            text-align: center;
+        }
+        .grid-menu {
+            display: grid;
+            grid-template-columns: repeat(3, 200px);
+            gap: 20px;
+            justify-content: center;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+.menu-box-btn {
+            background: linear-gradient(180deg, #fefeff 0%, #eef8ff 100%);
+            border: 4px solid #9ed8ff;
+            border-radius: 20px;
+            padding: 15px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 900;
+            color: #4a5568;
+            box-shadow: 0 6px 0 #b8e4ff, 0 10px 15px rgba(0,0,0,0.05);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            box-sizing: border-box;
+
+            /* ──────── [크기 및 정사각형 조절 핵심 부분] ──────── */
+            width: 180px;               /* 1. 원하는 가로 크기를 px로 지정하세요 (예: 160px, 180px 등) */
+            aspect-ratio: 1 / 0.8;        /* 2. 가로세로 비율을 1:1로 맞춰 항상 정사각형이 되도록 고정합니다 */
+            /* 기존 height: 90px; 은 자동으로 비율을 맞추기 위해 과감히 지워줍니다! */
+            /* ────────────────────────────────────────────────── */
+        }
+        .menu-box-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 0 #b8e4ff, 0 12px 18px rgba(0,0,0,0.08);
+        }
+        .menu-box-btn.active {
+            background: linear-gradient(180deg, #fff3f5 0%, #ffcbd1 100%) !important;
+            border-color: #ff6b9d !important;
+            box-shadow: 0 4px 0 #e05285 !important;
+            color: #d81b60 !important;
+            transform: translateY(2px);
+        }
+        .menu-box-btn span {
+            font-size: 0.9rem;
+            color: #718096;
+            font-weight: normal;
+            margin-top: 4px;
+        }
+        .menu-box-btn.active span {
+            color: #e91e63;
+        }
+        .menu-box-btn.full-width {
+            width: 100%;
+            max-width: 640px; 
+            height: 70px;
+            padding: 10px 20px;
+            flex-direction: row;
+            gap: 10px;
+            margin: 0 auto 15px auto; 
+        }
+        .status-counter {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #ff6b00;
+            margin-bottom: 15px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 5px 20px;
+            border-radius: 50px;
+            border: 2px solid #ffcbd1;
+        }
+        .start-btn {
+            padding: 12px 50px;
+            background: #fbbf24;
+            color: white;
+            font-weight: 900;
+            font-size: 1.6rem;
+            border-radius: 50px;
+            box-shadow: 0 6px 0 #d97706;
+            transition: all 0.1s;
+        }
+        .start-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 0 #d97706;
+        }
+
+        /* 기존 게임 스타일 */
+        .grid-table {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 950px;
+            aspect-ratio: 16 / 9;
+            position: relative;
+        }
+        .cell {
+            position: relative; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            background: #1e293b;
+            border-radius: 16px; 
+            font-weight: 900; 
+            font-size: 1.8rem;
+            color: #f1f5f9; 
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+            transition: transform 0.2s, filter 0.2s;
+        }
+        .overlay {
+            position: absolute; 
+            inset: 0; 
+            background: #334155;
+            border-radius: 14px; 
+            z-index: 5; 
+            opacity: 1;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            border: 2px solid #475569;
+        }
+        .overlay.revealed { 
+            opacity: 0; 
+            pointer-events: none; 
+            transform: scale(0.9);
+        }
+        .modal-wrap {
+            position: absolute;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.8);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+        }
+        .modal-wrap.active {
+            display: flex !important; 
+            z-index: 999999;
+        }
+        .modal-box {
+            background: #ffffff;
+            border: 8px solid #fbbf24;
+            border-radius: 40px;
+            padding: 40px;
+            max-width: 500px;
+            width: 80%;
+            text-align: center;
+            box-shadow: 0 20px 25px rgba(0,0,0,0.2);
+        }
+        .modal-box.fail {
+            border: 8px solid #ef4444 !important;
+        }
+        .modal-box h2 { font-size: 2.2rem; font-weight: 900; color: #1e293b; margin-bottom: 10px; letter-spacing: -1px}
+        .modal-time { 
+            font-family: 'Orbitron', sans-serif; font-size: 3.5rem; 
+            font-weight: 900; color: #ff6b00; 
+        }
+        .mbtn {
+            padding: 12px 24px; border-radius: 12px; font-weight: 800;
+            font-size: 1rem; cursor: pointer; border: none; transition: 0.2s;
+        }
+        .mbtn:hover { transform: scale(1.05); }
+        .mbtn-exit { background: #64748b; color: #fff; }
+        .mbtn-next { background: #ff6b00; color: #fff; }
+        .mbtn-retry { background: #ef4444; color: #fff; }
+        
+        .group-card { border-radius:25px; padding:25px; display:flex; flex-direction:column; align-items:center; background:rgba(255,255,255,0.1); border:3px solid rgba(255,255,255,0.2); }
+        .group-input { width:100%; text-align:center; padding:10px; border-radius:50px; font-weight:800; background:#fff; color:#334155; border:3px solid #cbd5e1; }
+        .btn-cnt { width:50px; height:50px; border-radius:12px; font-size:2.0rem; background:#1e293b; color:#fff; border:2px solid #334155; cursor:pointer; }
+        .round-disp {
+            font-family:'Orbitron',sans-serif; color:#fff; font-size:2.8rem; font-weight:900;
+            text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
+            letter-spacing: -2px;
+        }
+        .action-btn { position:absolute; bottom:16px; right:16px; background:var(--neon); color:#fff; width:54px; height:54px; border-radius:16px; display:none; align-items:center; justify-content:center; cursor:pointer; }
+        .action-btn.visible { display:flex; }
+        
+        .page { display: none; width: 100%; height: 100%; flex-direction: column; align-items: center; }
+        .page.active { display: flex; }
+
+        .img-btn img { width: 200px; height: auto; display: block; }
+        .img-btn:hover { transform: scale(1.05); }
+        .learning-goal {
+            color: #ffffff; font-size: 1.2rem; font-weight: 700; margin-top: 5px;
+            text-shadow: 0 0 10px rgba(255, 107, 0, 0.5); letter-spacing: 1px; text-align: center;
+        }
+        .blink { animation: blink 1.6s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+        #htpBtn {
+            background: #fbbf24; color: #ffffff; border: 3px solid #ffffff; box-shadow: 0 4px 0 #b45309;
+            font-weight: 900; font-size: 1.1rem; padding: 12px 25px; border-radius: 50px; transition: transform 0.2s;
+        }
+        #htpBtn:hover { transform: scale(1.1) rotate(5deg); background: #f59e0b; }
+        
+        #pg-setup, #pg-category, #pg-subcategory { justify-content: center; }
+
+        .htable { width: 100%; border-collapse: separate; border-spacing: 0 10px; font-size: 1.2rem; }
+        .htable td { padding: 15px; background: #f1f5f9; font-weight: 800; color: #334155; }
+        .htable td:first-child { border-radius: 12px 0 0 12px; }
+        .htable td:last-child { border-radius: 0 12px 12px 0; }
+    </style>
+</head>
+<body>
+
+<div class="game-container">
+    <div id="pg-welcome" class="page active" style="justify-content: center;">
+        <div style="flex-grow: 1;"></div> 
+        <p class="learning-goal blink" style="margin-bottom: 3px;">
+            Word Race 게임을 하며 단어를 빠르고 정확하게 읽어 봅시다.
+        </p>
+        <div class="menu-buttons">
+            <button class="img-btn" onclick="openHTP()">
+                <img src="btn3.png" alt="HOW TO PLAY">
+            </button>
+            <button class="img-btn" onclick="goToSetupFirst()">
+                <img src="btn2.png" alt="시작하기">
+            </button>
+        </div>
+    </div>
+
+    <div id="pg-setup" class="page" style="padding-top: 20px; padding-bottom: 20px;">
+        <div class="text-center mt-2 mb-4">
+            <h2 class="text-5xl font-black mb-3" style="color: #1e293b; text-shadow: 1px 1px 2px rgba(255,255,255,0.5);">팀 설정하기</h2>
+            <p class="text-gray-500 text-2xl font-medium">아래에서 팀 수, 팀 색깔, 팀 이름을 정해 주세요.</p>
+        </div>
+        <div class="w-full flex flex-col items-center gap-3"> 
+            <div class="flex items-center gap-6 bg-white border-2 border-gray-200 p-3 px-8 rounded-2xl shadow-sm"> 
+                <span class="text-gray-700 font-bold text-xl">참가 팀 수</span>
+                <button class="btn-cnt" onclick="chgCount(-1)" style="background:#64748b">-</button>
+                <span id="countDisp" class="text-[#fbbf24] font-black text-4xl w-16 text-center">6</span>
+                <button class="btn-cnt" onclick="chgCount(1)" style="background:#64748b">+</button>
+            </div>
+            <div id="groupGrid" class="grid grid-cols-3 gap-3 w-full max-w-[800px]"></div>
+            <button onclick="goToCategoryAfterSetup()" class="mt-2 px-12 py-4 bg-[#fbbf24] text-white font-black text-2xl rounded-2xl shadow-lg hover:scale-105 transition-all">
+                주제 선택하러 가기
+            </button>
+        </div>
+    </div>
+
+    <div id="pg-category" class="page">
+        <h2 class="selection-heading">원하는 주제를 선택하세요.</h2>
+        <div class="grid-menu" id="category-menu-grid"></div>
+    </div>
+
+    <div id="pg-subcategory" class="page">
+        <h2 class="selection-heading">소주제를 선택하세요.</h2>
+        <div id="all-btn-area" style="width: 100%; display: flex; justify-content: center; margin-bottom: 5px;"></div>
+        <div class="grid-menu" id="subcategory-menu-grid"></div>
+        <div class="status-counter" id="live-word-counter">선택됨: 0단어</div>
+        <button class="start-btn" onclick="launchGameAfterSelection()">GAME START</button>
+    </div>
+
+    <div id="pg-game" class="page" style="justify-content: center;">
+        <div class="w-full flex flex-col gap-1 items-center">
+            <div class="flex flex-col items-center gap-1 mt-4">
+                <div id="roundDisp" class="round-disp text-white text-5xl font-black italic tracking-tighter">ROUND 1 / 5</div>
+                <div class="w-full flex justify-between items-center px-6 mb-2">
+                    <div id="recDisp" class="bg-[#1e293b]/50 backdrop-blur-md border border-white/10 px-3 py-2 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.3)]">
+                        <span class="text-[#feff00] font-black text-lg tracking-tight">이전 라운드 기록: 없음</span>
+                    </div>
+                    <div id="timerDisp" class="flex items-center gap-3 bg-[#FEF08A] border-4 border-[#FBBF24] px-4 py-2 rounded-full shadow-[0_6px_0_#D97706] animate-pulse">
+                        <span class="text-[#92400E] font-black text-2xl tracking-wide">진행 시간: 00.00초</span>
+                    </div>
+                </div>          
+                <div id="dashboard" class="flex flex-wrap gap-3 justify-center bg-black/40 border border-white/10 p-2 rounded-2xl w-full max-w-[900px] mt-1 mb-1"></div>
+                <div class="relative w-full flex justify-center">
+                    <div id="colorGrid" class="grid-table"></div>
+                    <button id="nextBtn" class="action-btn" onclick="handleNext()">➤</button>
+                </div>
+                <p class="blink text-gray-400 font-bold bg-black/60 px-6 py-2 rounded-full border border-white/10 mt-2">
+                    스페이스바를 눌러 셀을 하나씩 공개하세요
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div id="resModal" class="modal-wrap">
+      <div id="resBox" class="modal-box">
+        <div style="color:#94a3b8;font-weight:700;font-size:1.1rem;letter-spacing:2px;text-transform:uppercase">이번 라운드 기록</div>
+        <div id="resTime" class="modal-time">00.00초</div>
+        <div id="resMsg" style="font-size:1.1rem;font-weight:700;color:#cbd5e1"></div>
+        <div id="resBtns" style="display:flex;gap:12px;justify-content:center;margin-top:8px"></div>
+      </div>
+    </div>
+
+    <div id="repModal" class="modal-wrap">
+      <div class="modal-box" style="border: 8px solid #fbbf24; border-radius: 40px; padding: 40px; max-width: 580px; text-align: center;">
+        <h2 style="font-size: 2.2rem; font-weight: 900; color: #1e293b; margin-bottom: 20px;">Class Record</h2>
+        <table class="htable" style="margin-bottom: 30px;">
+          <thead>
+            <tr style="color: #64748b;">
+              <th style="padding: 10px;">라운드</th>
+              <th style="padding: 10px;">소요 시간</th>
+            </tr>
+          </thead>
+          <tbody id="repBody"></tbody>
+        </table>
+        <div style="display: flex; gap: 15px; justify-content: center;">
+          <button class="mbtn" onclick="resetGame()" style="background: #fbbf24; color: white; padding: 15px 25px; border-radius: 16px; font-weight: 800;">즉시 재도전</button>
+          <button class="mbtn" onclick="goSetup()" style="background: #64748b; color: white; padding: 15px 25px; border-radius: 16px; font-weight: 800;">팀/주제 재설정</button>
+        </div>
+      </div>
+    </div>
+
+    <button id="htpBtn" onclick="openHTP()" style="position:fixed; top:14px; right:14px; z-index:100; display:none; padding: 10px 20px; background: #334155; color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+        How to Play
+    </button>
+
+    <div id="htpModal" class="modal-wrap">
+      <div class="modal-box" style="max-width: 600px; text-align: left; padding: 40px; position: relative;">
+        <button onclick="closeHTP()" style="position:absolute; top:20px; right:20px; font-size: 1.5rem; cursor:pointer; background:none; border:none;">✕</button>
+        <h2 style="font-size: 2rem; font-weight: 900; margin-bottom: 20px; color: #1e293b; text-align: center;">How to Play</h2>
+        <div style="font-size: 1.2rem; color: #334155; line-height: 1.8;">
+          <p><strong>1.</strong> "팀 설정하기"에서 팀 수, 팀 색깔, 팀 이름을 정합니다.</p>
+          <p><strong>2.</strong> 주제 카테고리를 고르고 소주제를 복수 선택합니다.</p>
+          <p class="hanging-indent"><strong>3.</strong> 화면에 우리 팀 색깔이 나오면 자리에서 일어나, 팀원들과 동시에 단어를 소리 내어 읽습니다.</p>
+          <p><strong>4.</strong> 화면의 단어를 모두 읽으면 라운드가 종료됩니다.</p>
+          <p class="hanging-indent"><strong>5.</strong> 이전 라운드보다 기록을 단축시켜야 다음 라운드를 도전할 수 있습니다.</p>
+          <p><strong>6.</strong> 5라운드까지 성공하면 Word Race 완주 성공!</p>
+          <div style="margin-top: 25px; padding: 20px; background: #f1f5f9; border-radius: 12px; border-left: 5px solid #cbd5e1;">
+            <p style="margin: 0; font-weight: 800; color: #ef4444;">⚠️ 주의사항</p>
+            <p style="margin: 5px 0 0 0;">- 팀원 모두 정확하게 단어를 읽어요.</p>
+            <p style="margin: 0;">- 다른 팀 색깔의 단어를 읽지 마세요.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<script>
+const CATEGORY_DATA = {
+  "숫자와 색깔": { "Number": [], "Color": [] },
+  "사람과 동물": { "Body": [], "Family": [], "Animal": [] },
+  "취미와 직업": { "Hobby": [], "Subject": [], "Job": [] },
+  "음식": { "Fruit & Vegetable": [], "Food": [] },
+  "국가와 자연": { "Nature & Weather": [], "Country": [] },
+  "장소와 교통": { "Place": ["school", "home", "park", "store", "hospital", "bank", "library", "zoo", "station"], "Transportation": ["bus", "taxi", "subway", "train", "car", "bike", "plane", "ship", "truck"] },
+  "물건": { 
+    "School": ["textbook", "pencil", "eraser", "glue stick", "notebook", "ruler", "scissors", "pencil case", "backpack", "crayon", "computer", "board"],
+    "House": ["door", "window", "bed", "chair", "desk", "clock", "robot", "doll", "umbrella", "fan", "lamp", "sofa"],
+    "Clothing": ["cap", "hat", "jacket", "dress", "skirt", "pants", "shoes", "gloves", "glasses", "socks", "shirt", "scarf"]
+  },
+  "동작": { "Action": ["run", "jump", "walk", "fly", "swim", "sing", "dance", "read", "write", "speak", "sleep", "eat"] },
+  "특징과 감정": { "Character": ["kind", "nice", "smart", "tall", "short", "big", "small", "fast", "slow"], "Condition": ["happy", "sad", "angry", "tired", "sick", "hungry", "thirsty", "good", "bad"] }
+};
+
+const masterColors = [
+  {id:'red',    name:'빨강', hex:'#ff4d4d', text:'#ffffff', def:'팀 이름'},
+  {id:'blue',   name:'파랑', hex:'#3b82f6', text:'#ffffff', def:'팀 이름'},
+  {id:'yellow', name:'노랑', hex:'#fbbf24', text:'#ffffff', def:'팀 이름'},
+  {id:'green',  name:'연두', hex:'#22c55e', text:'#ffffff', def:'팀 이름'},
+  {id:'pink',   name:'분홍', hex:'#ec4899', text:'#ffffff', def:'팀 이름'},
+  {id:'black',  name:'보라', hex:'#a855f7', text:'#ffffff', def:'팀 이름'},
+];
+
+let words = []; 
+const cellCount = 16;
+let page = 'welcome', groupCount = 6, groupNames = {}, roundNum = 1, revIdx = -1, lastRec = null, history = [], startTime = null, timerOn = false, success = false, pausedMs = 0, pauseAt = null;
+let selectedCategoryName = "";
+let selectedSubcategories = new Set();
+
+masterColors.forEach(c => groupNames[c.id] = c.def);
+
+const grid = document.getElementById('colorGrid');
+const roundDisp = document.getElementById('roundDisp');
+const recDisp = document.getElementById('recDisp');
+const nextBtn = document.getElementById('nextBtn');
+const resModal = document.getElementById('resModal');
+const resBox = document.getElementById('resBox');
+const resTime = document.getElementById('resTime');
+const resMsg = document.getElementById('resMsg');
+const resBtns = document.getElementById('resBtns');
+const repModal = document.getElementById('repModal');
+const repBody = document.getElementById('repBody');
+const dashboard = document.getElementById('dashboard');
+const htpModal = document.getElementById('htpModal');
+const groupGrid = document.getElementById('groupGrid');
+const countDisp = document.getElementById('countDisp');
+
+function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const target = document.getElementById(pageId);
+    if(target) target.classList.add('active');
+    
+    const container = document.querySelector('.game-container');
+    if (pageId === 'pg-welcome') {
+        container.style.backgroundImage = "url('car.png')"; 
+    } else {
+        container.style.backgroundImage = "none";            
+    }
+    
+    const htpBtn = document.getElementById('htpBtn');
+    if(htpBtn) htpBtn.style.display = (pageId === 'pg-setup' || pageId === 'pg-game') ? 'block' : 'none';
+    page = pageId;
+
+    if(pageId === 'pg-category') {
+        initCategoryMenu();
+    }
+}
+
+// 1. 메인화면 -> 팀 설정 열기
+function goToSetupFirst() {
+    showPage('pg-setup');
+    renderGroups();
+}
+
+// 2. 팀 설정 완료 -> 대분류 선택창 가기
+function goToCategoryAfterSetup() {
+    saveNames();
+    showPage('pg-category');
+}
+
+// 대분류 메뉴 렌더링
+// [수정] 대분류 메뉴 렌더링 (영문 명칭 추가)
+function initCategoryMenu() {
+  const gridMenu = document.getElementById("category-menu-grid");
+  gridMenu.innerHTML = "";
+  
+  // 기획안 기준 대분류별 영문 매핑 구조
+  const categoryEnglishMap = {
+    "숫자와 색깔": "Number & Color",
+    "사람과 동물": "People & Animal",
+    "취미와 직업": "Hobby & Job",
+    "음식": "Food",
+    "국가와 자연": "Country & Nature",
+    "장소와 교통": "Places & Transportation",
+    "물건": "Things",
+    "동작": "Action",
+    "특징과 감정": "Conditions"
+  };
+  
+  Object.keys(CATEGORY_DATA).forEach(cat => {
+    let total = 0;
+    Object.keys(CATEGORY_DATA[cat]).forEach(sub => {
+      total += CATEGORY_DATA[cat][sub].length;
+    });
+    
+    const engName = categoryEnglishMap[cat] ? ` (${categoryEnglishMap[cat]})` : '';
+    
+    const btn = document.createElement("button");
+    btn.className = "menu-box-btn";
+    // 대분류 버튼 안에 한글 + 영어 + 단어수가 모두 들어가도록 변경
+    btn.innerHTML = `${cat}<span class="eng-sub">${engName}</span><span>(${total}단어)</span>`;
+    btn.onclick = () => selectCategory(cat);
+    gridMenu.appendChild(btn);
+  });
+}
+// 대분류 선택 -> 소분류 매핑 렌더링
+function selectCategory(category) {
+  selectedCategoryName = category;
+  showPage('pg-subcategory');
+  
+  const allBtnArea = document.getElementById("all-btn-area");
+  const subGrid = document.getElementById("subcategory-menu-grid");
+  
+  allBtnArea.innerHTML = "";
+  subGrid.innerHTML = "";
+  selectedSubcategories.clear();
+
+  const subData = CATEGORY_DATA[category];
+  const subKeys = Object.keys(subData);
+
+  const allBtn = document.createElement("button");
+  allBtn.className = "menu-box-btn full-width";
+  allBtn.id = "btn-all-subcategories";
+  allBtn.innerHTML = `대분류 전체`;
+  allBtn.onclick = () => toggleAllSubcategories(subKeys);
+  allBtnArea.appendChild(allBtn);
+
+  subKeys.forEach(subKey => {
+    const btn = document.createElement("button");
+    btn.className = "menu-box-btn";
+    btn.id = `sub-btn-${subKey}`;
+    btn.innerHTML = `${subKey}<span>(${subData[subKey].length})</span>`;
+    btn.onclick = () => toggleSubcategory(subKey);
+    subGrid.appendChild(btn);
+  });
+
+  updateLiveWordCount();
+}
+
+function toggleSubcategory(subKey) {
+  const btn = document.getElementById(`sub-btn-${subKey}`);
+  if (selectedSubcategories.has(subKey)) {
+    selectedSubcategories.delete(subKey);
+    if(btn) btn.classList.remove("active");
+  } else {
+    selectedSubcategories.add(subKey);
+    if(btn) btn.classList.add("active");
+  }
+  
+  const subKeys = Object.keys(CATEGORY_DATA[selectedCategoryName]);
+  const allBtn = document.getElementById("btn-all-subcategories");
+  if (selectedSubcategories.size === subKeys.length) {
+    if(allBtn) allBtn.classList.add("active");
+  } else {
+    if(allBtn) allBtn.classList.remove("active");
+  }
+  updateLiveWordCount();
+}
+
+function toggleAllSubcategories(subKeys) {
+  const allBtn = document.getElementById("btn-all-subcategories");
+  const isAllSelected = (selectedSubcategories.size === subKeys.length);
+
+  subKeys.forEach(subKey => {
+    const btn = document.getElementById(`sub-btn-${subKey}`);
+    if (isAllSelected) {
+      selectedSubcategories.delete(subKey);
+      if(btn) btn.classList.remove("active");
+    } else {
+      selectedSubcategories.add(subKey);
+      if(btn) btn.classList.add("active");
+    }
+  });
+
+  if (isAllSelected) {
+    if(allBtn) allBtn.classList.remove("active");
+  } else {
+    if(allBtn) allBtn.classList.add("active");
+  }
+  updateLiveWordCount();
+}
+
+function updateLiveWordCount() {
+  let count = 0;
+  const subData = CATEGORY_DATA[selectedCategoryName];
+  selectedSubcategories.forEach(subKey => {
+    if(subData[subKey]) count += subData[subKey].length;
+  });
+  document.getElementById("live-word-counter").textContent = `선택됨: ${count}단어`;
+}
+
+// 3. 소분류 최종 완료 -> 실제 게임판 시작
+function launchGameAfterSelection() {
+    if(selectedSubcategories.size === 0) {
+        alert("최소 하나의 소주제를 선택하셔야 게임이 가능합니다.");
+        return;
+    }
+    
+    // 선택된 소분류 단어 풀 합산
+    words = [];
+    const subData = CATEGORY_DATA[selectedCategoryName];
+    selectedSubcategories.forEach(subKey => {
+        if(subData[subKey]) {
+            words.push(...subData[subKey]);
+        }
+    });
+
+    showPage('pg-game'); 
+    roundNum = 1;
+    roundDisp.textContent = `ROUND 1 / 5`;
+    updateDashboard(); 
+    initGrid(true); 
+}
+
+function updateTimer() {
+    if (timerOn && startTime) {
+        const elapsed = (Date.now() - startTime - pausedMs) / 1000;
+        document.querySelector('#timerDisp span').textContent = `진행 시간: ${elapsed.toFixed(2)}초`;
+    }
+}
+setInterval(updateTimer, 50);
+
+function playWelcomeSound(){
+  try {
+    const A = window.AudioContext || window.webkitAudioContext; if(!A) return;
+    const c = new A(), now = c.currentTime, notes = [110,147,196,294,220,440], durs = [.08,.08,.08,.12,.1,.4];
+    let t = 0;
+    notes.forEach((f,i)=>{
+      const o=c.createOscillator(),g=c.createGain();
+      o.type=i===notes.length-1?'sawtooth':'triangle'; o.frequency.setValueAtTime(f,now+t);
+      if(i===notes.length-1) o.frequency.exponentialRampToValueAtTime(880,now+t+durs[i]);
+      g.gain.setValueAtTime(.18,now+t); g.gain.exponentialRampToValueAtTime(.01,now+t+durs[i]);
+      o.connect(g); g.connect(c.destination); o.start(now+t); o.stop(now+t+durs[i]); t+=durs[i]-.02
+    });
+  } catch(e){}
+}
+
+function goSetup(){
+  playWelcomeSound();
+  repModal.classList.remove('active');
+  resModal.classList.remove('active');
+  showPage('pg-setup'); // 재설정 시 팀 설정부터 처음 순서대로 진입
+}
+
+function playSuccess(){
+  try{
+    const A=window.AudioContext||window.webkitAudioContext; if(!A)return;
+    const c=new A(),now=c.currentTime;
+    [440, 554, 659, 880].forEach((f, i) => {
+      const o=c.createOscillator(),g=c.createGain(); o.type='sine'; o.frequency.setValueAtTime(f, now + i*0.15);
+      g.gain.setValueAtTime(0.2, now + i*0.15); g.gain.exponentialRampToValueAtTime(0.01, now + i*0.15 + 0.3);
+      o.connect(g); g.connect(c.destination); o.start(now + i*0.15); o.stop(now + i*0.15 + 0.3);
+    });
+  }catch(e){}
+}
+
+function chgCount(d){
+  const n=groupCount+d;
+  if(n>=2&&n<=6){saveNames();groupCount=n;countDisp.textContent=n;renderGroups();}
+}
+function saveNames(){
+  masterColors.slice(0,groupCount).forEach(c=>{
+    const el=document.getElementById('inp-'+c.id);
+    if(el)groupNames[c.id]=el.value.trim()||c.def;
+  });
+}
+function renderGroups(){
+  groupGrid.innerHTML='';
+  masterColors.slice(0,groupCount).forEach(c=>{
+    const val=groupNames[c.id]||c.def;
+    const card=document.createElement('div');
+    card.className='group-card';
+    card.style.background=`linear-gradient(135deg,${c.hex}ee,${c.hex}99)`;
+    card.innerHTML=`<label style="font-weight:900;font-size:1.8rem;margin-bottom:10px;color:${c.text};text-shadow:0 1px 3px rgba(0,0,0,.4)">${c.name}</label><input type="text" id="inp-${c.id}" class="group-input" value="${val}">`;
+    const inp=card.querySelector('input');
+    inp.addEventListener('keydown',e=>{if(e.key==='Enter')inp.blur();});
+    groupGrid.appendChild(card);
+  });
+}
+
+function updateDashboard() {
+    dashboard.innerHTML = '';
+    masterColors.slice(0, groupCount).forEach(c => {
+        const nm = groupNames[c.id] || c.def;
+        const b = document.createElement('div');
+        b.style.backgroundColor = c.hex;
+        b.style.color = c.text;
+        b.style.padding = "6px 16px";
+        b.style.borderRadius = "50px";
+        b.style.fontWeight = "900";
+        b.style.fontSize = "1.1rem";
+        b.style.border = "2px solid rgba(255,255,255,0.2)";
+        b.innerHTML = `<span>${nm}</span>`;
+        dashboard.appendChild(b);
+    });
+}
+
+function getColors(){
+  let res = [];
+  let active = masterColors.slice(0, groupCount).map(c => c.hex);
+  const base = Math.floor(cellCount / active.length);
+  active.forEach(col => {
+    for (let j = 0; j < base; j++) res.push(col);
+  });
+  let extraColors = [...active];
+  for (let i = extraColors.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [extraColors[i], extraColors[j]] = [extraColors[j], extraColors[i]];
+  }
+  const remaining = cellCount - res.length;
+  for (let i = 0; i < remaining; i++) {
+    res.push(extraColors[i]);
+  }
+  for (let i = res.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [res[i], res[j]] = [res[j], res[i]];
+  }
+  return res;
+}
+
+function getWords(){
+  let sel=[], tmp=[...words];
+  for(let i=0;i<cellCount;i++){
+    if(!tmp.length) tmp=[...words];
+    sel.push(tmp.splice(Math.floor(Math.random()*tmp.length),1)[0]);
+  }
+  return sel;
+}
+
+function initGrid(reset=false){
+    grid.innerHTML=''; revIdx=-1; nextBtn.classList.remove('visible');
+    resModal.classList.remove('active'); repModal.classList.remove('active'); resBox.classList.remove('fail');
+    pausedMs=0; pauseAt=null;
+    
+    if(reset){
+        roundNum=1; lastRec=null; history=[]; 
+        roundDisp.textContent='ROUND 1 / 5';
+        document.querySelector('#recDisp span').textContent = '이전 라운드 기록: 없음';
+    }
+    
+    startTime=Date.now(); timerOn=true;
+    const cols=getColors(), wrds=getWords();
+    for(let i=0; i<cellCount; i++){
+        const cell=document.createElement('div'); cell.className='cell';
+        cell.style.backgroundColor=cols[i]; cell.textContent=wrds[i];
+        const ov=document.createElement('div'); ov.className='overlay'; ov.id='ov-'+i;
+        cell.appendChild(ov); grid.appendChild(cell);
+    }
+}
+
+function fmt(s){
+  if(s===null) return '없음';
+  if(s>=60){ const m=Math.floor(s/60), r=(s%60).toFixed(2); return `${m}분 ${r}초`; }
+  return `${s.toFixed(2)}초`;
+}
+
+function showResult(dur) {
+    resTime.textContent = fmt(dur);
+    resBtns.innerHTML = '';
+    const isFinalRound = (roundNum === 5);
+
+    if (lastRec === null || dur < lastRec) {
+        success = true;
+        history.push({ round: roundNum, time: dur });
+        lastRec = dur;
+
+        if (isFinalRound) {
+            resMsg.textContent = '기록 단축 성공! 결과를 확인해요.';
+            resBtns.innerHTML = `<button class="mbtn mbtn-next" onclick="exitGame()">결과 보기</button>`;
+        } else {
+            resMsg.textContent = roundNum === 1 ? '첫 라운드 완료!' : '기록 단축 성공! 다음 단계로 도전하세요.';
+            resBtns.innerHTML = `<button class="mbtn mbtn-exit" onclick="exitGame()">종료하기</button>
+                                 <button class="mbtn mbtn-next" onclick="handleNext()">다음 라운드</button>`;
+        }
+        resMsg.style.color = '#cbd5e1';
+        resBox.classList.remove('fail');
+        nextBtn.classList.add('visible');
+    } else {
+        success = false;
+        resMsg.textContent = `기록 단축 실패... (${fmt(lastRec)}보다 빨라야 함)`;
+        resMsg.style.color = '#ef4444';
+        resBox.classList.add('fail');
+        resBtns.innerHTML = `<button class="mbtn mbtn-exit" onclick="exitGame()">종료하기</button>
+                             <button class="mbtn mbtn-retry" onclick="handleNext()">한 번 더 도전!</button>`;
+        nextBtn.classList.remove('visible');
+    }
+    resModal.classList.add('active');
+}
+
+function handleNext(){
+    resModal.classList.remove('active');
+    if(success) {
+        if (roundNum >= 5) {
+            exitGame();
+            return;
+        }
+        roundNum++;
+        roundDisp.textContent = `ROUND ${roundNum} / 5`; 
+        document.querySelector('#recDisp span').textContent = `이전 라운드 기록: ${fmt(lastRec)}`;
+        initGrid(); 
+    } else {
+        initGrid(); 
+    }
+}
+
+function exitGame(){
+  resModal.classList.remove('active');
+  repBody.innerHTML='';
+  if(!history.length){
+      repBody.innerHTML='<tr><td colspan="2" style="color:#64748b;text-align:center;padding:16px">기록이 없습니다.</td></tr>';
+  } else {
+      history.forEach(r=>{
+          const tr=document.createElement('tr');
+          tr.innerHTML=`<td>ROUND ${r.round}</td><td style="color:#fbbf24">${fmt(r.time)}</td>`;
+          repBody.appendChild(tr);
+      });
+  }
+  repModal.classList.add('active');
+}
+
+function resetGame(){ repModal.classList.remove('active'); initGrid(true); }
+
+function openHTP() {
+    if (page === 'pg-game' && timerOn) {
+        pauseAt = Date.now();
+        timerOn = false; 
+    }
+    document.getElementById('htpModal').classList.add('active');
+}
+
+function closeHTP() {
+    document.getElementById('htpModal').classList.remove('active');
+    if (page === 'pg-game' && pauseAt) {
+        pausedMs += Date.now() - pauseAt;
+        pauseAt = null;
+        timerOn = true;
+    }
+}
+
+window.addEventListener('keydown', e => {
+    if(e.code !== 'Space') return;
+    if(document.activeElement && document.activeElement.tagName === 'INPUT') return;
+    if(page === 'pg-welcome' || page === 'pg-category' || page === 'pg-subcategory') return;
+
+    if(!htpModal.classList.contains('active')) e.preventDefault();
+    else return;
+
+    if(page === 'pg-setup') { 
+        goToCategoryAfterSetup(); 
+        return;
+    }
+    
+    if(page === 'pg-game') { 
+        if(resModal.classList.contains('active') || repModal.classList.contains('active')) return;
+        if(revIdx < cellCount - 1) {
+            revIdx++; 
+            const ov = document.getElementById('ov-' + revIdx);
+            if(ov) ov.classList.add('revealed');
+        } 
+        else if(revIdx === cellCount - 1 && timerOn) {
+            playSuccess(); 
+            const end = Date.now();
+            let off = pausedMs; 
+            if(pauseAt) off += end - pauseAt;
+            timerOn = false; 
+            showResult((end - startTime - off) / 1000);
+        }
+    }
+});
+
+function resizeGame() {
+    const container = document.querySelector('.game-container');
+    const winW = window.innerWidth;
+    const winH = window.innerHeight;
+    const scale = Math.min((winW / 1200) * 0.95, (winH / 800) * 0.95);
+    container.style.transform = `translate(-50%, -50%) scale(${scale})`;
+}
+window.addEventListener('resize', resizeGame);
+resizeGame();
+</script>
+</body>
+</html>
