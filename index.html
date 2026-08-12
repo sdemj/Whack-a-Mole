@@ -871,6 +871,8 @@ function toggleBgm(){
   if(a&&a.paused){state.bgmOn=true;ensureBgm()}else{state.bgmOn=false;stopBgm()}
   syncAudioButtons();
 }
+document.addEventListener("click",()=>{if(state.bgmOn)ensureBgm()},{once:true});
+document.addEventListener("keyup",()=>{if(state.bgmOn)ensureBgm()},{once:true});
 document.addEventListener("visibilitychange",()=>{
   if(document.hidden)$("#bgmAudio")?.pause();
   else if(state.bgmOn)ensureBgm();
