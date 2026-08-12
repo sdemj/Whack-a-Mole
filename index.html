@@ -144,14 +144,15 @@ h2{font-size:clamp(25px,4vw,40px);margin-bottom:10px}
 .soft-btn:hover,.primary-btn:hover,.secondary-btn:hover,.danger-btn:hover{transform:translateY(-2px)}
 .primary-btn:disabled,.secondary-btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
 .sub-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.sub-card{text-align:left;position:relative;min-height:130px}
+.sub-card{text-align:left;position:relative;min-height:150px;padding:22px}
 .sub-card.selected{border-color:#9f7ac9;background:linear-gradient(145deg,#fbf6ff,#f1e4fb)}
 .sub-check{
   position:absolute;right:14px;top:14px;width:30px;height:30px;border-radius:50%;
   background:#eee7f1;display:grid;place-items:center;font-weight:950;color:#fff
 }
 .sub-card.selected .sub-check{background:#9d7bc6}
-.sub-name{display:block;font-size:20px;font-weight:950;margin:16px 0 8px}
+.sub-name{display:block;font-size:23px;font-weight:950;margin:16px 0 8px}
+.select-all-btn{display:block;width:100%;text-align:center;margin-bottom:14px;font-size:19px;min-height:0;padding:14px 22px}
 .selection-summary{
   background:linear-gradient(135deg,#f8effd,#eef8ff);border-radius:20px;padding:14px 18px;
   font-weight:850;color:#6f587c
@@ -267,6 +268,8 @@ h2{font-size:clamp(25px,4vw,40px);margin-bottom:10px}
   position:relative
 }
 .modal-close{position:absolute;right:16px;top:16px}
+.modal-actions{display:flex;justify-content:center;margin-top:18px}
+.modal-actions:empty{display:none}
 .rule-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:18px}
 .rule-card{background:#f8f4fb;border-radius:18px;padding:16px;line-height:1.55}
 .rule-card strong{display:block;margin-bottom:5px;font-size:1.08em}
@@ -372,8 +375,8 @@ html,body,button,input,textarea,select,option,table,th,td,h1,h2,h3,h4,p,span,div
 
 /* 소주제 하위 단어 미리보기: 마우스를 올리면 화면 안쪽에 자동 배치 */
 .word-preview-tooltip{
-  position:fixed;z-index:500;display:none;width:min(390px,calc(100vw - 24px));
-  max-height:min(430px,70vh);overflow:auto;padding:15px 16px 14px;
+  position:fixed;z-index:500;display:none;width:min(430px,calc(100vw - 24px));
+  max-height:min(480px,78vh);overflow:auto;padding:15px 16px 14px;
   border:2px solid rgba(214,191,236,.82);border-radius:22px;
   background:rgba(255,255,255,.98);box-shadow:0 22px 55px rgba(73,49,88,.25);
   color:var(--ink);pointer-events:none;backdrop-filter:blur(12px)
@@ -383,13 +386,13 @@ html,body,button,input,textarea,select,option,table,th,td,h1,h2,h3,h4,p,span,div
 .preview-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
 .preview-head strong{font-size:19px;color:#765493}
 .preview-count{font-size:12px;background:#f4eafa;color:#7f5c99;border-radius:999px;padding:5px 9px}
-.preview-word-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.preview-word-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
 .preview-word{
-  min-width:0;display:flex;flex-direction:column;gap:2px;padding:8px 9px;border-radius:13px;
+  min-width:0;display:flex;flex-direction:column;gap:1px;padding:6px 6px;border-radius:11px;
   background:linear-gradient(145deg,#fff8eb,#f5effd);border:1px solid #f0e5f8
 }
-.preview-word b{font-size:14px;color:#55405f;overflow-wrap:anywhere}
-.preview-word small{font-size:12px;color:#8b7595;overflow-wrap:anywhere}
+.preview-word b{font-size:12.5px;color:#55405f;overflow-wrap:anywhere}
+.preview-word small{font-size:10.5px;color:#8b7595;overflow-wrap:anywhere}
 .preview-tip{margin-top:10px;text-align:center;font-size:12px;color:#9b7dab}
 .sub-card{z-index:1}
 .sub-card:hover{z-index:30}
@@ -435,6 +438,108 @@ html,body,button,input,textarea,select,option,table,th,td,h1,h2,h3,h4,p,span,div
 @media (max-height:680px) and (orientation:landscape){
   .hole{min-height:155px}
   .mole{width:min(72%,175px)}
+}
+
+
+/* ===== 모바일 가독성/겹침 보완 ===== */
+@media (max-width:620px){
+  /* 상단 메뉴: 6개 요소가 작은 화면에서도 한 줄에 안정적으로 들어가도록 고정 폭 축소 */
+  .top-nav{
+    grid-template-columns:40px 40px minmax(0,1fr) 40px 40px 40px;
+    gap:4px;padding:6px;min-width:0
+  }
+  .top-nav .icon-btn,.top-nav .fullscreen-btn{
+    width:40px;min-width:40px;height:40px;padding:0;gap:0;font-size:17px
+  }
+  .top-nav .help-btn,.top-nav .bgm-toggle{font-size:0}
+  .top-nav .help-btn::after{font-size:17px}
+  .top-nav .bgm-toggle::after{font-size:17px}
+  .top-nav .fullscreen-btn{font-size:18px}
+  .nav-title{
+    min-width:0;font-size:clamp(13px,4vw,17px);line-height:1.1;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+  }
+
+  /* 카드 내부의 아이콘이 텍스트에 밀리거나 겹치지 않도록 크기/폭 분리 */
+  .choice-card{gap:9px;padding:13px;min-width:0}
+  .choice-card>span:last-child{min-width:0;flex:1}
+  .choice-icon{font-size:24px;line-height:1;flex:0 0 28px;text-align:center}
+  .choice-title{font-size:16px;line-height:1.2;overflow-wrap:anywhere}
+  .choice-desc{font-size:12px;line-height:1.38;overflow-wrap:anywhere}
+  .setting-block{padding:15px;border-radius:20px}
+  .setting-block h3{font-size:18px;margin-bottom:11px}
+
+  .category-card,.sub-card{min-width:0;overflow:hidden}
+  .category-icon{font-size:26px;line-height:1;margin-bottom:6px}
+  .category-ko{font-size:15px;line-height:1.2;overflow-wrap:anywhere}
+  .category-en{font-size:11px;line-height:1.25;overflow-wrap:anywhere}
+  .sub-name{font-size:15px;line-height:1.2;overflow-wrap:anywhere}
+  .sub-check{width:26px;height:26px;right:10px;top:10px;font-size:13px}
+
+  /* 모바일 제목/설명 및 일반 버튼 크기 */
+  h1{font-size:clamp(25px,8vw,32px)}
+  h2{font-size:clamp(23px,7vw,30px)}
+  .lead{font-size:14px;line-height:1.5}
+  .eyebrow{font-size:11px;padding:6px 10px}
+  .soft-btn,.primary-btn,.secondary-btn,.danger-btn{
+    padding:12px 15px;border-radius:15px;font-size:14px;line-height:1.2
+  }
+  .selection-summary{font-size:13px;padding:11px 13px;min-width:0}
+  .section-actions{gap:8px}
+  .setting-summary{padding:13px;gap:10px}
+  .setting-summary strong{font-size:15px}
+
+  /* 게임 화면: 아이콘 버튼은 아이콘만, 전체화면 아이콘은 숨지 않도록 별도 복구 */
+  .game-actions{gap:5px;min-width:0;flex-wrap:nowrap}
+  .game-actions .icon-btn,#gameFxBtn{
+    width:40px;min-width:40px;height:40px;padding:0
+  }
+  #gameFullscreenBtn{font-size:18px!important}
+  #gameHomeBtn::after,#gameHelpBtn::after,#gameBgmBtn::after,#gameFxBtn::after{font-size:17px}
+  .stats{min-width:0}
+  .stat{min-width:0;padding:6px 2px}
+  .stat-label{font-size:9px;white-space:nowrap}
+  .stat-value{font-size:clamp(15px,5vw,18px)}
+  .question-word{font-size:clamp(23px,8vw,34px);overflow-wrap:anywhere}
+  .question-instruction{font-size:12px;line-height:1.35}
+  .word-board{
+    left:12%;right:12%;font-size:clamp(11px,3.65vw,16px);line-height:1.05;
+    padding:5px 4px;overflow-wrap:anywhere;word-break:break-word
+  }
+
+  /* 결과/도움말에서도 긴 글자가 화면 밖으로 밀리지 않도록 */
+  .modal{padding:20px 14px;border-radius:24px}
+  .rule-card{font-size:14px;padding:13px;overflow-wrap:anywhere}
+  .answer-row{grid-template-columns:30px minmax(0,1fr);gap:8px}
+  .answer-meta{grid-column:2;text-align:left}
+}
+
+@media (max-width:390px){
+  .screen:not(#introScreen){padding:6px}
+  .top-nav{
+    grid-template-columns:36px 36px minmax(0,1fr) 36px 36px 36px;
+    gap:3px;padding:5px;border-radius:15px
+  }
+  .top-nav .icon-btn,.top-nav .fullscreen-btn{
+    width:36px;min-width:36px;height:36px;font-size:16px
+  }
+  .top-nav .help-btn::after,.top-nav .bgm-toggle::after{font-size:16px}
+  .top-nav .fullscreen-btn{font-size:17px}
+  .nav-title{font-size:12px}
+  .panel{padding:15px 10px;border-radius:20px}
+  .category-grid,.sub-grid{gap:7px}
+  .category-card{padding:10px 7px}
+  .category-icon{font-size:23px}
+  .category-ko{font-size:14px}
+  .choice-card{padding:11px 9px;gap:7px}
+  .choice-icon{font-size:22px;flex-basis:25px}
+  .choice-title{font-size:15px}
+  .choice-desc{font-size:11px}
+  .game-actions .icon-btn,#gameFxBtn{width:36px;min-width:36px;height:36px}
+  #gameFullscreenBtn{font-size:17px!important}
+  .mole{width:min(90%,165px)}
+  .hole{min-height:145px}
+  .word-board{left:10%;right:10%;font-size:clamp(10px,3.5vw,14px)}
 }
 
 </style>
@@ -486,13 +591,13 @@ html,body,button,input,textarea,select,option,table,th,td,h1,h2,h3,h4,p,span,div
       <main class="panel">
         <div class="hero-copy">
           <span class="eyebrow">STEP 2 · 복수 선택 가능</span>
-          <h2 id="subHeading">소분류를 선택하세요</h2>
+          <h2 id="subHeading">주제를 선택하세요.</h2>
           <p class="lead">원하는 단원을 여러 개 골라 섞어서 출제할 수 있습니다.</p>
         </div>
         <div class="section-actions">
-          <button id="selectAllBtn" class="soft-btn">전체 선택</button>
           <div id="selectionSummary" class="selection-summary">선택된 단어 0개</div>
         </div>
+        <button id="selectAllBtn" class="sub-card select-all-btn">전체 단어 선택하기</button>
         <div id="subGrid" class="sub-grid"></div>
         <div class="section-actions" style="justify-content:flex-end;margin-bottom:0">
           <button id="toSettingsBtn" class="primary-btn" disabled>모드 설정하기 →</button>
@@ -535,15 +640,15 @@ html,body,button,input,textarea,select,option,table,th,td,h1,h2,h3,h4,p,span,div
             <div id="difficultyChoices" class="choice-stack">
               <button class="choice-card" data-difficulty="easy">
                 <span class="choice-icon">🌱</span>
-                <span><span class="choice-title">쉬움 · 3초</span><span class="choice-desc">두더지가 오래 보여 처음 연습하기 좋습니다.</span></span>
+                <span><span class="choice-title">쉬움 · 7초</span><span class="choice-desc">두더지가 오래 보여 처음 연습하기 좋습니다.</span></span>
               </button>
               <button class="choice-card selected" data-difficulty="normal">
                 <span class="choice-icon">⭐</span>
-                <span><span class="choice-title">보통 · 2초</span><span class="choice-desc">적당한 속도로 위치가 바뀝니다.</span></span>
+                <span><span class="choice-title">보통 · 5초</span><span class="choice-desc">적당한 속도로 위치가 바뀝니다.</span></span>
               </button>
               <button class="choice-card" data-difficulty="hard">
                 <span class="choice-icon">⚡</span>
-                <span><span class="choice-title">어려움 · 1초</span><span class="choice-desc">빠르게 움직이는 두더지를 집중해서 잡습니다.</span></span>
+                <span><span class="choice-title">어려움 · 3초</span><span class="choice-desc">빠르게 움직이는 두더지를 집중해서 잡습니다.</span></span>
               </button>
             </div>
           </section>
@@ -639,9 +744,10 @@ html,body,button,input,textarea,select,option,table,th,td,h1,h2,h3,h4,p,span,div
       <div class="rule-card"><strong>1️⃣ 단어 고르기</strong>배우고 싶은 주제와 단어 묶음을 골라요.</div>
       <div class="rule-card"><strong>2️⃣ 게임 고르기</strong><b>단어</b>는 뜻에 맞는 단어를, <b>철자</b>는 바른 철자를 찾아요.</div>
       <div class="rule-card"><strong>3️⃣ 두더지 잡기</strong>정답 두더지가 보이면 빠르게 콕! 철자 게임은 단어도 한 번 써요.</div>
-      <div class="rule-card"><strong>4️⃣ 속도 고르기</strong>쉬움 3초 · 보통 2초 · 어려움 1초예요.</div>
+      <div class="rule-card"><strong>4️⃣ 속도 고르기</strong>쉬움 7초 · 보통 5초 · 어려움 3초예요.</div>
     </div>
     <div class="help-cheer">⭐ 정답 +100점 · 오답 -20점 · 3번 연속 정답이면 +50점과 +5초!</div>
+    <div id="helpActions" class="modal-actions"></div>
   </div>
 </div>
 
@@ -672,9 +778,9 @@ html,body,button,input,textarea,select,option,table,th,td,h1,h2,h3,h4,p,span,div
 const WORD_BANK = [{"ko":"숫자·색깔·시간","en":"Number, Color&Time","subcategories":[{"name":"Number","words":[{"en":"one","ko":"하나","caseSensitive":false},{"en":"two","ko":"둘","caseSensitive":false},{"en":"three","ko":"셋","caseSensitive":false},{"en":"four","ko":"넷","caseSensitive":false},{"en":"five","ko":"다섯","caseSensitive":false},{"en":"six","ko":"여섯","caseSensitive":false},{"en":"seven","ko":"일곱","caseSensitive":false},{"en":"eight","ko":"여덟","caseSensitive":false},{"en":"nine","ko":"아홉","caseSensitive":false},{"en":"ten","ko":"열","caseSensitive":false},{"en":"eleven","ko":"열하나","caseSensitive":false},{"en":"twelve","ko":"열둘","caseSensitive":false},{"en":"thirteen","ko":"열셋","caseSensitive":false},{"en":"fourteen","ko":"열넷","caseSensitive":false},{"en":"fifteen","ko":"열다섯","caseSensitive":false},{"en":"sixteen","ko":"열여섯","caseSensitive":false},{"en":"seventeen","ko":"열일곱","caseSensitive":false},{"en":"eighteen","ko":"열여덟","caseSensitive":false},{"en":"nineteen","ko":"열아홉","caseSensitive":false},{"en":"twenty","ko":"스물","caseSensitive":false},{"en":"thirty","ko":"서른","caseSensitive":false},{"en":"forty","ko":"마흔","caseSensitive":false},{"en":"fifty","ko":"쉰","caseSensitive":false},{"en":"sixty","ko":"예순","caseSensitive":false},{"en":"seventy","ko":"일흔","caseSensitive":false},{"en":"eighty","ko":"여든","caseSensitive":false},{"en":"ninety","ko":"아흔","caseSensitive":false},{"en":"hundred","ko":"백","caseSensitive":false},{"en":"thousand","ko":"천","caseSensitive":false}]},{"name":"Color","words":[{"en":"white","ko":"흰색","caseSensitive":false},{"en":"black","ko":"검정","caseSensitive":false},{"en":"red","ko":"빨강","caseSensitive":false},{"en":"orange","ko":"주황","caseSensitive":false},{"en":"yellow","ko":"노랑","caseSensitive":false},{"en":"green","ko":"초록","caseSensitive":false},{"en":"blue","ko":"파랑","caseSensitive":false},{"en":"purple","ko":"보라","caseSensitive":false},{"en":"brown","ko":"갈색","caseSensitive":false},{"en":"gray","ko":"회색","caseSensitive":false},{"en":"pink","ko":"분홍","caseSensitive":false},{"en":"color","ko":"색깔","caseSensitive":false},{"en":"rainbow","ko":"무지개","caseSensitive":false}]},{"name":"Time&Date","words":[{"en":"day","ko":"날","caseSensitive":false},{"en":"week","ko":"주","caseSensitive":false},{"en":"month","ko":"월","caseSensitive":false},{"en":"year","ko":"년","caseSensitive":false},{"en":"morning","ko":"아침","caseSensitive":false},{"en":"afternoon","ko":"오후","caseSensitive":false},{"en":"evening","ko":"저녁","caseSensitive":false},{"en":"night","ko":"밤","caseSensitive":false},{"en":"time","ko":"시간","caseSensitive":false},{"en":"today","ko":"오늘","caseSensitive":false},{"en":"tomorrow","ko":"내일","caseSensitive":false},{"en":"yesterday","ko":"어제","caseSensitive":false},{"en":"weekend","ko":"주말","caseSensitive":false},{"en":"noon","ko":"정오","caseSensitive":false},{"en":"season","ko":"계절","caseSensitive":false},{"en":"future","ko":"미래","caseSensitive":false},{"en":"Monday","ko":"월요일","caseSensitive":true},{"en":"Tuesday","ko":"화요일","caseSensitive":true},{"en":"Wednesday","ko":"수요일","caseSensitive":true},{"en":"Thursday","ko":"목요일","caseSensitive":true},{"en":"Friday","ko":"금요일","caseSensitive":true},{"en":"Saturday","ko":"토요일","caseSensitive":true},{"en":"Sunday","ko":"일요일","caseSensitive":true},{"en":"spring","ko":"봄","caseSensitive":false},{"en":"summer","ko":"여름","caseSensitive":false},{"en":"fall","ko":"가을","caseSensitive":false},{"en":"winter","ko":"겨울","caseSensitive":false}]}]},{"ko":"사람과 동물","en":"People&Animal","subcategories":[{"name":"Body","words":[{"en":"eye","ko":"눈","caseSensitive":false},{"en":"nose","ko":"코","caseSensitive":false},{"en":"ear","ko":"귀","caseSensitive":false},{"en":"mouth","ko":"입","caseSensitive":false},{"en":"tooth","ko":"이","caseSensitive":false},{"en":"face","ko":"얼굴","caseSensitive":false},{"en":"neck","ko":"목","caseSensitive":false},{"en":"hair","ko":"머리카락","caseSensitive":false},{"en":"head","ko":"머리","caseSensitive":false},{"en":"foot","ko":"발","caseSensitive":false},{"en":"finger","ko":"손가락","caseSensitive":false},{"en":"leg","ko":"다리","caseSensitive":false},{"en":"arm","ko":"팔","caseSensitive":false},{"en":"skin","ko":"피부","caseSensitive":false},{"en":"hand","ko":"손","caseSensitive":false}]},{"name":"Family&People","words":[{"en":"mom","ko":"엄마","caseSensitive":false},{"en":"dad","ko":"아빠","caseSensitive":false},{"en":"grandma","ko":"할머니","caseSensitive":false},{"en":"grandpa","ko":"할아버지","caseSensitive":false},{"en":"sister","ko":"언니·누나","caseSensitive":false},{"en":"brother","ko":"형·오빠","caseSensitive":false},{"en":"parents","ko":"부모님","caseSensitive":false},{"en":"uncle","ko":"삼촌","caseSensitive":false},{"en":"aunt","ko":"이모·고모","caseSensitive":false},{"en":"cousin","ko":"사촌","caseSensitive":false},{"en":"baby","ko":"아기","caseSensitive":false},{"en":"child","ko":"아이","caseSensitive":false},{"en":"boy","ko":"남자아이","caseSensitive":false},{"en":"girl","ko":"여자아이","caseSensitive":false},{"en":"man","ko":"남자","caseSensitive":false},{"en":"woman","ko":"여자","caseSensitive":false}]},{"name":"Animal","words":[{"en":"bear","ko":"곰","caseSensitive":false},{"en":"bird","ko":"새","caseSensitive":false},{"en":"cat","ko":"고양이","caseSensitive":false},{"en":"cow","ko":"소","caseSensitive":false},{"en":"dog","ko":"개","caseSensitive":false},{"en":"duck","ko":"오리","caseSensitive":false},{"en":"elephant","ko":"코끼리","caseSensitive":false},{"en":"fish","ko":"물고기","caseSensitive":false},{"en":"fox","ko":"여우","caseSensitive":false},{"en":"frog","ko":"개구리","caseSensitive":false},{"en":"giraffe","ko":"기린","caseSensitive":false},{"en":"horse","ko":"말","caseSensitive":false},{"en":"kangaroo","ko":"캥거루","caseSensitive":false},{"en":"lion","ko":"사자","caseSensitive":false},{"en":"monkey","ko":"원숭이","caseSensitive":false},{"en":"mouse","ko":"쥐","caseSensitive":false},{"en":"octopus","ko":"문어","caseSensitive":false},{"en":"panda","ko":"판다","caseSensitive":false},{"en":"pig","ko":"돼지","caseSensitive":false},{"en":"rabbit","ko":"토끼","caseSensitive":false},{"en":"shark","ko":"상어","caseSensitive":false},{"en":"sheep","ko":"양","caseSensitive":false},{"en":"tiger","ko":"호랑이","caseSensitive":false},{"en":"zebra","ko":"얼룩말","caseSensitive":false}]}]},{"ko":"취미·과목·직업","en":"Hobby, Subject&Job","subcategories":[{"name":"Sports&Hobby","words":[{"en":"soccer","ko":"축구","caseSensitive":false},{"en":"baseball","ko":"야구","caseSensitive":false},{"en":"basketball","ko":"농구","caseSensitive":false},{"en":"badminton","ko":"배드민턴","caseSensitive":false},{"en":"tennis","ko":"테니스","caseSensitive":false},{"en":"table tennis","ko":"탁구","caseSensitive":false},{"en":"taekwondo","ko":"태권도","caseSensitive":false},{"en":"swimming","ko":"수영","caseSensitive":false},{"en":"skating","ko":"스케이트","caseSensitive":false},{"en":"skiing","ko":"스키","caseSensitive":false},{"en":"camping","ko":"캠핑","caseSensitive":false},{"en":"hiking","ko":"등산","caseSensitive":false},{"en":"drawing","ko":"그림 그리기","caseSensitive":false},{"en":"painting","ko":"색칠하기","caseSensitive":false},{"en":"cooking","ko":"요리","caseSensitive":false},{"en":"picnic","ko":"소풍","caseSensitive":false}]},{"name":"Subject&Class","words":[{"en":"English","ko":"영어","caseSensitive":true},{"en":"Korean","ko":"국어","caseSensitive":true},{"en":"Math","ko":"수학","caseSensitive":true},{"en":"Science","ko":"과학","caseSensitive":true},{"en":"History","ko":"역사","caseSensitive":true},{"en":"Art","ko":"미술","caseSensitive":true},{"en":"Music","ko":"음악","caseSensitive":true},{"en":"P.E.","ko":"체육","caseSensitive":true},{"en":"subject","ko":"과목","caseSensitive":false},{"en":"class","ko":"수업","caseSensitive":false},{"en":"lesson","ko":"단원","caseSensitive":false},{"en":"homework","ko":"숙제","caseSensitive":false},{"en":"test","ko":"시험","caseSensitive":false},{"en":"vacation","ko":"방학","caseSensitive":false},{"en":"grade","ko":"학년","caseSensitive":false}]},{"name":"Job","words":[{"en":"cook","ko":"요리사","caseSensitive":false},{"en":"doctor","ko":"의사","caseSensitive":false},{"en":"pilot","ko":"조종사","caseSensitive":false},{"en":"singer","ko":"가수","caseSensitive":false},{"en":"painter","ko":"화가","caseSensitive":false},{"en":"nurse","ko":"간호사","caseSensitive":false},{"en":"teacher","ko":"선생님","caseSensitive":false},{"en":"actor","ko":"배우","caseSensitive":false},{"en":"scientist","ko":"과학자","caseSensitive":false},{"en":"photographer","ko":"사진사","caseSensitive":false},{"en":"firefighter","ko":"소방관","caseSensitive":false},{"en":"police officer","ko":"경찰관","caseSensitive":false},{"en":"writer","ko":"작가","caseSensitive":false},{"en":"dentist","ko":"치과의사","caseSensitive":false},{"en":"zookeeper","ko":"사육사","caseSensitive":false},{"en":"designer","ko":"디자이너","caseSensitive":false},{"en":"astronaut","ko":"우주인","caseSensitive":false},{"en":"farmer","ko":"농부","caseSensitive":false},{"en":"driver","ko":"운전사","caseSensitive":false}]}]},{"ko":"음식과 음료","en":"Food&Drink","subcategories":[{"name":"Fruit&Vegetable","words":[{"en":"apple","ko":"사과","caseSensitive":false},{"en":"banana","ko":"바나나","caseSensitive":false},{"en":"grape","ko":"포도","caseSensitive":false},{"en":"lemon","ko":"레몬","caseSensitive":false},{"en":"kiwi","ko":"키위","caseSensitive":false},{"en":"watermelon","ko":"수박","caseSensitive":false},{"en":"strawberry","ko":"딸기","caseSensitive":false},{"en":"peach","ko":"복숭아","caseSensitive":false},{"en":"pear","ko":"배(과일)","caseSensitive":false},{"en":"melon","ko":"멜론","caseSensitive":false},{"en":"potato","ko":"감자","caseSensitive":false},{"en":"tomato","ko":"토마토","caseSensitive":false},{"en":"carrot","ko":"당근","caseSensitive":false},{"en":"corn","ko":"옥수수","caseSensitive":false},{"en":"onion","ko":"양파","caseSensitive":false}]},{"name":"Meal&Snack","words":[{"en":"bread","ko":"빵","caseSensitive":false},{"en":"rice","ko":"밥","caseSensitive":false},{"en":"cake","ko":"케이크","caseSensitive":false},{"en":"cheese","ko":"치즈","caseSensitive":false},{"en":"chicken","ko":"치킨","caseSensitive":false},{"en":"chocolate","ko":"초콜릿","caseSensitive":false},{"en":"cookie","ko":"쿠키","caseSensitive":false},{"en":"hamburger","ko":"햄버거","caseSensitive":false},{"en":"pizza","ko":"피자","caseSensitive":false},{"en":"salad","ko":"샐러드","caseSensitive":false},{"en":"sandwich","ko":"샌드위치","caseSensitive":false},{"en":"spaghetti","ko":"스파게티","caseSensitive":false},{"en":"steak","ko":"스테이크","caseSensitive":false},{"en":"beef","ko":"소고기","caseSensitive":false},{"en":"egg","ko":"달걀","caseSensitive":false},{"en":"soup","ko":"수프","caseSensitive":false},{"en":"meat","ko":"고기","caseSensitive":false},{"en":"noodles","ko":"국수","caseSensitive":false},{"en":"candy","ko":"사탕","caseSensitive":false}]},{"name":"Drink&Taste","words":[{"en":"water","ko":"물","caseSensitive":false},{"en":"milk","ko":"우유","caseSensitive":false},{"en":"juice","ko":"주스","caseSensitive":false},{"en":"lemonade","ko":"레모네이드","caseSensitive":false},{"en":"tea","ko":"차","caseSensitive":false},{"en":"coffee","ko":"커피","caseSensitive":false},{"en":"sweet","ko":"단","caseSensitive":false},{"en":"salty","ko":"짠","caseSensitive":false},{"en":"sour","ko":"신","caseSensitive":false},{"en":"spicy","ko":"매운","caseSensitive":false},{"en":"bitter","ko":"쓴","caseSensitive":false},{"en":"sugar","ko":"설탕","caseSensitive":false},{"en":"salt","ko":"소금","caseSensitive":false},{"en":"taste","ko":"맛","caseSensitive":false},{"en":"delicious","ko":"맛있는","caseSensitive":false}]}]},{"ko":"국가와 자연","en":"Country, Nature&Weather","subcategories":[{"name":"Country","words":[{"en":"Korea","ko":"한국","caseSensitive":true},{"en":"the U.S.","ko":"미국","caseSensitive":true},{"en":"the U.K.","ko":"영국","caseSensitive":true},{"en":"Japan","ko":"일본","caseSensitive":true},{"en":"China","ko":"중국","caseSensitive":true},{"en":"Vietnam","ko":"베트남","caseSensitive":true},{"en":"Thailand","ko":"태국","caseSensitive":true},{"en":"India","ko":"인도","caseSensitive":true},{"en":"Italy","ko":"이탈리아","caseSensitive":true},{"en":"France","ko":"프랑스","caseSensitive":true},{"en":"Spain","ko":"스페인","caseSensitive":true},{"en":"Germany","ko":"독일","caseSensitive":true},{"en":"Sweden","ko":"스웨덴","caseSensitive":true},{"en":"Canada","ko":"캐나다","caseSensitive":true},{"en":"Mexico","ko":"멕시코","caseSensitive":true},{"en":"Argentina","ko":"아르헨티나","caseSensitive":true},{"en":"Brazil","ko":"브라질","caseSensitive":true},{"en":"Australia","ko":"호주","caseSensitive":true}]},{"name":"Nature","words":[{"en":"earth","ko":"지구","caseSensitive":false},{"en":"flower","ko":"꽃","caseSensitive":false},{"en":"tree","ko":"나무","caseSensitive":false},{"en":"leaves","ko":"나뭇잎","caseSensitive":false},{"en":"forest","ko":"숲","caseSensitive":false},{"en":"mountain","ko":"산","caseSensitive":false},{"en":"river","ko":"강","caseSensitive":false},{"en":"sea","ko":"바다","caseSensitive":false},{"en":"beach","ko":"해변","caseSensitive":false},{"en":"lake","ko":"호수","caseSensitive":false},{"en":"grass","ko":"풀","caseSensitive":false},{"en":"sky","ko":"하늘","caseSensitive":false},{"en":"star","ko":"별","caseSensitive":false},{"en":"sun","ko":"해","caseSensitive":false},{"en":"moon","ko":"달","caseSensitive":false},{"en":"space","ko":"우주","caseSensitive":false},{"en":"air","ko":"공기","caseSensitive":false},{"en":"sand","ko":"모래","caseSensitive":false},{"en":"rose","ko":"장미","caseSensitive":false}]},{"name":"Weather","words":[{"en":"weather","ko":"날씨","caseSensitive":false},{"en":"cloud","ko":"구름","caseSensitive":false},{"en":"cloudy","ko":"흐린","caseSensitive":false},{"en":"sunny","ko":"맑은","caseSensitive":false},{"en":"raining","ko":"비 오는","caseSensitive":false},{"en":"snowing","ko":"눈 오는","caseSensitive":false},{"en":"windy","ko":"바람 부는","caseSensitive":false},{"en":"foggy","ko":"안개 낀","caseSensitive":false},{"en":"lightning","ko":"번개","caseSensitive":false},{"en":"storm","ko":"폭풍","caseSensitive":false},{"en":"snowman","ko":"눈사람","caseSensitive":false},{"en":"ice","ko":"얼음","caseSensitive":false},{"en":"snow","ko":"눈(날씨)","caseSensitive":false},{"en":"rain","ko":"비","caseSensitive":false},{"en":"wind","ko":"바람","caseSensitive":false},{"en":"hot","ko":"더운","caseSensitive":false},{"en":"cold","ko":"추운","caseSensitive":false},{"en":"cool","ko":"시원한","caseSensitive":false},{"en":"warm","ko":"따뜻한","caseSensitive":false},{"en":"dry","ko":"건조한","caseSensitive":false}]}]},{"ko":"장소·교통·방향","en":"Place, Transportation&Direction","subcategories":[{"name":"Place","words":[{"en":"bank","ko":"은행","caseSensitive":false},{"en":"bakery","ko":"빵집","caseSensitive":false},{"en":"bookstore","ko":"서점","caseSensitive":false},{"en":"market","ko":"시장","caseSensitive":false},{"en":"restaurant","ko":"식당","caseSensitive":false},{"en":"store","ko":"가게","caseSensitive":false},{"en":"hospital","ko":"병원","caseSensitive":false},{"en":"library","ko":"도서관","caseSensitive":false},{"en":"park","ko":"공원","caseSensitive":false},{"en":"school","ko":"학교","caseSensitive":false},{"en":"museum","ko":"박물관","caseSensitive":false},{"en":"airport","ko":"공항","caseSensitive":false},{"en":"church","ko":"교회","caseSensitive":false},{"en":"city hall","ko":"시청","caseSensitive":false},{"en":"police station","ko":"경찰서","caseSensitive":false},{"en":"fire station","ko":"소방서","caseSensitive":false},{"en":"zoo","ko":"동물원","caseSensitive":false},{"en":"living room","ko":"거실","caseSensitive":false},{"en":"bedroom","ko":"침실","caseSensitive":false},{"en":"bathroom","ko":"화장실","caseSensitive":false},{"en":"kitchen","ko":"부엌","caseSensitive":false},{"en":"garden","ko":"정원","caseSensitive":false},{"en":"classroom","ko":"교실","caseSensitive":false},{"en":"playground","ko":"운동장","caseSensitive":false},{"en":"farm","ko":"농장","caseSensitive":false}]},{"name":"Transportation","words":[{"en":"bike","ko":"자전거","caseSensitive":false},{"en":"bus","ko":"버스","caseSensitive":false},{"en":"car","ko":"자동차","caseSensitive":false},{"en":"taxi","ko":"택시","caseSensitive":false},{"en":"truck","ko":"트럭","caseSensitive":false},{"en":"train","ko":"기차","caseSensitive":false},{"en":"subway","ko":"지하철","caseSensitive":false},{"en":"airplane","ko":"비행기","caseSensitive":false},{"en":"flight","ko":"항공편","caseSensitive":false},{"en":"police car","ko":"경찰차","caseSensitive":false},{"en":"ship","ko":"배(탈것)","caseSensitive":false},{"en":"boat","ko":"보트","caseSensitive":false},{"en":"fire truck","ko":"소방차","caseSensitive":false}]},{"name":"Direction&Position","words":[{"en":"down","ko":"아래로","caseSensitive":false},{"en":"left","ko":"왼쪽","caseSensitive":false},{"en":"right","ko":"오른쪽","caseSensitive":false},{"en":"straight","ko":"곧게","caseSensitive":false},{"en":"front","ko":"앞","caseSensitive":false},{"en":"back","ko":"뒤","caseSensitive":false},{"en":"behind","ko":"뒤에","caseSensitive":false},{"en":"under","ko":"아래에","caseSensitive":false},{"en":"over","ko":"위로","caseSensitive":false},{"en":"top","ko":"맨 위","caseSensitive":false},{"en":"bottom","ko":"맨 아래","caseSensitive":false},{"en":"middle","ko":"가운데","caseSensitive":false},{"en":"near","ko":"가까이","caseSensitive":false},{"en":"next to","ko":"옆에","caseSensitive":false},{"en":"between","ko":"사이에","caseSensitive":false},{"en":"inside","ko":"안쪽","caseSensitive":false},{"en":"outside","ko":"바깥쪽","caseSensitive":false},{"en":"here","ko":"여기","caseSensitive":false},{"en":"there","ko":"저기","caseSensitive":false},{"en":"around","ko":"주위에","caseSensitive":false},{"en":"corner","ko":"모퉁이","caseSensitive":false}]}]},{"ko":"물건","en":"Things","subcategories":[{"name":"School Supplies","words":[{"en":"textbook","ko":"교과서","caseSensitive":false},{"en":"book","ko":"책","caseSensitive":false},{"en":"notebook","ko":"공책","caseSensitive":false},{"en":"pencil","ko":"연필","caseSensitive":false},{"en":"pencil case","ko":"필통","caseSensitive":false},{"en":"eraser","ko":"지우개","caseSensitive":false},{"en":"ruler","ko":"자","caseSensitive":false},{"en":"scissors","ko":"가위","caseSensitive":false},{"en":"glue stick","ko":"딱풀","caseSensitive":false},{"en":"crayon","ko":"크레용","caseSensitive":false},{"en":"board","ko":"칠판","caseSensitive":false},{"en":"map","ko":"지도","caseSensitive":false},{"en":"paper","ko":"종이","caseSensitive":false},{"en":"computer","ko":"컴퓨터","caseSensitive":false},{"en":"bag","ko":"가방","caseSensitive":false},{"en":"backpack","ko":"책가방","caseSensitive":false}]},{"name":"Household","words":[{"en":"door","ko":"문","caseSensitive":false},{"en":"window","ko":"창문","caseSensitive":false},{"en":"bed","ko":"침대","caseSensitive":false},{"en":"chair","ko":"의자","caseSensitive":false},{"en":"desk","ko":"책상","caseSensitive":false},{"en":"table","ko":"식탁","caseSensitive":false},{"en":"sofa","ko":"소파","caseSensitive":false},{"en":"clock","ko":"시계","caseSensitive":false},{"en":"lamp","ko":"램프","caseSensitive":false},{"en":"fan","ko":"선풍기","caseSensitive":false},{"en":"mirror","ko":"거울","caseSensitive":false},{"en":"sink","ko":"싱크대","caseSensitive":false},{"en":"stair","ko":"계단","caseSensitive":false},{"en":"towel","ko":"수건","caseSensitive":false},{"en":"toothbrush","ko":"칫솔","caseSensitive":false},{"en":"cup","ko":"컵","caseSensitive":false},{"en":"plate","ko":"접시","caseSensitive":false},{"en":"spoon","ko":"숟가락","caseSensitive":false},{"en":"fork","ko":"포크","caseSensitive":false},{"en":"box","ko":"상자","caseSensitive":false},{"en":"key","ko":"열쇠","caseSensitive":false},{"en":"phone","ko":"전화기","caseSensitive":false},{"en":"doll","ko":"인형","caseSensitive":false},{"en":"robot","ko":"로봇","caseSensitive":false},{"en":"umbrella","ko":"우산","caseSensitive":false},{"en":"present","ko":"선물","caseSensitive":false},{"en":"guitar","ko":"기타","caseSensitive":false},{"en":"basket","ko":"바구니","caseSensitive":false}]},{"name":"Clothing","words":[{"en":"cap","ko":"야구모자","caseSensitive":false},{"en":"hat","ko":"모자","caseSensitive":false},{"en":"coat","ko":"코트","caseSensitive":false},{"en":"jacket","ko":"재킷","caseSensitive":false},{"en":"shirt","ko":"셔츠","caseSensitive":false},{"en":"T-shirt","ko":"티셔츠","caseSensitive":true},{"en":"sweater","ko":"스웨터","caseSensitive":false},{"en":"dress","ko":"원피스","caseSensitive":false},{"en":"skirt","ko":"치마","caseSensitive":false},{"en":"pants","ko":"바지","caseSensitive":false},{"en":"hairpin","ko":"머리핀","caseSensitive":false},{"en":"socks","ko":"양말","caseSensitive":false},{"en":"shoes","ko":"신발","caseSensitive":false},{"en":"sunglasses","ko":"선글라스","caseSensitive":false},{"en":"gloves","ko":"장갑","caseSensitive":false},{"en":"scarf","ko":"목도리","caseSensitive":false},{"en":"belt","ko":"벨트","caseSensitive":false},{"en":"ring","ko":"반지","caseSensitive":false},{"en":"glasses","ko":"안경","caseSensitive":false}]}]},{"ko":"동작","en":"Action","subcategories":[{"name":"Daily Action","words":[{"en":"get up","ko":"일어나다","caseSensitive":false},{"en":"wash","ko":"씻다","caseSensitive":false},{"en":"brush","ko":"닦다","caseSensitive":false},{"en":"eat","ko":"먹다","caseSensitive":false},{"en":"drink","ko":"마시다","caseSensitive":false},{"en":"sleep","ko":"자다","caseSensitive":false},{"en":"open","ko":"열다","caseSensitive":false},{"en":"close","ko":"닫다","caseSensitive":false},{"en":"sit","ko":"앉다","caseSensitive":false},{"en":"stand","ko":"서다","caseSensitive":false},{"en":"read","ko":"읽다","caseSensitive":false},{"en":"write","ko":"쓰다","caseSensitive":false},{"en":"study","ko":"공부하다","caseSensitive":false},{"en":"clean","ko":"청소하다","caseSensitive":false},{"en":"make","ko":"만들다","caseSensitive":false},{"en":"use","ko":"사용하다","caseSensitive":false},{"en":"do","ko":"하다","caseSensitive":false},{"en":"take","ko":"가져가다","caseSensitive":false},{"en":"buy","ko":"사다","caseSensitive":false},{"en":"help","ko":"돕다","caseSensitive":false},{"en":"watch","ko":"지켜보다","caseSensitive":false}]},{"name":"Move&Play","words":[{"en":"go","ko":"가다","caseSensitive":false},{"en":"come","ko":"오다","caseSensitive":false},{"en":"run","ko":"달리다","caseSensitive":false},{"en":"walk","ko":"걷다","caseSensitive":false},{"en":"jump","ko":"뛰다","caseSensitive":false},{"en":"fly","ko":"날다","caseSensitive":false},{"en":"ride","ko":"타다","caseSensitive":false},{"en":"play","ko":"놀다","caseSensitive":false},{"en":"dance","ko":"춤추다","caseSensitive":false},{"en":"move","ko":"움직이다","caseSensitive":false},{"en":"enter","ko":"들어가다","caseSensitive":false},{"en":"catch","ko":"잡다","caseSensitive":false},{"en":"kick","ko":"차다","caseSensitive":false},{"en":"throw","ko":"던지다","caseSensitive":false},{"en":"climb","ko":"오르다","caseSensitive":false},{"en":"push","ko":"밀다","caseSensitive":false},{"en":"pull","ko":"당기다","caseSensitive":false},{"en":"turn","ko":"돌다","caseSensitive":false},{"en":"stop","ko":"멈추다","caseSensitive":false},{"en":"exercise","ko":"운동하다","caseSensitive":false},{"en":"pick","ko":"고르다","caseSensitive":false},{"en":"touch","ko":"만지다","caseSensitive":false},{"en":"grow","ko":"자라다","caseSensitive":false}]},{"name":"Talk&Feel","words":[{"en":"talk","ko":"이야기하다","caseSensitive":false},{"en":"say","ko":"말하다","caseSensitive":false},{"en":"tell","ko":"알려주다","caseSensitive":false},{"en":"ask","ko":"묻다","caseSensitive":false},{"en":"answer","ko":"대답하다","caseSensitive":false},{"en":"call","ko":"부르다","caseSensitive":false},{"en":"listen","ko":"듣다","caseSensitive":false},{"en":"sing","ko":"노래하다","caseSensitive":false},{"en":"meet","ko":"만나다","caseSensitive":false},{"en":"visit","ko":"방문하다","caseSensitive":false},{"en":"give","ko":"주다","caseSensitive":false},{"en":"thank","ko":"고마워하다","caseSensitive":false},{"en":"welcome","ko":"환영하다","caseSensitive":false},{"en":"like","ko":"좋아하다","caseSensitive":false},{"en":"want","ko":"원하다","caseSensitive":false},{"en":"know","ko":"알다","caseSensitive":false},{"en":"think","ko":"생각하다","caseSensitive":false},{"en":"love","ko":"사랑하다","caseSensitive":false},{"en":"see","ko":"보이다","caseSensitive":false},{"en":"look","ko":"바라보다","caseSensitive":false},{"en":"smile","ko":"미소짓다","caseSensitive":false},{"en":"cry","ko":"울다","caseSensitive":false},{"en":"laugh","ko":"소리내어 웃다","caseSensitive":false}]}]},{"ko":"특징과 감정","en":"Character&Feeling","subcategories":[{"name":"Look","words":[{"en":"big","ko":"큰","caseSensitive":false},{"en":"small","ko":"작은","caseSensitive":false},{"en":"large","ko":"커다란","caseSensitive":false},{"en":"tall","ko":"키가 큰","caseSensitive":false},{"en":"short","ko":"짧은·키가 작은","caseSensitive":false},{"en":"long","ko":"긴","caseSensitive":false},{"en":"slim","ko":"날씬한","caseSensitive":false},{"en":"fat","ko":"뚱뚱한","caseSensitive":false},{"en":"thin","ko":"얇은","caseSensitive":false},{"en":"heavy","ko":"무거운","caseSensitive":false},{"en":"light","ko":"가벼운","caseSensitive":false},{"en":"strong","ko":"힘이 센","caseSensitive":false},{"en":"weak","ko":"약한","caseSensitive":false},{"en":"straight","ko":"곧은","caseSensitive":false},{"en":"curly","ko":"곱슬한","caseSensitive":false},{"en":"pretty","ko":"예쁜","caseSensitive":false},{"en":"cute","ko":"귀여운","caseSensitive":false},{"en":"beautiful","ko":"아름다운","caseSensitive":false},{"en":"young","ko":"어린","caseSensitive":false},{"en":"old","ko":"나이가 많은","caseSensitive":false}]},{"name":"Character","words":[{"en":"good","ko":"착한","caseSensitive":false},{"en":"bad","ko":"나쁜","caseSensitive":false},{"en":"kind","ko":"친절한","caseSensitive":false},{"en":"nice","ko":"좋은","caseSensitive":false},{"en":"brave","ko":"용감한","caseSensitive":false},{"en":"funny","ko":"재미있는","caseSensitive":false},{"en":"smart","ko":"똑똑한","caseSensitive":false},{"en":"quiet","ko":"조용한","caseSensitive":false},{"en":"honest","ko":"정직한","caseSensitive":false},{"en":"lazy","ko":"게으른","caseSensitive":false}]},{"name":"Feeling","words":[{"en":"happy","ko":"행복한","caseSensitive":false},{"en":"sad","ko":"슬픈","caseSensitive":false},{"en":"angry","ko":"화난","caseSensitive":false},{"en":"glad","ko":"기쁜","caseSensitive":false},{"en":"excited","ko":"신난","caseSensitive":false},{"en":"afraid","ko":"두려운","caseSensitive":false},{"en":"tired","ko":"피곤한","caseSensitive":false},{"en":"sleepy","ko":"졸린","caseSensitive":false},{"en":"hungry","ko":"배고픈","caseSensitive":false},{"en":"thirsty","ko":"목마른","caseSensitive":false},{"en":"sick","ko":"아픈","caseSensitive":false},{"en":"busy","ko":"바쁜","caseSensitive":false},{"en":"surprised","ko":"놀란","caseSensitive":false}]}]}];
 const CATEGORY_ICONS = ["🔢","🐾","🎨","🍎","🌦️","🚗","🎒","🏃","😊"];
 const DIFFICULTIES = {
-  easy:{label:"쉬움",exposure:3000},
-  normal:{label:"보통",exposure:2000},
-  hard:{label:"어려움",exposure:1000}
+  easy:{label:"쉬움",exposure:7000},
+  normal:{label:"보통",exposure:5000},
+  hard:{label:"어려움",exposure:3000}
 };
 const BASE_TIME = 60;
 const TOTAL_ROUNDS = 10;
@@ -829,7 +935,6 @@ function renderCategories(){
 }
 function renderSubcategories(){
   const cat=WORD_BANK[state.categoryIndex];
-  $("#subHeading").textContent=cat.ko;
   const grid=$("#subGrid");grid.innerHTML="";
   cat.subcategories.forEach((sub,i)=>{
     const b=document.createElement("button");
@@ -851,9 +956,12 @@ function renderSubcategories(){
     grid.appendChild(b);
   });
   const count=selectedPool().length;
+  const totalCount=cat.subcategories.reduce((n,s)=>n+s.words.length,0);
+  const allSelected=state.selectedSubs.size===cat.subcategories.length;
   $("#selectionSummary").textContent=`소분류 ${state.selectedSubs.size}개 · 선택된 단어 ${count}개`;
   $("#toSettingsBtn").disabled=count<10;
-  $("#selectAllBtn").textContent=state.selectedSubs.size===cat.subcategories.length?"전체 해제":"전체 선택";
+  $("#selectAllBtn").textContent=`${allSelected?"전체 단어 선택 해제하기":"전체 단어 선택하기"} (${totalCount})`;
+  $("#selectAllBtn").classList.toggle("selected",allSelected);
 }
 function updateSettingsSummary(){
   const pool=selectedPool();
@@ -870,6 +978,11 @@ function goHome(){
 function openHelp(){
   state.resumeAfterHelp=state.gameActive && !state.paused;
   if(state.resumeAfterHelp)pauseGame();
+  const onIntro=state.screen==="intro";
+  $("#helpActions").innerHTML=onIntro?'<button id="helpStartBtn" class="primary-btn">GAME START ✨</button>':"";
+  if(onIntro)$("#helpStartBtn").addEventListener("click",()=>{
+    closeHelp(false);ensureBgm();renderCategories();showScreen("category");
+  });
   $("#helpModal").classList.add("open");
 }
 function closeHelp(shouldResume=true){
@@ -1137,12 +1250,12 @@ function positionWordPreview(card){
   const margin=12;
   const tw=tooltip.offsetWidth||390;
   const th=tooltip.offsetHeight||320;
-  let left=r.right+12;
-  let top=r.top;
-  if(left+tw>window.innerWidth-margin)left=r.left-tw-12;
-  if(left<margin)left=Math.min(Math.max(margin,r.left+(r.width-tw)/2),window.innerWidth-tw-margin);
-  if(top+th>window.innerHeight-margin)top=window.innerHeight-th-margin;
+  let left=r.left+(r.width-tw)/2;
+  left=Math.min(Math.max(margin,left),window.innerWidth-tw-margin);
+  let top=r.bottom+10;
+  if(top+th>window.innerHeight-margin)top=r.top-th-10;
   if(top<margin)top=margin;
+  if(top+th>window.innerHeight-margin)top=window.innerHeight-th-margin;
   tooltip.style.left=`${Math.round(left)}px`;
   tooltip.style.top=`${Math.round(top)}px`;
 }
