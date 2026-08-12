@@ -552,7 +552,6 @@ html,body,button,input,textarea,select,option,table,th,td,h1,h2,h3,h4,p,span,div
       <button id="coverHelp" class="cover-hotspot" aria-label="How to Play"></button>
       <button id="coverStart" class="cover-hotspot" aria-label="게임 시작"></button>
       <div class="cover-audio">
-        <button id="introFxBtn" class="mini-control" aria-label="효과음 켜기 또는 끄기">🔊</button>
         <button id="introBgmBtn" class="mini-control" aria-label="배경음악 켜기 또는 끄기">🎵</button>
       </div>
     </div>
@@ -884,7 +883,6 @@ function syncAudioButtons(){
   $("#introBgmBtn").textContent=state.bgmOn?"🎵":"🚫";
   $("#gameBgmBtn").textContent=state.bgmOn?"🎵 ON":"🎵 OFF";
   $("#gameBgmBtn").dataset.mobileIcon=state.bgmOn?"🎵":"🚫";
-  $("#introFxBtn").textContent=state.sfxOn?"🔊":"🔇";
   $("#gameFxBtn").textContent=state.sfxOn?"🔊 효과음":"🔇 효과음";
   $("#gameFxBtn").dataset.mobileIcon=state.sfxOn?"🔊":"🔇";
 }
@@ -1299,7 +1297,6 @@ window.addEventListener("scroll",hideWordPreview,true);
 $("#coverStart").addEventListener("click",()=>{ensureBgm();renderCategories();showScreen("category")});
 $("#coverHelp").addEventListener("click",()=>{ensureBgm();openHelp()});
 $("#introBgmBtn").addEventListener("click",toggleBgm);
-$("#introFxBtn").addEventListener("click",toggleSfx);
 $$(".home-btn").forEach(b=>b.addEventListener("click",goHome));
 $$(".help-btn").forEach(b=>b.addEventListener("click",openHelp));
 $$(".bgm-toggle").forEach(b=>b.addEventListener("click",toggleBgm));
