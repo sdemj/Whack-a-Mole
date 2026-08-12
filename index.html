@@ -11,7 +11,7 @@
 <style>
 :root{
   --ink:#4d4055;
-  --muted:#74677d;
+  --muted:ㅁ#74677d;
   --lav:#d9c8f1;
   --lav-deep:#9d7bc6;
   --pink:#f3b6ca;
@@ -867,8 +867,8 @@ function stopBgm(){
   a.pause();
 }
 function toggleBgm(){
-  state.bgmOn=!state.bgmOn;
-  if(state.bgmOn)ensureBgm();else stopBgm();
+  const a=$("#bgmAudio");
+  if(a&&a.paused){state.bgmOn=true;ensureBgm()}else{state.bgmOn=false;stopBgm()}
   syncAudioButtons();
 }
 document.addEventListener("visibilitychange",()=>{
