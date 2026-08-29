@@ -1,0 +1,44 @@
+[
+  {
+    "level": "OK",
+    "title": "참조하는 파일이 모두 존재합니다",
+    "detail": "검사한 참조 185건",
+    "items": []
+  },
+  {
+    "level": "OK",
+    "title": "첫 로딩 용량 1547KB",
+    "detail": "HTML 316KB + 즉시 내려받기 1231KB",
+    "items": []
+  },
+  {
+    "level": "WARN",
+    "title": "외부 서버에서 받아오는 것이 있습니다 (1곳)",
+    "detail": "외부 접속이 막힌 학교망에서는 화면이 깨질 수 있습니다. 화면 전환이나 글꼴이 여기에 의존하면 특히 위험합니다.",
+    "items": [
+      "https://cdnjs.cloudflare.com"
+    ]
+  },
+  {
+    "level": "OK",
+    "title": "타이머 정리",
+    "detail": "setTimeout 24 / clearTimeout 12 · setInterval 1 / clearInterval 2",
+    "items": []
+  },
+  {
+    "level": "OK",
+    "title": "키보드 포커스 표시 있음",
+    "detail": "",
+    "items": []
+  },
+  {
+    "level": "WARN",
+    "title": "파일 이름을 코드에서 조합합니다",
+    "detail": "데이터에 적힌 글자로 파일명을 만들고 있습니다. 데이터와 실제 파일명의 대소문자·띄어쓰기가 다르면 윈도우·맥에서는 멀쩡히 보이지만 리눅스 서버(GitHub Pages 등)에서는 그림이 깨집니다. 내 컴퓨터에서는 절대 재현되지 않으니, 실제 서버에 올린 뒤 해당 화면을 꼭 확인해 주세요.",
+    "items": [
+      "`audio_260824/${folder}/${base}.mp3`",
+      "",
+      "대문자가 들어간 파일 16개 — 조합 결과와 어긋나기 쉽습니다: Canada.mp3, China.mp3, France.mp3, Germany.mp3, India.mp3, Italy.mp3 …"
+    ]
+  }
+]
