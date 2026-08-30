@@ -7,7 +7,12 @@
  *  4) Console 에  점검('2일차_1회차_이름')  처럼 라벨을 넣어서 치고 Enter
  *     → 결과가 콘솔에 뜨는 동시에 그 이름으로 json 파일이 자동 다운로드됩니다 (캡처 불필요)
  *
- *  게임 코드를 고칠 필요 없습니다. 새로고침하면 원래대로 돌아갑니다.
+ *  게임 코드를 고칠 필요는 없습니다 — 새로고침하면 setTimeout 등을 가로챈 감시 코드
+ *  자체는 사라지지만(그래서 3번을 다시 해야 합니다), 그 전까지 기록된 오류·의심스러운
+ *  타이머·새로고침 횟수 같은 "증거"는 sessionStorage에 저장되어 새로고침 후에도
+ *  이어집니다. 즉 체크리스트 중간에 새로고침이 여러 번 끼어도, 맨 마지막에 한 번
+ *  점검()을 실행하면 그 전 구간에서 있었던 일까지 전부 포함된 json이 나옵니다.
+ *  (같은 탭을 닫거나 새 탭에서 열면 완전히 새 세션으로 취급되어 초기화됩니다.)
  *
  *  외부 라이브러리를 쓰지 않습니다. 자유롭게 사용·수정·재배포하셔도 됩니다.
  *  판단 기준(개수 임계값 등)은 점검() 함수 안에서 조정하시면 됩니다.
@@ -15,9 +20,33 @@
 (function () {
   if (window.__gameProbe) { console.log('%c이미 켜져 있습니다. 게임을 해보신 뒤 점검() 을 입력하세요.', 'color:#888'); return; }
 
+  /* ── 세션 전체에 걸쳐 남는 기록 (새로고침해도 유지, 탭을 닫으면 초기화) ── */
+  var STORE_KEY = '__gameProbeSession';
+  var storageOK = true;
+  function loadStore() {
+    try {
+      var raw = sessionStorage.getItem(STORE_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) { storageOK = false; return null; }
+  }
+  function saveStore() {
+    if (!storageOK) return;
+    try { sessionStorage.setItem(STORE_KEY, JSON.stringify(store)); }
+    catch (e) { storageOK = false; }
+  }
+
+  var store = loadStore();
+  if (!store) {
+    store = { startedAt: Date.now(), reloadCount: 0, errors: [], speaks: [], crossedTimers: [], unloadFindings: [] };
+  } else {
+    store.reloadCount = (store.reloadCount || 0) + 1;
+  }
+  saveStore();
+
   var P = window.__gameProbe = {
-    timers: [], listeners: [], speaks: [], errors: [],
-    startedAt: Date.now(),
+    timers: [], listeners: [],
+    speaks: store.speaks, errors: store.errors, /* 세션 전체와 공유되는 배열(같은 참조) */
+    loadStartedAt: Date.now(),
     startNodes: document.getElementsByTagName('*').length,
     bodyChildrenAtStart: document.body.children.length,
   };
@@ -50,13 +79,24 @@
   var _sT = window.setTimeout, _cT = window.clearTimeout;
   var _sI = window.setInterval, _cI = window.clearInterval;
 
+  function noteCrossed(rec) {
+    /* 예약할 때의 화면과 실행될 때의 화면이 다르면, 새로고침으로 사라지기 전에
+       바로 세션 기록에 남겨둔다 (나중에 필터링하는 방식은 새로고침을 못 버틴다) */
+    store.crossedTimers.push({
+      종류: rec.kind, '예약(ms)': rec.delay, '예약한 화면': rec.at, '실행된 화면': rec.firedAt,
+      위치: rec.where, reloadIndex: store.reloadCount
+    });
+    saveStore();
+  }
+
   window.setTimeout = function (fn, delay) {
     var rec = { kind: '한번', delay: delay || 0, at: screenName(), where: shortStack(), fired: false, cleared: false, firedAt: null };
     var args = Array.prototype.slice.call(arguments, 2);
     var id = _sT.call(window, function () {
       rec.fired = true; rec.firedAt = screenName();
+      if (rec.at !== rec.firedAt) noteCrossed(rec);
       try { typeof fn === 'function' ? fn.apply(null, args) : eval(fn); }
-      catch (e) { P.errors.push({ msg: String(e && e.message), where: rec.where }); throw e; }
+      catch (e) { P.errors.push({ msg: String(e && e.message), where: rec.where, reloadIndex: store.reloadCount }); saveStore(); throw e; }
     }, delay);
     rec.id = id; P.timers.push(rec); return id;
   };
@@ -68,8 +108,9 @@
     var rec = { kind: '반복', delay: delay || 0, at: screenName(), where: shortStack(), fired: false, cleared: false, count: 0, firedAt: null };
     var id = _sI.call(window, function () {
       rec.fired = true; rec.count++; rec.firedAt = screenName();
+      if (rec.at !== rec.firedAt) noteCrossed(rec);
       try { typeof fn === 'function' ? fn() : eval(fn); }
-      catch (e) { P.errors.push({ msg: String(e && e.message), where: rec.where }); throw e; }
+      catch (e) { P.errors.push({ msg: String(e && e.message), where: rec.where, reloadIndex: store.reloadCount }); saveStore(); throw e; }
     }, delay);
     rec.id = id; P.timers.push(rec); return id;
   };
@@ -78,7 +119,7 @@
     return _cI.call(window, id);
   };
 
-  /* ── 이벤트 리스너 감시 ── */
+  /* ── 이벤트 리스너 감시 (새로고침 한 판 안에서만 의미 있는 값이라 세션 기록엔 안 넣음) ── */
   var _add = EventTarget.prototype.addEventListener;
   var _rem = EventTarget.prototype.removeEventListener;
   EventTarget.prototype.addEventListener = function (type, fn, opt) {
@@ -104,14 +145,77 @@
   if (window.speechSynthesis && window.speechSynthesis.speak) {
     var _spk = window.speechSynthesis.speak.bind(window.speechSynthesis);
     window.speechSynthesis.speak = function (u) {
-      P.speaks.push({ text: (u && u.text || '').slice(0, 40), lang: u && u.lang, voice: u && u.voice ? u.voice.name : '(지정 안 함)', at: screenName() });
+      P.speaks.push({ text: (u && u.text || '').slice(0, 40), lang: u && u.lang, voice: u && u.voice ? u.voice.name : '(지정 안 함)', at: screenName(), reloadIndex: store.reloadCount });
+      saveStore();
       return _spk(u);
     };
   }
 
   /* ── 오류 감시 ── */
-  window.addEventListener('error', function (e) { P.errors.push({ msg: e.message, where: (e.filename || '') + ':' + e.lineno }); });
-  window.addEventListener('unhandledrejection', function (e) { P.errors.push({ msg: '처리 안 된 오류: ' + e.reason, where: '' }); });
+  window.addEventListener('error', function (e) { P.errors.push({ msg: e.message, where: (e.filename || '') + ':' + e.lineno, reloadIndex: store.reloadCount }); saveStore(); });
+  window.addEventListener('unhandledrejection', function (e) { P.errors.push({ msg: '처리 안 된 오류: ' + e.reason, where: '', reloadIndex: store.reloadCount }); saveStore(); });
+
+  /* ── 화면(DOM) 관련 검사 — 점검() 호출 시점과, 새로고침으로 사라지기 직전 시점 둘 다에 쓴다 ── */
+  function computeLiveFindings() {
+    var out = {};
+
+    var liveIntervals = P.timers.filter(function (t) { return t.kind === '반복' && !t.cleared; });
+    if (liveIntervals.length > 1) {
+      out.liveIntervals = liveIntervals.map(function (t) { return { '주기(ms)': t.delay, '시작한 화면': t.at, 실행횟수: t.count, 위치: t.where }; });
+    }
+
+    var alive = P.listeners.filter(function (l) { return l.alive; });
+    var byKey = {};
+    alive.forEach(function (l) { var k = l.target + ' / ' + l.type; byKey[k] = (byKey[k] || 0) + 1; });
+    var heavy = Object.keys(byKey).filter(function (k) { return byKey[k] >= 20; }).sort(function (a, b) { return byKey[b] - byKey[a]; });
+    if (heavy.length) {
+      out.heavyListeners = heavy.map(function (k) { return { 대상: k, 개수: byKey[k] }; });
+    }
+
+    var now = document.getElementsByTagName('*').length;
+    var grow = now - P.startNodes;
+    if (grow > 400) {
+      out.nodeGrowth = { before: P.startNodes, after: now, grow: grow };
+    }
+
+    var leftovers = [];
+    for (var i = 0; i < document.body.children.length; i++) {
+      var el = document.body.children[i];
+      if (el.tagName === 'SCRIPT' || el.tagName === 'STYLE') continue;
+      var cs = getComputedStyle(el);
+      if ((cs.position === 'fixed' || cs.position === 'absolute') && cs.display !== 'none' && el.getBoundingClientRect().width > 0) {
+        leftovers.push((el.tagName.toLowerCase()) + (el.id ? '#' + el.id : '') + (el.className ? '.' + String(el.className).split(' ')[0] : ''));
+      }
+    }
+    var dupLeft = {};
+    leftovers.forEach(function (x) { dupLeft[x] = (dupLeft[x] || 0) + 1; });
+    var stacked = Object.keys(dupLeft).filter(function (k) { return dupLeft[k] > 1; });
+    if (stacked.length) {
+      out.domLeftovers = stacked.map(function (k) { return { 요소: k, 개수: dupLeft[k] }; });
+    }
+
+    return out;
+  }
+
+  /* 새로고침·닫기로 이 구간이 끝나기 직전, 그 순간의 스냅샷을 세션 기록에 남긴다.
+     (반복 타이머·리스너 누적 같은 건 새로고침되면 브라우저가 알아서 정리해버려서,
+      나중에 점검()을 불러도 이 구간에 있었던 문제는 더 이상 보이지 않기 때문) */
+  window.addEventListener('beforeunload', function () {
+    var f = computeLiveFindings();
+    if (f.liveIntervals || f.heavyListeners || f.nodeGrowth || f.domLeftovers) {
+      store.unloadFindings.push({
+        reloadIndex: store.reloadCount,
+        endedAt: Date.now(),
+        minutesInSegment: Number(((Date.now() - P.loadStartedAt) / 60000).toFixed(1)),
+        screenAtEnd: screenName(),
+        liveIntervals: f.liveIntervals || null,
+        heavyListeners: f.heavyListeners || null,
+        nodeGrowth: f.nodeGrowth || null,
+        domLeftovers: f.domLeftovers || null,
+      });
+      saveStore();
+    }
+  });
 
   /* ── 결과를 파일로 저장 (캡처 대신) ──
    *  점검('2일차_1회차_이름') 처럼 라벨을 넣으면 그 이름으로 json 파일이 저장됩니다.
@@ -132,86 +236,66 @@
   window.점검 = window.check = function (label) {
     var line = '━'.repeat(56);
     console.log('%c\n' + line + '\n  게임 자가점검 결과\n' + line, 'color:#6B4A7E;font-weight:bold');
-    var mins = ((Date.now() - P.startedAt) / 60000).toFixed(1);
-    console.log('플레이 시간 ' + mins + '분 · 지금 화면: ' + screenName());
+    var sessionMins = ((Date.now() - store.startedAt) / 60000).toFixed(1);
+    console.log('세션 전체 플레이 시간 ' + sessionMins + '분 (새로고침 ' + store.reloadCount + '회 포함) · 지금 화면: ' + screenName());
+    if (!storageOK) {
+      console.log('%c(주의: 이 브라우저/모드에서는 세션 기록 저장이 안 돼, 새로고침 이전 구간은 이번 결과에 빠져 있을 수 있습니다.)', 'color:#b8860b');
+    }
 
     var problems = 0;
-    var report = { playMinutes: Number(mins), screenNow: screenName(), findings: [] };
+    var report = {
+      sessionMinutes: Number(sessionMins), reloadCount: store.reloadCount,
+      screenNow: screenName(), findings: [], previousSegments: store.unloadFindings
+    };
 
-    /* 1. 화면이 바뀐 뒤에 실행된 예약 */
-    var crossed = P.timers.filter(function (t) { return t.fired && t.firedAt && t.at !== t.firedAt; });
+    /* 1. 화면이 바뀐 뒤에 실행된 예약 (세션 전체 누적 — 새로고침 전 구간도 포함) */
+    var crossed = store.crossedTimers;
     if (crossed.length) {
       problems++;
-      console.log('%c\n[문제] 화면을 옮긴 뒤에도 예약된 작업이 실행됐습니다 (' + crossed.length + '건)', 'color:#c0392b;font-weight:bold');
+      console.log('%c\n[문제] 화면을 옮긴 뒤에도 예약된 작업이 실행됐습니다 (' + crossed.length + '건, 세션 전체)', 'color:#c0392b;font-weight:bold');
       console.log('       나간 화면에서 소리가 나거나, 다음 게임의 진행이 저절로 넘어갈 수 있습니다.');
-      var crossedRows = crossed.slice(0, 10).map(function (t) {
-        return { 종류: t.kind, '예약(ms)': t.delay, '예약한 화면': t.at, '실행된 화면': t.firedAt, 위치: t.where };
-      });
-      console.table(crossedRows);
-      report.findings.push({ level: 'ERR', title: '화면을 옮긴 뒤에도 예약된 작업이 실행됨', count: crossed.length, items: crossedRows });
+      console.table(crossed.slice(0, 10));
+      report.findings.push({ level: 'ERR', title: '화면을 옮긴 뒤에도 예약된 작업이 실행됨', count: crossed.length, items: crossed });
     }
 
-    /* 2. 취소되지 않고 남아 있는 반복 타이머 */
-    var liveIntervals = P.timers.filter(function (t) { return t.kind === '반복' && !t.cleared; });
-    if (liveIntervals.length > 1) {
+    /* 2~5. 지금 이 구간(마지막 새로고침 이후)의 실시간 상태 */
+    var live = computeLiveFindings();
+
+    if (live.liveIntervals) {
       problems++;
-      console.log('%c\n[문제] 취소되지 않은 반복 타이머가 ' + liveIntervals.length + '개 살아 있습니다', 'color:#c0392b;font-weight:bold');
+      console.log('%c\n[문제] 취소되지 않은 반복 타이머가 ' + live.liveIntervals.length + '개 살아 있습니다', 'color:#c0392b;font-weight:bold');
       console.log('       게임을 다시 시작할 때마다 쌓이면 시간이 두 배로 빨리 흐르거나 느려집니다.');
-      var liveIntervalRows = liveIntervals.slice(0, 10).map(function (t) { return { '주기(ms)': t.delay, '시작한 화면': t.at, 실행횟수: t.count, 위치: t.where }; });
-      console.table(liveIntervalRows);
-      report.findings.push({ level: 'ERR', title: '취소되지 않은 반복 타이머가 살아 있음', count: liveIntervals.length, items: liveIntervalRows });
+      console.table(live.liveIntervals.slice(0, 10));
+      report.findings.push({ level: 'ERR', title: '취소되지 않은 반복 타이머가 살아 있음', count: live.liveIntervals.length, items: live.liveIntervals });
     }
 
-    /* 3. 리스너 누적 */
-    var alive = P.listeners.filter(function (l) { return l.alive; });
-    var byKey = {};
-    alive.forEach(function (l) { var k = l.target + ' / ' + l.type; byKey[k] = (byKey[k] || 0) + 1; });
-    var heavy = Object.keys(byKey).filter(function (k) { return byKey[k] >= 20; }).sort(function (a, b) { return byKey[b] - byKey[a]; });
-    if (heavy.length) {
+    if (live.heavyListeners) {
       problems++;
       console.log('%c\n[확인] 같은 곳에 이벤트가 계속 쌓이고 있습니다', 'color:#b8860b;font-weight:bold');
       console.log('       화면을 다시 그릴 때 이전 것을 정리하지 않으면 오래 쓸수록 느려집니다.');
-      var heavyRows = heavy.slice(0, 8).map(function (k) { return { 대상: k, 개수: byKey[k] }; });
-      console.table(heavyRows);
-      report.findings.push({ level: 'WARN', title: '같은 곳에 이벤트가 계속 쌓이고 있음', count: heavy.length, items: heavyRows });
+      console.table(live.heavyListeners.slice(0, 8));
+      report.findings.push({ level: 'WARN', title: '같은 곳에 이벤트가 계속 쌓이고 있음', count: live.heavyListeners.length, items: live.heavyListeners });
     }
 
-    /* 4. 화면 요소 증가 */
-    var now = document.getElementsByTagName('*').length;
-    var grow = now - P.startNodes;
-    if (grow > 400) {
+    if (live.nodeGrowth) {
       problems++;
-      console.log('%c\n[확인] 화면 요소가 ' + P.startNodes + '개 → ' + now + '개로 늘었습니다 (+' + grow + ')', 'color:#b8860b;font-weight:bold');
+      console.log('%c\n[확인] 화면 요소가 ' + live.nodeGrowth.before + '개 → ' + live.nodeGrowth.after + '개로 늘었습니다 (+' + live.nodeGrowth.grow + ')', 'color:#b8860b;font-weight:bold');
       console.log('       지운 줄 알았던 것이 화면 밖에 남아 있을 수 있습니다.');
-      report.findings.push({ level: 'WARN', title: '화면 요소 수 증가', before: P.startNodes, after: now, grow: grow });
+      report.findings.push({ level: 'WARN', title: '화면 요소 수 증가', before: live.nodeGrowth.before, after: live.nodeGrowth.after, grow: live.nodeGrowth.grow });
     }
 
-    /* 5. body 바로 아래 잔류물 */
-    var leftovers = [];
-    for (var i = 0; i < document.body.children.length; i++) {
-      var el = document.body.children[i];
-      if (el.tagName === 'SCRIPT' || el.tagName === 'STYLE') continue;
-      var cs = getComputedStyle(el);
-      if ((cs.position === 'fixed' || cs.position === 'absolute') && cs.display !== 'none' && el.getBoundingClientRect().width > 0) {
-        leftovers.push((el.tagName.toLowerCase()) + (el.id ? '#' + el.id : '') + (el.className ? '.' + String(el.className).split(' ')[0] : ''));
-      }
-    }
-    var dupLeft = {};
-    leftovers.forEach(function (x) { dupLeft[x] = (dupLeft[x] || 0) + 1; });
-    var stacked = Object.keys(dupLeft).filter(function (k) { return dupLeft[k] > 1; });
-    if (stacked.length) {
+    if (live.domLeftovers) {
       problems++;
       console.log('%c\n[문제] 같은 것이 화면에 여러 개 겹쳐 있습니다', 'color:#c0392b;font-weight:bold');
       console.log('       손을 뗀 뒤에도 사라지지 않는 잔상일 수 있습니다.');
-      var stackedRows = stacked.map(function (k) { return { 요소: k, 개수: dupLeft[k] }; });
-      console.table(stackedRows);
-      report.findings.push({ level: 'ERR', title: '같은 것이 화면에 여러 개 겹쳐 있음', items: stackedRows });
+      console.table(live.domLeftovers);
+      report.findings.push({ level: 'ERR', title: '같은 것이 화면에 여러 개 겹쳐 있음', items: live.domLeftovers });
     }
 
-    /* 6. 음성 */
+    /* 6. 음성 (세션 전체 누적) */
     if (P.speaks.length) {
       var noVoice = P.speaks.filter(function (s) { return s.voice === '(지정 안 함)'; });
-      console.log('%c\n[정보] 음성 읽기 ' + P.speaks.length + '회', 'color:#2E6B52;font-weight:bold');
+      console.log('%c\n[정보] 음성 읽기 ' + P.speaks.length + '회 (세션 전체)', 'color:#2E6B52;font-weight:bold');
       if (noVoice.length) {
         console.log('       그중 ' + noVoice.length + '회는 목소리를 직접 고르지 않았습니다 — 기기에 영어 음성이 없으면 다른 언어로 읽힙니다.');
       }
@@ -227,13 +311,26 @@
       report.findings.push({ level: 'INFO', title: '음성 읽기 횟수', count: P.speaks.length, noVoiceCount: noVoice.length, recent: speakRows });
     }
 
-    /* 7. 오류 */
+    /* 7. 오류 (세션 전체 누적) */
     if (P.errors.length) {
       problems++;
-      console.log('%c\n[문제] 실행 중 오류 ' + P.errors.length + '건', 'color:#c0392b;font-weight:bold');
+      console.log('%c\n[문제] 실행 중 오류 ' + P.errors.length + '건 (세션 전체)', 'color:#c0392b;font-weight:bold');
       var errorRows = P.errors.slice(0, 10);
       console.table(errorRows);
       report.findings.push({ level: 'ERR', title: '실행 중 오류', count: P.errors.length, items: errorRows });
+    }
+
+    /* 8. 이전 새로고침 구간에서 발견된 것 (지금은 이미 사라졌지만, 그때 스냅샷 찍어둔 것) */
+    if (store.unloadFindings.length) {
+      console.log('%c\n[정보] 이전 새로고침 구간 ' + store.unloadFindings.length + '개에서 남겨진 기록', 'color:#2E6B52;font-weight:bold');
+      store.unloadFindings.forEach(function (seg, idx) {
+        var segProblems = (seg.liveIntervals ? 1 : 0) + (seg.domLeftovers ? 1 : 0);
+        if (segProblems) problems += segProblems;
+        console.log('  구간 ' + (idx + 1) + ' (' + seg.minutesInSegment + '분간 진행 후 새로고침으로 종료 · 종료 시점 화면: ' + seg.screenAtEnd + ')'
+          + (segProblems ? ' — [문제] 있음, 아래 참고' : ''));
+        if (seg.liveIntervals) console.table(seg.liveIntervals);
+        if (seg.domLeftovers) console.table(seg.domLeftovers);
+      });
     }
 
     console.log('%c\n' + line, 'color:#6B4A7E');
@@ -252,8 +349,9 @@
     return '점검 완료 — ' + savedAs;
   };
 
-  console.log('%c게임 자가점검이 켜졌습니다.', 'color:#6B4A7E;font-weight:bold;font-size:14px');
+  console.log('%c게임 자가점검이 켜졌습니다.' + (store.reloadCount ? ' (이번 세션 새로고침 ' + store.reloadCount + '회째)' : ''), 'color:#6B4A7E;font-weight:bold;font-size:14px');
   console.log('%c게임을 평소처럼 해보신 뒤,  점검(\'2일차_1회차_이름\')  처럼 라벨을 넣어서 입력하세요.', 'color:#555');
   console.log('%c결과가 콘솔에 뜨는 동시에 그 이름으로 json 파일이 자동 다운로드됩니다 — 캡처할 필요 없습니다.', 'color:#555');
+  console.log('%c새로고침 항목을 하고 나면 이 코드를 다시 붙여넣어야 그 이후가 계속 감시됩니다 — 단, 그 전까지의 기록은 사라지지 않고 마지막 점검() 결과에 자동으로 합쳐집니다.', 'color:#888');
   console.log('%c특히 이런 경로를 섞어 보세요 — 정답 직후 나가기 / 기회를 다 쓰고 나가기 / 팝업을 X로 닫기 / 중간에 다시 시작', 'color:#888');
 })();

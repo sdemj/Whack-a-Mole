@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#d9c8f1">
 <title>Whack-a-Mole 영어 단어 게임</title>
+<link rel="preload" as="image" href="두더지.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 /* ===== 폰트: 학교안심 두 가지만 사용 (Jua 등 다른 폰트 사용하지 않음) ===== */
@@ -725,7 +726,6 @@ h2{font-size:clamp(30px,4.4vw,48px);margin-bottom:12px}
     <span class="eyebrow">BONUS SPELLING</span>
     <h2 id="spellTitle">철자를 입력하세요</h2>
     <div class="spell-clue">
-      <div style="color:var(--muted);font-size:16px;font-weight:900">방금 잡은 단어의 뜻</div>
       <div id="spellKo" style="font-size:clamp(28px,4vw,36px);font-weight:900;margin-top:4px;font-family:var(--title-font)"></div>
       <div id="caseNotice" style="font-size:15px;color:#8d5065;margin-top:7px"></div>
     </div>
@@ -789,8 +789,22 @@ const state = {
   options:[],
   sfxOn:true,
   bgmOn:true,
-  resumeAfterHelp:false
+  resumeAfterHelp:false,
+  taskToken:0
 };
+
+const delayedTasks = new Set();
+function delay(callback, milliseconds){
+  const token=state.taskToken;
+  const id=setTimeout(()=>{delayedTasks.delete(id);if(token===state.taskToken)callback()},milliseconds);
+  delayedTasks.add(id);
+  return id;
+}
+function clearDelayedTasks(){
+  state.taskToken++;
+  delayedTasks.forEach(clearTimeout);
+  delayedTasks.clear();
+}
 
 const $ = (sel, root=document) => root.querySelector(sel);
 const $$ = (sel, root=document) => [...root.querySelectorAll(sel)];
@@ -822,11 +836,26 @@ function selectedPool(){
 }
 
 /* ================= 효과음 ================= */
-function playSfx(kind){
-  if(!state.sfxOn)return;
+function playSfx(kind,onDone){
+  const done=typeof onDone==="function"?onDone:()=>{};
+  if(!state.sfxOn){done();return}
   const el = kind==="correct"?$("#correctSfx"):kind==="wrong"?$("#wrongSfx"):$("#completeSfx");
-  if(!el)return;
-  try{el.currentTime=0;el.play().catch(()=>{})}catch(e){}
+  if(!el){done();return}
+  const taskToken=state.taskToken;
+  let finished=false;
+  let guardId=null;
+  const finish=()=>{
+    if(finished)return;
+    finished=true;
+    if(guardId){clearTimeout(guardId);delayedTasks.delete(guardId)}
+    el.removeEventListener("ended",finish);
+    el.removeEventListener("error",finish);
+    if(taskToken===state.taskToken)done();
+  };
+  el.addEventListener("ended",finish);
+  el.addEventListener("error",finish);
+  guardId=delay(finish,1500);
+  try{el.currentTime=0;el.play().catch(finish)}catch(e){finish()}
 }
 function toggleSfx(){
   state.sfxOn=!state.sfxOn;
@@ -862,16 +891,18 @@ function playWordAudio(word,onDone){
   const el=$("#wordAudio");
   const src=audioSrcFor(word);
   const done=typeof onDone==="function"?onDone:()=>{};
-  if(!el||!src||!state.sfxOn){setTimeout(done,520);return false}
+  if(!el||!src||!state.sfxOn){delay(done,0);return false}
+  const taskToken=state.taskToken;
   let finished=false;
   let guardId=null;
   const finish=()=>{
     if(finished)return;
     finished=true;
     clearTimeout(guardId);
+    delayedTasks.delete(guardId);
     el.removeEventListener("ended",finish);
     el.removeEventListener("error",finish);
-    done();
+    if(taskToken===state.taskToken)done();
   };
   el.addEventListener("ended",finish);
   el.addEventListener("error",finish);
@@ -885,8 +916,18 @@ function playWordAudio(word,onDone){
   }catch(e){finish();return false}
   /* 녹음 파일 끝의 여백까지 기다리면 진행이 느려지므로 2.5초가 지나면 다음으로 넘어간다.
      이때 소리를 끊지는 않으므로 단어 발음은 끝까지 들린다. 파일을 못 읽었을 때의 안전장치이기도 하다. */
-  guardId=setTimeout(finish,2500);
+  guardId=delay(finish,2500);
   return true;
+}
+function preloadQuestionAudio(){
+  state.questions.forEach(word=>{
+    const src=audioSrcFor(word);
+    if(!src)return;
+    const preload=new Audio();
+    preload.preload="auto";
+    preload.src=src;
+    preload.load();
+  });
 }
 
 /* ================= 배경음악 (표지 화면에서만 재생) ================= */
@@ -902,7 +943,7 @@ function tryPlayCurrentBgm(){
   const audio=bgmTracks[currentBgmKey];
   if(!audio)return;
   if(!bgmAllowedNow()){audio.pause();return}
-  audio.volume=0.35;
+  audio.volume=0.22;
   syncBgmAudio(audio);
   if(audio.paused)audio.play().catch(()=>{});
 }
@@ -987,6 +1028,7 @@ document.addEventListener("webkitfullscreenchange",updateFullscreenIcon);
 
 /* ================= 화면 전환 ================= */
 function showScreen(name){
+  clearDelayedTasks();
   if(name!=="result")clearConfetti();
   Object.values(screens).forEach(s=>s.classList.remove("active"));
   screens[name].classList.add("active");
@@ -1079,7 +1121,7 @@ function showToast(text,type="good",duration=900){
   toast.textContent=text;
   $("#toastLayer").appendChild(toast);
   requestAnimationFrame(()=>toast.classList.add("show"));
-  setTimeout(()=>{toast.classList.remove("show");setTimeout(()=>toast.remove(),250)},duration);
+  delay(()=>{toast.classList.remove("show");delay(()=>toast.remove(),250)},duration);
 }
 function renderCategories(){
   const grid=$("#categoryGrid");grid.innerHTML="";
@@ -1164,12 +1206,13 @@ function createQuestions(){
 }
 function startGame(){
   clearConfetti();
-  stopGameLoops();stopWordAudio();
+  stopGameLoops();stopWordAudio();clearDelayedTasks();
   state.questions=createQuestions();
   state.results=state.questions.map(word=>({word,status:"pending",wrongHits:0,spellingBonus:false}));
   state.currentIndex=0;state.score=0;state.streak=0;state.maxStreak=0;state.currentWrongHits=0;
   state.timeLeft=BASE_TIME;state.elapsed=0;state.bonusTime=0;state.wrongHitCount=0;
   state.paused=false;state.lock=false;state.gameActive=true;state.lastTick=performance.now();
+  preloadQuestionAudio();
   showScreen("game");startTimer();renderQuestion();
 }
 function startTimer(){
@@ -1189,6 +1232,7 @@ function startTimer(){
 function stopGameLoops(){
   if(state.cycleTimer){clearTimeout(state.cycleTimer);state.cycleTimer=null}
   if(state.timerId){clearInterval(state.timerId);state.timerId=null}
+  clearDelayedTasks();
 }
 function pauseGame(){
   state.paused=true;
@@ -1254,7 +1298,9 @@ function buildOptions(word){
     }
     return shuffle([{text:word.en,correct:true},...variants.map(text=>({text,correct:false}))]);
   }
-  const pool=selectedPool().filter(w=>w.en!==word.en);
+  const synonymousAnswers={good:["nice","kind"],nice:["good","kind"],kind:["good","nice"]};
+  const excluded=new Set([word.en.toLowerCase(),...(synonymousAnswers[word.en.toLowerCase()]||[])]);
+  const pool=selectedPool().filter(w=>!excluded.has(w.en.toLowerCase()));
   const distractors=[];
   for(const w of shuffle(pool)){
     if(!distractors.some(d=>d.text===w.en)){distractors.push({text:w.en,correct:false})}
@@ -1273,6 +1319,17 @@ function moleMarkup(option,index){
       </div>
     </button>
   </div>`;
+}
+function ensureMoleSlots(){
+  const grid=$("#moleGrid");
+  if(grid.children.length===6)return;
+  grid.innerHTML=Array.from({length:6},(_,index)=>moleMarkup({text:"",correct:false},index)).join("");
+  grid.addEventListener("click",event=>{
+    const button=event.target.closest(".mole-button");
+    if(!button||!grid.contains(button)||!button.classList.contains("visible"))return;
+    const option=state.options[Number(button.dataset.optionIndex)];
+    if(option)hitMole(button,option);
+  });
 }
 function fitAllWordBoards(){
   $$(".word-card").forEach(board => {
@@ -1312,17 +1369,30 @@ function placeOptions(){
   if(state.cycleTimer){clearTimeout(state.cycleTimer);state.cycleTimer=null}
   const grid=$("#moleGrid");
   const opts=shuffle(state.options);
-  grid.innerHTML=opts.map((o,i)=>moleMarkup(o,i)).join("");
-  $$(".mole-button",grid).forEach((b,i)=>{
-    b.addEventListener("click",()=>hitMole(b,opts[i]));
+  ensureMoleSlots();
+  $$(".mole-button",grid).forEach((button,index)=>{
+    const option=opts[index];
+    button.dataset.optionIndex=String(index);
+    button.dataset.correct=String(option.correct);
+    button.setAttribute("aria-label",option.text);
+    button.querySelector(".wb-text").textContent=option.text;
+    button.classList.remove("visible","ducking","correct","wrong");
   });
   requestAnimationFrame(()=>{
     fitAllWordBoards();
-    $$(".mole-button",grid).forEach((b,i)=>setTimeout(()=>b.classList.add("visible"),i*70));
+    const appearanceOrder=shuffle($$(".mole-button",grid));
+    appearanceOrder.forEach((button,index)=>delay(()=>button.classList.add("visible"),index*100));
+    grid.dataset.appearanceOrder=appearanceOrder.map(button=>button.dataset.index).join(",");
   });
   state.cycleTimer=setTimeout(()=>{
-    $$(".mole-button",grid).forEach(b=>{b.classList.remove("visible");b.classList.add("ducking")});
-    state.cycleTimer=setTimeout(()=>{if(state.gameActive&&!state.paused&&!state.lock)placeOptions()},260);
+    const appearanceOrder=grid.dataset.appearanceOrder.split(",")
+      .map(index=>$(`.mole-button[data-index="${index}"]`,grid))
+      .filter(Boolean);
+    appearanceOrder.forEach((button,index)=>delay(()=>{
+      button.classList.remove("visible");
+      button.classList.add("ducking");
+    },index*100));
+    state.cycleTimer=delay(()=>{if(state.gameActive&&!state.paused&&!state.lock)placeOptions()},appearanceOrder.length*100+260);
   },DIFFICULTIES[state.difficulty].exposure);
 }
 function hitMole(button,option){
@@ -1333,7 +1403,6 @@ function hitMole(button,option){
   const word=state.questions[state.currentIndex];
   if(option.correct){
     button.classList.add("correct");
-    playSfx("correct");
     state.score+=10;
     state.streak++;
     state.maxStreak=Math.max(state.maxStreak,state.streak);
@@ -1353,7 +1422,7 @@ function hitMole(button,option){
       state.paused=false;state.lastTick=performance.now();
       setTimeout(nextQuestion,280);
     };
-    setTimeout(()=>playWordAudio(word,afterAudio),240);
+    playSfx("correct",()=>playWordAudio(word,afterAudio));
   }else{
     button.classList.add("wrong");
     playSfx("wrong");
@@ -1361,7 +1430,7 @@ function hitMole(button,option){
     state.streak=0;state.currentWrongHits++;state.wrongHitCount++;
     showToast("-3 오답! 다시 찾아보세요.","bad",850);
     updateHud();
-    setTimeout(()=>{state.lock=false;if(state.gameActive&&!state.paused)placeOptions()},520);
+    delay(()=>{state.lock=false;if(state.gameActive&&!state.paused)placeOptions()},520);
   }
 }
 function nextQuestion(){
@@ -1378,7 +1447,7 @@ function openSpellModal(){
   $("#spellInput").value="";$("#spellFeedback").textContent="";
   $("#spellInput").classList.remove("error");
   $("#spellModal").classList.add("open");
-  setTimeout(()=>$("#spellInput").focus(),80);
+  delay(()=>$("#spellInput").focus(),80);
 }
 function closeSpellModal(resume=false){
   $("#spellModal").classList.remove("open");
@@ -1393,7 +1462,7 @@ function submitSpelling(){
     playSfx("correct");state.results[state.currentIndex].spellingBonus=true;
     $("#spellFeedback").style.color="var(--good)";$("#spellFeedback").textContent="정확해요!";
     showToast("참 잘했어요!","bonus",900);updateHud();
-    setTimeout(()=>{closeSpellModal(false);state.paused=false;state.lastTick=performance.now();nextQuestion()},650);
+    delay(()=>{closeSpellModal(false);state.paused=false;state.lastTick=performance.now();nextQuestion()},650);
   }else{
     playSfx("wrong");
     $("#spellFeedback").style.color="var(--bad)";
@@ -1455,7 +1524,7 @@ function launchConfetti(){
     p.style.animationDelay=(Math.random()*.8)+"s";
     document.body.appendChild(p);
     confettiPieces.push(p);
-    setTimeout(()=>{
+    delay(()=>{
       p.remove();
       const at=confettiPieces.indexOf(p);
       if(at>=0)confettiPieces.splice(at,1);
@@ -1539,6 +1608,7 @@ document.addEventListener("keydown",e=>{
 window.addEventListener("beforeunload",e=>{
   if(state.gameActive){e.preventDefault();e.returnValue=""}
 });
+document.addEventListener("contextmenu",event=>event.preventDefault());
 
 /* 화면 클래스가 어떤 경로로 바뀌든 앞으로/뒤로 버튼 상태를 따라가도록 감시 */
 NAV_SCREEN_IDS.forEach(id=>{
@@ -1554,7 +1624,7 @@ initBgm();
 if(document.fonts&&document.fonts.ready&&document.fonts.ready.then){
   document.fonts.ready.then(checkIconFont).catch(()=>{});
 }
-setTimeout(checkIconFont,2500);
+delay(checkIconFont,2500);
 </script>
 </body>
 </html>

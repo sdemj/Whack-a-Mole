@@ -1,0 +1,1944 @@
+{
+  "sessionMinutes": 60.8,
+  "reloadCount": 7,
+  "screenNow": "gameScreen",
+  "findings": [
+    {
+      "level": "ERR",
+      "title": "화면을 옮긴 뒤에도 예약된 작업이 실행됨",
+      "count": 227,
+      "items": [
+        {
+          "종류": "한번",
+          "예약(ms)": 850,
+          "예약한 화면": "gameScreen",
+          "실행된 화면": "panel",
+          "위치": "showToast (https://sdemj.github.io/Whack-a-Mole/:1082:3) ← hitMole (https://sdemj.github.io/Whack-a-Mole/:1346:11)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 850,
+          "예약한 화면": "gameScreen",
+          "실행된 화면": "panel",
+          "위치": "showToast (https://sdemj.github.io/Whack-a-Mole/:1082:3) ← hitMole (https://sdemj.github.io/Whack-a-Mole/:1346:11)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 2500,
+          "예약한 화면": "gameScreen",
+          "실행된 화면": "panel",
+          "위치": "playWordAudio (https://sdemj.github.io/Whack-a-Mole/:888:11) ← https://sdemj.github.io/Whack-a-Mole/:1356:20",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 250,
+          "예약한 화면": "gameScreen",
+          "실행된 화면": "introScreen",
+          "위치": "https://sdemj.github.io/Whack-a-Mole/:1082:50 ← <anonymous>:98:43",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 2500,
+          "예약한 화면": "gameScreen",
+          "실행된 화면": "introScreen",
+          "위치": "playWordAudio (https://sdemj.github.io/Whack-a-Mole/:888:11) ← https://sdemj.github.io/Whack-a-Mole/:1356:20",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "introScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 280,
+          "예약한 화면": "gameScreen",
+          "실행된 화면": "introScreen",
+          "위치": "afterAudio (https://sdemj.github.io/Whack-a-Mole/:1354:7) ← finish (https://sdemj.github.io/Whack-a-Mole/:874:5)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 250,
+          "예약한 화면": "gameScreen",
+          "실행된 화면": "panel",
+          "위치": "https://sdemj.github.io/Whack-a-Mole/:1082:50 ← <anonymous>:98:43",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 2500,
+          "예약한 화면": "gameScreen",
+          "실행된 화면": "introScreen",
+          "위치": "playWordAudio (https://sdemj.github.io/Whack-a-Mole/:888:11) ← https://sdemj.github.io/Whack-a-Mole/:1356:20",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 2500,
+          "예약한 화면": "gameScreen",
+          "실행된 화면": "introScreen",
+          "위치": "playWordAudio (https://sdemj.github.io/Whack-a-Mole/:888:11) ← https://sdemj.github.io/Whack-a-Mole/:1356:20",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 2500,
+          "예약한 화면": "gameScreen",
+          "실행된 화면": "introScreen",
+          "위치": "playWordAudio (https://sdemj.github.io/Whack-a-Mole/:888:11) ← https://sdemj.github.io/Whack-a-Mole/:1356:20",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 70,
+          "예약한 화면": "gameScreen",
+          "실행된 화면": "panel",
+          "위치": "https://sdemj.github.io/Whack-a-Mole/:1321:44 ← Array.forEach (<anonymous>)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 140,
+          "예약한 화면": "gameScreen",
+          "실행된 화면": "panel",
+          "위치": "https://sdemj.github.io/Whack-a-Mole/:1321:44 ← Array.forEach (<anonymous>)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 210,
+          "예약한 화면": "gameScreen",
+          "실행된 화면": "panel",
+          "위치": "https://sdemj.github.io/Whack-a-Mole/:1321:44 ← Array.forEach (<anonymous>)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 280,
+          "예약한 화면": "gameScreen",
+          "실행된 화면": "panel",
+          "위치": "https://sdemj.github.io/Whack-a-Mole/:1321:44 ← Array.forEach (<anonymous>)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 350,
+          "예약한 화면": "gameScreen",
+          "실행된 화면": "panel",
+          "위치": "https://sdemj.github.io/Whack-a-Mole/:1321:44 ← Array.forEach (<anonymous>)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 6000,
+          "예약한 화면": "panel",
+          "실행된 화면": "gameScreen",
+          "위치": "launchConfetti (https://sdemj.github.io/Whack-a-Mole/:1458:5) ← finishGame (https://sdemj.github.io/Whack-a-Mole/:1414:49)",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 520,
+          "예약한 화면": "gameScreen",
+          "실행된 화면": "panel",
+          "위치": "playWordAudio (https://sdemj.github.io/Whack-a-Mole/:865:31) ← https://sdemj.github.io/Whack-a-Mole/:1356:20",
+          "reloadIndex": 7
+        },
+        {
+          "종류": "한번",
+          "예약(ms)": 850,
+          "예약한 화면": "gameScreen",
+          "실행된 화면": "panel",
+          "위치": "showToast (https://sdemj.github.io/Whack-a-Mole/:1082:3) ← hitMole (https://sdemj.github.io/Whack-a-Mole/:1346:11)",
+          "reloadIndex": 7
+        }
+      ]
+    },
+    {
+      "level": "WARN",
+      "title": "같은 곳에 이벤트가 계속 쌓이고 있음",
+      "count": 6,
+      "items": [
+        {
+          "대상": "button / click",
+          "개수": 2577
+        },
+        {
+          "대상": "button / mouseenter",
+          "개수": 132
+        },
+        {
+          "대상": "button / mousemove",
+          "개수": 132
+        },
+        {
+          "대상": "button / mouseleave",
+          "개수": 132
+        },
+        {
+          "대상": "button / focus",
+          "개수": 132
+        },
+        {
+          "대상": "button / blur",
+          "개수": 132
+        }
+      ]
+    }
+  ],
+  "previousSegments": [
+    {
+      "reloadIndex": 2,
+      "endedAt": 1788097231403,
+      "minutesInSegment": 0.2,
+      "screenAtEnd": "gameScreen",
+      "liveIntervals": null,
+      "heavyListeners": [
+        {
+          "대상": "button / click",
+          "개수": 21
+        }
+      ],
+      "nodeGrowth": null,
+      "domLeftovers": null
+    },
+    {
+      "reloadIndex": 3,
+      "endedAt": 1788097299222,
+      "minutesInSegment": 1,
+      "screenAtEnd": "gameScreen",
+      "liveIntervals": null,
+      "heavyListeners": [
+        {
+          "대상": "button / click",
+          "개수": 57
+        }
+      ],
+      "nodeGrowth": null,
+      "domLeftovers": null
+    },
+    {
+      "reloadIndex": 4,
+      "endedAt": 1788097357995,
+      "minutesInSegment": 0.9,
+      "screenAtEnd": "panel",
+      "liveIntervals": null,
+      "heavyListeners": [
+        {
+          "대상": "button / click",
+          "개수": 75
+        }
+      ],
+      "nodeGrowth": null,
+      "domLeftovers": [
+        {
+          "요소": "span.confetti-piece",
+          "개수": 42
+        }
+      ]
+    },
+    {
+      "reloadIndex": 5,
+      "endedAt": 1788097410136,
+      "minutesInSegment": 0.8,
+      "screenAtEnd": "gameScreen",
+      "liveIntervals": null,
+      "heavyListeners": [
+        {
+          "대상": "button / click",
+          "개수": 63
+        }
+      ],
+      "nodeGrowth": null,
+      "domLeftovers": null
+    },
+    {
+      "reloadIndex": 6,
+      "endedAt": 1788097579675,
+      "minutesInSegment": 2.7,
+      "screenAtEnd": "gameScreen",
+      "liveIntervals": null,
+      "heavyListeners": [
+        {
+          "대상": "button / click",
+          "개수": 36
+        }
+      ],
+      "nodeGrowth": null,
+      "domLeftovers": null
+    }
+  ],
+  "problemCount": 3
+}
