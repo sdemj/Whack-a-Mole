@@ -17,6 +17,15 @@ const ROOT = path.resolve(process.argv[2] || '.');
 const OUT = [];
 let errCount = 0, warnCount = 0;
 
+if (!fs.existsSync(ROOT)) {
+  console.error('검사할 폴더를 찾지 못했습니다: ' + ROOT);
+  process.exit(1);
+}
+if (!fs.statSync(ROOT).isDirectory()) {
+  console.error('검사 대상은 폴더여야 합니다: ' + ROOT);
+  process.exit(1);
+}
+
 const C = {
   red: s => '\x1b[31m' + s + '\x1b[0m',
   yel: s => '\x1b[33m' + s + '\x1b[0m',
@@ -49,6 +58,11 @@ function walk(dir, out = []) {
   return out;
 }
 
+function relativeKey(ref, baseDir) {
+  const absolute = path.resolve(baseDir, ref);
+  return path.relative(ROOT, absolute).replace(/\\/g, '/').toLowerCase();
+}
+
 // ─────────────────────────────────────────────
 console.log(C.bold('\n게임 자가점검 — 파일 검사'));
 console.log(C.dim('대상: ' + ROOT));
@@ -67,6 +81,7 @@ files.forEach(f => onDisk.set(path.relative(ROOT, f).replace(/\\/g, '/').toLower
 for (const htmlPath of htmlFiles) {
   const rel = path.relative(ROOT, htmlPath).replace(/\\/g, '/');
   const src = fs.readFileSync(htmlPath, 'utf8');
+  const analyzedSrc = src.replace(/<!--[\s\S]*?-->|\/\*[\s\S]*?\*\//g, '');
   console.log('\n' + C.bold('━'.repeat(58)));
   console.log(C.bold('  ' + rel) + C.dim('  (' + Math.round(src.length / 1024) + 'KB)'));
   console.log(C.bold('━'.repeat(58)));
@@ -74,19 +89,20 @@ for (const htmlPath of htmlFiles) {
   // ── 1. 참조하는 파일이 실제로 있는가 (대소문자 포함) ──
   const refs = new Set();
   // src="...", href="..." 중 로컬 파일
-  for (const m of src.matchAll(/(?:src|href)\s*=\s*["']([^"'#?]+)["']/g)) {
+  for (const m of analyzedSrc.matchAll(/(?:src|href)\s*=\s*["']([^"'#?]+)["']/g)) {
     const v = m[1].trim();
-    if (!v || /^(https?:|data:|blob:|mailto:|javascript:|#)/i.test(v)) continue;
+    if (!v || /^(https?:|data:|blob:|mailto:|javascript:|#|\/\/)/i.test(v)) continue;
     refs.add(v.replace(/^\.\//, ''));
   }
   // 코드 안에서 조립되는 파일명: "xxx.png" / 'xxx.mp3' 리터럴
-  for (const m of src.matchAll(/["'`]([\w][\w .\-]*\.(?:png|jpe?g|gif|webp|svg|mp3|wav|m4a|ogg|json))["'`]/gi)) {
+  for (const m of analyzedSrc.matchAll(/["'`]([\w][\w .\-]*\.(?:png|jpe?g|gif|webp|svg|mp3|wav|m4a|ogg|json))["'`]/gi)) {
     refs.add(m[1].trim());
   }
 
   const missing = [], caseWrong = [];
+  const htmlDir = path.dirname(htmlPath);
   for (const r of refs) {
-    const key = r.toLowerCase();
+    const key = relativeKey(r, htmlDir);
     if (onDisk.has(key)) {
       const actual = onDisk.get(key);
       if (actual !== r && path.basename(actual) !== path.basename(r)) continue;
@@ -118,7 +134,7 @@ for (const htmlPath of htmlFiles) {
     if (!s2 || /^data:/.test(s2)) continue;
     const isLazy = /loading\s*=\s*["']lazy/.test(tag) || /preload\s*=\s*["'](none|metadata)/.test(tag);
     if (!isLazy) {
-      const f = onDisk.get(s2.replace(/^\.\//, '').toLowerCase());
+      const f = onDisk.get(relativeKey(s2, htmlDir));
       if (f) eager.push({ name: s2, bytes: fs.statSync(path.join(ROOT, f)).size });
     }
   }
@@ -148,10 +164,10 @@ for (const htmlPath of htmlFiles) {
   // ── 3. 외부 의존 ──
   const ext = new Set();
   // 태그 속성 / CSS @import / CSS url() / 코드 안의 주소 모두 확인
-  for (const m of src.matchAll(/(?:src|href)\s*=\s*["'](https?:\/\/[^"'\/]+)/gi)) ext.add(m[1]);
-  for (const m of src.matchAll(/@import\s+url\(\s*["']?(https?:\/\/[^"')\/]+)/gi)) ext.add(m[1]);
-  for (const m of src.matchAll(/url\(\s*["']?(https?:\/\/[^"')\/]+)/gi)) ext.add(m[1]);
-  for (const m of src.matchAll(/["'`](https?:\/\/[^"'`\/]+)\/[^"'`]*["'`]/gi)) ext.add(m[1]);
+  for (const m of analyzedSrc.matchAll(/(?:src|href)\s*=\s*["'](https?:\/\/[^"'\/]+)/gi)) ext.add(m[1]);
+  for (const m of analyzedSrc.matchAll(/@import\s+url\(\s*["']?(https?:\/\/[^"')\/]+)/gi)) ext.add(m[1]);
+  for (const m of analyzedSrc.matchAll(/url\(\s*["']?(https?:\/\/[^"')\/]+)/gi)) ext.add(m[1]);
+  for (const m of analyzedSrc.matchAll(/["'`](https?:\/\/[^"'`\/]+)\/[^"'`]*["'`]/gi)) ext.add(m[1]);
   if (ext.size) {
     report('WARN', '외부 서버에서 받아오는 것이 있습니다 (' + ext.size + '곳)',
       '외부 접속이 막힌 학교망에서는 화면이 깨질 수 있습니다. 화면 전환이나 글꼴이 여기에 의존하면 특히 위험합니다.',
@@ -161,10 +177,10 @@ for (const htmlPath of htmlFiles) {
   }
 
   // ── 4. 타이머 정리 ──
-  const setT = (src.match(/setTimeout\s*\(/g) || []).length;
-  const setI = (src.match(/setInterval\s*\(/g) || []).length;
-  const clrT = (src.match(/clearTimeout\s*\(/g) || []).length;
-  const clrI = (src.match(/clearInterval\s*\(/g) || []).length;
+  const setT = (analyzedSrc.match(/setTimeout\s*\(/g) || []).length;
+  const setI = (analyzedSrc.match(/setInterval\s*\(/g) || []).length;
+  const clrT = (analyzedSrc.match(/clearTimeout\s*\(/g) || []).length;
+  const clrI = (analyzedSrc.match(/clearInterval\s*\(/g) || []).length;
   if (setT > 0 && clrT === 0) {
     report('WARN', 'setTimeout ' + setT + '곳을 쓰는데 clearTimeout이 한 번도 없습니다',
       '화면을 나가거나 게임을 다시 시작할 때 예약된 작업이 취소되지 않으면, 엉뚱한 화면에서 소리가 나거나 진행이 어긋날 수 있습니다.');
@@ -173,8 +189,8 @@ for (const htmlPath of htmlFiles) {
   }
 
   // ── 5. 키보드 포커스 표시 ──
-  const hasFocusStyle = /:focus(-visible)?\s*\{/.test(src);
-  const killsOutline = /outline\s*:\s*(none|0)/.test(src) || /all\s*:\s*unset/.test(src);
+  const hasFocusStyle = /:focus(-visible)?\s*\{/.test(analyzedSrc);
+  const killsOutline = /outline\s*:\s*(none|0)/.test(analyzedSrc) || /all\s*:\s*unset/.test(analyzedSrc);
   if (!hasFocusStyle) {
     report('WARN', '키보드로 이동할 때 어디가 선택됐는지 표시하는 스타일이 없습니다',
       (killsOutline ? '게다가 브라우저 기본 테두리를 지우는 설정이 있습니다. ' : '') +
@@ -184,9 +200,9 @@ for (const htmlPath of htmlFiles) {
   }
 
   // ── 6. 음성 읽기 방어 ──
-  if (/speechSynthesis/.test(src)) {
-    const picksVoice = /getVoices\s*\(/.test(src);
-    const waitsVoices = /voiceschanged/.test(src);
+  if (/speechSynthesis/.test(analyzedSrc)) {
+    const picksVoice = /getVoices\s*\(/.test(analyzedSrc);
+    const waitsVoices = /voiceschanged/.test(analyzedSrc);
     const msgs = [];
     if (!picksVoice) msgs.push('영어 목소리를 직접 고르지 않습니다 (언어만 지정)');
     if (!waitsVoices) msgs.push('목소리 목록이 늦게 도착할 때 다시 시도하는 처리가 없습니다');
@@ -200,7 +216,7 @@ for (const htmlPath of htmlFiles) {
 
   // ── 7. 코드로 조합하는 파일명 ──
   const EXT = /\.(png|jpe?g|gif|webp|svg|mp3|wav|m4a|ogg)$/i;
-  const dynPat = [...src.matchAll(/`[^`\n]{0,60}\$\{[^}]{1,60}\}[^`\n]{0,30}\.(?:png|jpe?g|gif|webp|svg|mp3|wav|m4a|ogg)`/gi)]
+  const dynPat = [...analyzedSrc.matchAll(/`[^`\n]{0,60}\$\{[^}]{1,60}\}[^`\n]{0,30}\.(?:png|jpe?g|gif|webp|svg|mp3|wav|m4a|ogg)`/gi)]
     .map(m => m[0].slice(0, 72));
   if (dynPat.length) {
     const assets = files.map(f => path.basename(f)).filter(n => EXT.test(n));
@@ -218,7 +234,7 @@ for (const htmlPath of htmlFiles) {
   }
 
   // ── 8. 중복 id ──
-  const ids = [...src.matchAll(/\sid\s*=\s*["']([^"']+)["']/g)].map(m => m[1]);
+  const ids = [...analyzedSrc.matchAll(/\sid\s*=\s*["']([^"']+)["']/g)].map(m => m[1]);
   const dup = ids.filter((v, i) => ids.indexOf(v) !== i);
   if (dup.length) {
     report('ERR', '같은 id가 여러 번 쓰였습니다', 'id는 화면에서 하나만 있어야 합니다. 코드가 엉뚱한 요소를 집을 수 있습니다.', [...new Set(dup)]);
