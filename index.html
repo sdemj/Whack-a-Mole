@@ -483,6 +483,49 @@ h2{font-size:clamp(30px,4.4vw,48px);margin-bottom:12px}
 </head>
 <body>
 
+<!-- [추가] 휴대폰 세로 화면 안내 - 태블릿에는 안 뜨고, 휴대폰 화면 크기에서 세로로 시작했을 때만 뜬다.
+     가로로 돌리면 자동으로 사라지고, "이대로 할래요"를 누르면 세로로도 계속 플레이할 수 있다. -->
+<div id="rotate-overlay" style="display:none;position:fixed;inset:0;z-index:2147483000;background:linear-gradient(145deg,#eee3f6,#fff8e5 52%,#dff3e4);flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:36px;text-align:center;">
+    <div style="width:92px;height:148px;border:9px solid #9d7bc6;border-radius:26px;background:#ffffff;animation:rotateHintWAM 2.6s ease-in-out infinite;"></div>
+    <h2 style="font-family:'Hakgyoansim Poster',sans-serif;font-size:24px;color:#413347;margin:0;">화면을 가로로 돌려 주세요</h2>
+    <p style="font-family:'Hakgyoansim Boardmarker',sans-serif;font-size:16px;color:#6d5f77;margin:0;line-height:1.6;">가로로 놓으면 글자와 블록이 커져서<br>훨씬 편하게 할 수 있어요.</p>
+    <button type="button" onclick="dismissRotateOverlay()" style="font-family:'Hakgyoansim Poster',sans-serif;font-size:17px;color:#fff;background:linear-gradient(135deg,#ef9fbe,#e879a4);border:0;border-radius:18px;box-shadow:0 8px 20px rgba(83,58,96,.13);padding:16px 32px;cursor:pointer;">이대로 할래요</button>
+</div>
+<style>
+@keyframes rotateHintWAM {
+    0%, 15% { transform: rotate(0deg); }
+    45%, 60% { transform: rotate(-90deg); }
+    90%, 100% { transform: rotate(0deg); }
+}
+</style>
+<script>
+(function () {
+    var overlay = document.getElementById('rotate-overlay');
+    if (!overlay) return;
+    var dismissed = false;
+    // 태블릿(짧은 쪽이 대략 600px 이상, 아이패드 세로 768px 등)은 제외하고
+    // 휴대폰 화면 크기에서 세로로 시작했을 때만 보여준다. screen.width/height는
+    // 회전해도 "짧은 쪽" 값 자체는 기기 고유값이라 방향과 무관하게 안정적으로 쓸 수 있다.
+    function isPhoneSized() {
+        var shortSide = Math.min(window.screen.width, window.screen.height);
+        return shortSide > 0 && shortSide < 600;
+    }
+    function shouldShow() {
+        return !dismissed && isPhoneSized() && window.innerHeight > window.innerWidth;
+    }
+    function updateRotateOverlay() {
+        overlay.style.display = shouldShow() ? 'flex' : 'none';
+    }
+    window.dismissRotateOverlay = function () {
+        dismissed = true;
+        updateRotateOverlay();
+    };
+    window.addEventListener('resize', updateRotateOverlay);
+    window.addEventListener('orientationchange', updateRotateOverlay);
+    updateRotateOverlay();
+})();
+</script>
+
 <!-- 두더지 그림 원본(한 번만 정의하고 모든 두더지가 재사용) -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <defs>
