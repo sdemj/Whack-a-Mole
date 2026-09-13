@@ -259,17 +259,18 @@ h2{font-size:clamp(30px,4.4vw,48px);margin-bottom:12px}
 
 /* 단어 카드: 두더지 손 아래로 약간 겹치게 배치하여 잡고 있는 연출 */
 .word-card{
-  width:92%;
+  width:100%;
   background:#ffffff;
   border:2.5px solid #e0d0c4;
   border-radius:16px;
-  padding:7px 10px 8px;
+  min-height:48px;padding:10px 12px 11px;
   box-shadow:0 6px 16px rgba(60,40,20,.14);
   display:flex;align-items:center;justify-content:center;text-align:center;
   position:relative;z-index:1;
   margin-top:-22px; /* 두더지 손가락 위치에 맞춰 카드가 손 아래로 들어감 */
 }
 .wb-text{
+  font-family:var(--title-font);
   display:inline-block;white-space:nowrap;font-weight:900;color:#3a1d05;line-height:1.1;
   font-size:22px;
 }
@@ -355,11 +356,13 @@ h2{font-size:clamp(30px,4.4vw,48px);margin-bottom:12px}
 }
 .answer-row.ok{background:#eaf8ef}.answer-row.pending{background:#fff1f2}
 .answer-mark{font-size:26px;font-weight:900;text-align:center}
-.answer-word strong{display:block;font-size:clamp(22px,2.6vw,28px);line-height:1.15}
+.answer-word{min-width:0}
+.answer-word-line{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.answer-word strong{font-size:clamp(26px,2.8vw,32px);line-height:1.2;overflow-wrap:anywhere;min-width:0}
 .answer-word small{color:var(--muted);font-size:18px}
-.answer-meta{font-size:18px;color:var(--muted);text-align:right;font-weight:900}
+.answer-meta{font-size:14px;color:var(--muted);text-align:right;font-weight:900;max-width:110px;word-break:keep-all}
 .answer-audio-button{
-  width:42px;height:42px;border:0;border-radius:50%;background:#e8dcf5;cursor:pointer;
+  width:34px;height:34px;flex-shrink:0;border:0;border-radius:50%;background:#e8dcf5;cursor:pointer;
   font-size:21px;line-height:1;transition:transform .16s ease,background .16s ease
 }
 .answer-audio-button:hover{transform:translateY(-2px);background:#dac4ee}
@@ -383,7 +386,7 @@ h2{font-size:clamp(30px,4.4vw,48px);margin-bottom:12px}
 .preview-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
 .preview-head strong{font-size:21px;color:#6b4a89}
 .preview-count{font-size:18px;background:#f4eafa;color:#71508b;border-radius:999px;padding:6px 11px;font-weight:900}
-.preview-word-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.preview-word-list{font-size:20px;line-height:1.7;overflow-wrap:anywhere;color:#4b3a55}
 .preview-word{
   min-width:0;padding:8px 8px;border-radius:12px;text-align:center;
   background:linear-gradient(145deg,#fff8eb,#f5effd);border:1px solid #f0e5f8;
@@ -427,8 +430,8 @@ h2{font-size:clamp(30px,4.4vw,48px);margin-bottom:12px}
   .question-hint{font-size:18px}
   .preview-word-list{grid-template-columns:repeat(2,minmax(0,1fr))}
   .modal{padding:22px 15px;border-radius:24px}
-  .answer-row{grid-template-columns:32px minmax(0,1fr);gap:9px}
-  .answer-meta{grid-column:2;text-align:left;font-size:18px}
+  .answer-row{grid-template-columns:24px minmax(0,1fr) auto;gap:8px;padding:12px 10px}
+  .answer-meta{font-size:12px;max-width:76px}
   .soft-btn,.primary-btn,.secondary-btn,.danger-btn{padding:13px 18px;font-size:18px}
   h1{font-size:clamp(28px,7.5vw,36px)}
   h2{font-size:clamp(26px,6.8vw,34px)}
@@ -631,10 +634,10 @@ h2{font-size:clamp(30px,4.4vw,48px);margin-bottom:12px}
             <h3>게임 모드</h3>
             <div id="modeChoices" class="choice-stack">
               <button type="button" class="choice-card selected" data-mode="word">
-                <span><span class="choice-title">단어 익히기</span><span class="choice-desc">우리말 뜻에 맞는 영어 단어 두더지를 잡아요. 오답은 다른 단어로 나와요.</span></span>
+                <span><span class="choice-title">단어 익히기</span><span class="choice-desc">우리말 뜻에 맞는 영어 단어 두더지를 잡아요.<br>오답은 다른 단어로 나와요.</span></span>
               </button>
               <button type="button" class="choice-card" data-mode="spelling">
-                <span><span class="choice-title">철자 익히기</span><span class="choice-desc">철자가 조금씩 다른 두더지 중 정답을 찾고, 이어서 철자를 직접 입력해보세요.</span></span>
+                <span><span class="choice-title">철자 익히기</span><span class="choice-desc">철자가 조금씩 다른 두더지 중 정답을 찾고,<br>이어서 철자를 직접 입력해보세요.</span></span>
               </button>
             </div>
           </section>
@@ -698,7 +701,7 @@ h2{font-size:clamp(30px,4.4vw,48px);margin-bottom:12px}
               <div class="kpi"><strong id="correctKpi">0/10</strong><span>정답 완료</span></div>
               <div class="kpi"><strong id="timeKpi">0.0초</strong><span>진행 시간</span></div>
               <div class="kpi"><strong id="streakKpi">0</strong><span>최고 연속 정답</span></div>
-              <div class="kpi"><strong id="bonusKpi">0초</strong><span>획득 시간 보너스</span></div>
+              <div class="kpi"><strong id="bonusKpi">0점</strong><span>획득 보너스 점수</span></div>
             </div>
             <div class="result-actions">
               <button type="button" id="retryBtn" class="primary-btn">같은 설정으로 다시</button>
@@ -820,7 +823,7 @@ const state = {
   currentWrongHits:0,
   timeLeft:BASE_TIME,
   elapsed:0,
-  bonusTime:0,
+  bonusScore:0,
   wrongHitCount:0,
   paused:false,
   lock:false,
@@ -1313,7 +1316,7 @@ function startGame(){
   state.questions=createQuestions();
   state.results=state.questions.map(word=>({word,status:"pending",wrongHits:0,spellingBonus:false}));
   state.currentIndex=0;state.score=0;state.streak=0;state.maxStreak=0;state.currentWrongHits=0;
-  state.timeLeft=BASE_TIME;state.elapsed=0;state.bonusTime=0;state.wrongHitCount=0;
+  state.timeLeft=BASE_TIME;state.elapsed=0;state.bonusScore=0;state.wrongHitCount=0;
   state.paused=false;state.lock=false;state.gameActive=true;state.lastTick=performance.now();
   preloadQuestionAudio();
   showScreen("game");startTimer();renderQuestion();
@@ -1442,7 +1445,7 @@ function fitAllWordBoards(){
     const paddingRight = parseFloat(style.paddingRight) || 8;
     const availWidth = Math.max(10, board.clientWidth - paddingLeft - paddingRight);
     if (availWidth <= 0) return;
-    let fontSize = 24;
+    let fontSize = 30;
     textEl.style.fontSize = fontSize + "px";
     textEl.style.whiteSpace = "nowrap";
     while (textEl.offsetWidth > availWidth && fontSize > 8) {
@@ -1472,8 +1475,8 @@ function placeOptions(){
   });
   requestAnimationFrame(()=>{
     fitAllWordBoards();
-    const appearanceOrder=shuffle($$(".mole-button",grid));
-    appearanceOrder.forEach((button,index)=>startMoleCycle(button,index*300));
+    if(!state.gameActive||state.paused||state.lock)return;
+    startMoleCycle();
   });
 }
 function setMoleOption(button,option){
@@ -1482,28 +1485,24 @@ function setMoleOption(button,option){
   button.setAttribute("aria-label",option.text);
   button.querySelector(".wb-text").textContent=option.text;
 }
-function nextMoleOption(button){
-  const current=state.options[Number(button.dataset.optionIndex)];
-  const candidates=shuffle(state.options.filter(option=>option!==current));
-  return candidates[0] || current;
-}
-function startMoleCycle(button,initialDelay=0){
-  delay(()=>{
-    if(!state.gameActive||state.paused||state.lock)return;
+function startMoleCycle(){
+  if(!state.gameActive||state.paused)return;
+  const buttons=$$(".mole-button",$("#moleGrid"));
+  buttons.forEach(button=>{
     button.classList.remove("ducking","correct","wrong");
     button.classList.add("visible");
-    delay(()=>{
-      if(!state.gameActive||state.paused||state.lock)return;
+  });
+  delay(()=>{
+    if(!state.gameActive||state.paused)return;
+    // Finish wrong-answer feedback before starting the next appearance.
+    if(state.lock){delay(()=>startMoleCycle(),100);return}
+    buttons.forEach(button=>{
       button.classList.remove("visible");
       button.classList.add("ducking");
-      delay(()=>{
-        if(!state.gameActive||state.paused||state.lock)return;
-        setMoleOption(button,nextMoleOption(button));
-        fitAllWordBoards();
-        startMoleCycle(button);
-      },1000);
-    },DIFFICULTIES[state.difficulty].exposure);
-  },initialDelay);
+    });
+    // Reassign all six options together, only while every card is hidden.
+    delay(()=>placeOptions(),1000);
+  },DIFFICULTIES[state.difficulty].exposure);
 }
 function hitMole(button,option){
   if(state.lock||state.paused||!state.gameActive)return;
@@ -1519,6 +1518,7 @@ function hitMole(button,option){
     let bonusText="+10 정답!";
     if(state.streak%3===0){
       state.score+=5;
+      state.bonusScore+=5;
       bonusText="+10 정답 · 3연속 보너스 +5점!";
       showToast(bonusText,"bonus",1450);
     }else showToast(bonusText,"good",850);
@@ -1602,7 +1602,7 @@ function renderResults(completed){
   $("#correctKpi").textContent=`${correct}/${TOTAL_ROUNDS}`;
   $("#timeKpi").textContent=`${state.elapsed.toFixed(1)}초`;
   $("#streakKpi").textContent=state.maxStreak;
-  $("#bonusKpi").textContent=`+${state.bonusTime}초`;
+  $("#bonusKpi").textContent=`+${state.bonusScore}점`;
   $("#answerList").innerHTML=state.results.map((r,i)=>{
     const ok=r.status==="correct";
     const meta=ok
@@ -1610,8 +1610,9 @@ function renderResults(completed){
       :"시간 내 미완료";
     return `<div class="answer-row ${ok?"ok":"pending"}">
       <div class="answer-mark">${ok?"○":"×"}</div>
-      <div class="answer-word"><strong>${i+1}. ${escapeHtml(r.word.en)}</strong><small>${escapeHtml(r.word.ko)}</small></div>
+      <div class="answer-word"><div class="answer-word-line"><strong>${i+1}. ${escapeHtml(r.word.en)}</strong>
       <button type="button" class="answer-audio-button" data-result-index="${i}" title="${escapeHtml(r.word.en)} 발음 듣기" aria-label="${escapeHtml(r.word.en)} 발음 듣기">🔊</button>
+      </div><small>${escapeHtml(r.word.ko)}</small></div>
       <div class="answer-meta">${meta}</div>
     </div>`;
   }).join("");
@@ -1648,7 +1649,7 @@ function showWordPreview(card,sub){
   if(!window.matchMedia("(hover:hover) and (pointer:fine)").matches && document.activeElement!==card)return;
   const tooltip=$("#wordPreviewTooltip");
   tooltip.innerHTML=`<div class="preview-head"><strong>단어 미리보기: ${escapeHtml(sub.name)}</strong><span class="preview-count">${sub.words.length}개</span></div>
-    <div class="preview-word-list">${sub.words.map(w=>`<span class="preview-word">${escapeHtml(w.en)}</span>`).join("")}</div>
+    <div class="preview-word-list">${sub.words.map(w=>escapeHtml(w.en)).join(", ")}</div>
     <div class="preview-tip">카드를 클릭하면 이 단어 묶음이 선택돼요!</div>`;
   tooltip.classList.add("show");
   tooltip.setAttribute("aria-hidden","false");
