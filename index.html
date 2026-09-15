@@ -185,7 +185,16 @@ h2{font-size:clamp(30px,4.4vw,48px);margin-bottom:12px}
 .choice-card.selected{border-color:#9d7bc6;background:#f5edfc}
 .choice-icon{font-size:34px;line-height:1;flex:0 0 auto}
 .choice-title{font-weight:900;font-size:22px}
-.choice-desc{display:block;color:var(--muted);font-size:18px;line-height:1.5;margin-top:5px;padding-left:1.2em;text-indent:-1.2em}
+.choice-desc{display:block;color:var(--muted);font-size:18px;line-height:1.5;margin-top:5px}
+/* STEP 3(모드/난이도) 화면 글씨를 전체적으로 조금 키운다 */
+#settingsScreen h2{font-size:clamp(33px,4.8vw,52px)}
+#settingsScreen .lead{font-size:clamp(20px,2.3vw,25px)}
+#settingsScreen .eyebrow{font-size:1.1em}
+#settingsScreen .setting-block h3{font-size:29px}
+#settingsScreen .choice-title{font-size:25px}
+#settingsScreen .choice-desc{font-size:20px}
+#settingsScreen .setting-summary strong{font-size:24px}
+#settingsScreen #settingsSummaryText{font-size:18px!important}
 .setting-summary{
   margin-top:22px;background:linear-gradient(135deg,#fff5dc,#eef9ef);padding:18px 22px;
   border-radius:20px;display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap
@@ -223,6 +232,7 @@ h2{font-size:clamp(30px,4.4vw,48px);margin-bottom:12px}
   position:relative;width:100%;min-height:0;
   display:flex;align-items:flex-end;justify-content:center;
   overflow:hidden;border-radius:28px;
+  container-type:size;
 }
 .mole-button{
   position:relative;width:100%;height:100%;border:0;background:transparent;padding:0;
@@ -232,7 +242,9 @@ h2{font-size:clamp(30px,4.4vw,48px);margin-bottom:12px}
 /* 두더지와 단어 카드가 함께 움직이는 그룹 */
 .mole-group{
   position:absolute;bottom:12px;left:50%;
-  width:88%;max-width:200px;
+  width:96%;max-width:250px;
+  /* 칸 높이가 낮은 화면에서는 두더지 머리가 잘리지 않도록 높이에 맞춰 줄인다 */
+  width:min(96%,250px,calc((100cqh - 60px) / .92));
   transform:translate(-50%,230px);
   transition:transform .32s cubic-bezier(.25,1.2,.5,1), opacity .32s ease;
   opacity:0;
@@ -252,7 +264,7 @@ h2{font-size:clamp(30px,4.4vw,48px);margin-bottom:12px}
 
 /* 두더지 이미지 (z-index: 2로 단어 카드 상단 위로 손가락이 얹어짐) */
 .mole-body{
-  width:86%;height:auto;display:block;margin:0 auto;object-fit:contain;
+  width:90%;height:auto;display:block;margin:0 auto;object-fit:contain;
   position:relative;z-index:2;
   filter:drop-shadow(0 4px 6px rgba(0,0,0,.15));
 }
@@ -263,7 +275,7 @@ h2{font-size:clamp(30px,4.4vw,48px);margin-bottom:12px}
   background:#ffffff;
   border:2.5px solid #e0d0c4;
   border-radius:16px;
-  min-height:48px;padding:10px 12px 11px;
+  min-height:56px;padding:12px 14px 13px;
   box-shadow:0 6px 16px rgba(60,40,20,.14);
   display:flex;align-items:center;justify-content:center;text-align:center;
   position:relative;z-index:1;
@@ -363,7 +375,8 @@ h2{font-size:clamp(30px,4.4vw,48px);margin-bottom:12px}
 .answer-meta{font-size:14px;color:var(--muted);text-align:right;font-weight:900;max-width:110px;word-break:keep-all}
 .answer-audio-button{
   width:34px;height:34px;flex-shrink:0;border:0;border-radius:50%;background:#e8dcf5;cursor:pointer;
-  font-size:21px;line-height:1;transition:transform .16s ease,background .16s ease
+  display:inline-flex;align-items:center;justify-content:center;padding:0;text-indent:0;letter-spacing:0;
+  font-size:19px;line-height:1;transition:transform .16s ease,background .16s ease
 }
 .answer-audio-button:hover{transform:translateY(-2px);background:#dac4ee}
 .result-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px}
@@ -421,6 +434,7 @@ h2{font-size:clamp(30px,4.4vw,48px);margin-bottom:12px}
   .stat-label{font-size:clamp(11px,3vw,14px);white-space:nowrap}
   .stat-value{font-size:clamp(17px,5vw,24px)}
   .mole-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .mole-slot{container-type:normal}
   .hole{min-height:clamp(150px,22vh,200px);border-radius:20px}
   .mole-button{border-radius:20px}
   .mole{max-width:72%}
@@ -454,8 +468,8 @@ h2{font-size:clamp(30px,4.4vw,48px);margin-bottom:12px}
   .question-hint,.question-instruction{font-size:18px}
   .mole-grid{gap:6px}
   .mole-slot{min-height:clamp(140px,22vh,180px)}
-  .mole-group{bottom:4px;width:74%;max-width:150px}
-  .mole-body{width:78%}
+  .mole-group{bottom:4px;width:86%;max-width:185px;width:min(86%,185px,calc((100cqh - 40px) / .86))}
+  .mole-body{width:84%}
   .word-card{margin-top:-17px;padding:5px 7px 6px;border-width:2px}
   .wb-text{font-size:18px}
 }
@@ -877,6 +891,7 @@ const state = {
   sfxOn:true,
   bgmOn:true,
   resumeAfterHelp:false,
+  afterHelp:null,
   taskToken:0
 };
 
@@ -1342,9 +1357,15 @@ function openHelp(fromIntro=false){
   }
   $("#helpModal").classList.add("open");
 }
+function isHelpOpen(){
+  return $("#helpModal").classList.contains("open");
+}
 function closeHelp(shouldResume=true){
   $("#helpModal").classList.remove("open");
-  if(shouldResume && state.resumeAfterHelp && state.gameActive)resumeGame();
+  /* 도움말을 보는 동안 끝난 정답 발음의 다음 진행은 도움말을 닫을 때 이어서 한다 */
+  const pending=state.afterHelp;state.afterHelp=null;
+  if(shouldResume && pending && state.gameActive)pending();
+  else if(shouldResume && state.resumeAfterHelp && state.gameActive)resumeGame();
   state.resumeAfterHelp=false;
 }
 
@@ -1360,7 +1381,7 @@ function startGame(){
   state.results=state.questions.map(word=>({word,status:"pending",wrongHits:0,spellingBonus:false}));
   state.currentIndex=0;state.score=0;state.streak=0;state.maxStreak=0;state.currentWrongHits=0;
   state.timeLeft=BASE_TIME;state.elapsed=0;state.bonusScore=0;state.wrongHitCount=0;
-  state.paused=false;state.lock=false;state.gameActive=true;state.lastTick=performance.now();
+  state.paused=false;state.lock=false;state.gameActive=true;state.lastTick=performance.now();state.afterHelp=null;
   preloadQuestionAudio();
   showScreen("game");startTimer();renderQuestion();
 }
@@ -1368,7 +1389,7 @@ function startTimer(){
   clearInterval(state.timerId);
   state.lastTick=performance.now();
   state.timerId=setInterval(()=>{
-    if(!state.gameActive||state.paused){state.lastTick=performance.now();return}
+    if(!state.gameActive||state.paused||isHelpOpen()){state.lastTick=performance.now();return}
     const now=performance.now();
     const delta=(now-state.lastTick)/1000;
     state.lastTick=now;
@@ -1491,7 +1512,7 @@ function fitAllWordBoards(){
     const paddingRight = parseFloat(style.paddingRight) || 8;
     const availWidth = Math.max(10, board.clientWidth - paddingLeft - paddingRight);
     if (availWidth <= 0) return;
-    let fontSize = 30;
+    let fontSize = 34;
     textEl.style.fontSize = fontSize + "px";
     textEl.style.whiteSpace = "nowrap";
     while (textEl.offsetWidth > availWidth && fontSize > 8) {
@@ -1573,6 +1594,7 @@ function hitMole(button,option){
     pauseGame();
     const afterAudio=()=>{
       if(!state.gameActive)return;
+      if(isHelpOpen()){state.afterHelp=afterAudio;return}
       if(state.mode==="spelling"){openSpellModal();return}
       state.paused=false;state.lastTick=performance.now();
       setTimeout(nextQuestion,280);
