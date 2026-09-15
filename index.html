@@ -1118,10 +1118,16 @@ function setIcon(el,faClass,fallbackText){
   else{el.className="";el.textContent=fallbackText}
 }
 function checkIconFont(){
+  /* document.fonts.check()는 CDN 스타일시트가 막혀 글꼴이 아예 등록되지 않았을 때도 true를 돌려주므로,
+     실제로 등록된 Font Awesome 글꼴이 불러와졌는지(또는 불러오는 중인지)로 판단한다 */
   try{
-    iconFontReady=(document.fonts&&document.fonts.check)
-      ? document.fonts.check('900 16px "Font Awesome 6 Free"')
-      : true;
+    if(document.fonts&&typeof document.fonts.forEach==="function"){
+      let usable=false;
+      document.fonts.forEach(face=>{
+        if(/Font Awesome 6 Free/i.test(face.family)&&(face.status==="loaded"||face.status==="loading"))usable=true;
+      });
+      iconFontReady=usable;
+    }else iconFontReady=true;
   }catch(e){iconFontReady=true}
   if(!iconFontReady){
     const fallback={"nav-home-btn":"HOME","nav-back-btn":"BACK","nav-forward-btn":"NEXT","nav-htp-btn":"HELP"};
