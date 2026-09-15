@@ -808,6 +808,7 @@ h2{font-size:clamp(30px,4.4vw,48px);margin-bottom:12px}
         <li>- 우리말 뜻에 맞는 영어 단어 두더지를 골라요.</li>
         <li>- 단어 익히기 모드 또는 철자 익히기 모드를 선택할 수 있어요.</li>
         <li>- 두더지의 속도에 따른 난이도를 조절할 수 있어요.</li>
+        <li>- 10문제를 100초 안에 풀어요. 시간이 다 되면 게임이 끝나요.</li>
         <li>- 철자 익히기 모드에서는 보너스 점수가 더 나와요.</li>
       </ul>
     </div>
@@ -815,8 +816,9 @@ h2{font-size:clamp(30px,4.4vw,48px);margin-bottom:12px}
       <h3>점수 규칙</h3>
       <ul class="htp-list">
         <li>- 정답일 때 +10점</li>
-        <li>- 오답일 때 -3점</li>
-        <li>- 3번 연속 정답이면 +5점 보너스!</li>
+        <li>- 오답일 때 -3점 (0점 아래로는 내려가지 않아요)</li>
+        <li>- 3번 연속 정답마다 +5점 보너스!</li>
+        <li>- 철자 익히기 모드에서 철자를 정확히 입력하면 +5점 보너스!</li>
       </ul>
     </div>
     <div id="helpActions" class="modal-actions"></div>
@@ -864,6 +866,7 @@ const DIFFICULTIES = {
 };
 const BASE_TIME = 100;   /* 10문제 제한 시간 100초 */
 const TOTAL_ROUNDS = 10;
+const SPELLING_BONUS = 5; /* 철자 익히기에서 철자를 정확히 입력하면 주는 보너스 */
 
 const state = {
   screen:"intro",
@@ -1643,9 +1646,14 @@ function submitSpelling(){
   const raw=$("#spellInput").value.trim();
   const correct=raw===word.en;
   if(correct){
-    playSfx("correct");state.results[state.currentIndex].spellingBonus=true;
+    playSfx("correct");
+    /* 철자 보너스: How to Play의 점수 규칙과 맞춘다 (확인 버튼을 여러 번 눌러도 한 번만 준다) */
+    if(!state.results[state.currentIndex].spellingBonus){
+      state.results[state.currentIndex].spellingBonus=true;
+      state.score+=SPELLING_BONUS;state.bonusScore+=SPELLING_BONUS;
+    }
     $("#spellFeedback").style.color="var(--good)";$("#spellFeedback").textContent="정확해요!";
-    showToast("참 잘했어요!","bonus",900);updateHud();
+    showToast(`참 잘했어요! 철자 보너스 +${SPELLING_BONUS}점`,"bonus",900);updateHud();
     delay(()=>{closeSpellModal(false);state.paused=false;state.lastTick=performance.now();nextQuestion()},650);
   }else{
     playSfx("wrong");
