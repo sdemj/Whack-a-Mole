@@ -868,6 +868,34 @@ const BASE_TIME = 100;   /* 10문제 제한 시간 100초 */
 const TOTAL_ROUNDS = 10;
 const SPELLING_BONUS = 5; /* 철자 익히기에서 철자를 정확히 입력하면 주는 보너스 */
 
+/* 뜻이 비슷해 함께 보기로 나오면 정답이 둘처럼 보이는 단어 묶음.
+   이 중 하나가 문제로 나오면 같은 묶음의 다른 단어는 오답 보기로 쓰지 않는다. */
+const SIMILAR_WORD_GROUPS = [
+  ["cap","hat"],
+  ["nice","kind","good"],
+  ["class","lesson"],
+  ["ship","boat"],
+  ["slim","thin"],
+  ["small","short"],
+  ["big","large"],
+  ["happy","glad"],
+  ["watch","see","look"],
+  ["talk","say","tell"],
+  ["bag","backpack"],
+  ["meat","beef"],
+  ["down","under","bottom"],
+  ["back","behind"]
+];
+const SIMILAR_WORD_MAP = new Map();
+SIMILAR_WORD_GROUPS.forEach(group=>{
+  group.forEach(word=>{
+    const key=word.toLowerCase();
+    const set=SIMILAR_WORD_MAP.get(key)||new Set();
+    group.forEach(other=>{if(other.toLowerCase()!==key)set.add(other.toLowerCase())});
+    SIMILAR_WORD_MAP.set(key,set);
+  });
+});
+
 const state = {
   screen:"intro",
   categoryIndex:null,
@@ -1476,8 +1504,7 @@ function buildOptions(word){
     }
     return shuffle([{text:word.en,correct:true},...variants.map(text=>({text,correct:false}))]);
   }
-  const synonymousAnswers={good:["nice","kind"],nice:["good","kind"],kind:["good","nice"]};
-  const excluded=new Set([word.en.toLowerCase(),...(synonymousAnswers[word.en.toLowerCase()]||[])]);
+  const excluded=new Set([word.en.toLowerCase(),...(SIMILAR_WORD_MAP.get(word.en.toLowerCase())||[])]);
   /* 뜻이 겹치는 단어(예: ship/boat "배", watch/see "보다")는 오답으로 내지 않는다 */
   const meanings=ko=>ko.split(",").map(s=>s.trim()).filter(Boolean);
   const answerMeanings=new Set(meanings(word.ko));
