@@ -170,37 +170,39 @@ h2{font-size:48px;margin-bottom:12px}
 .choice-title{font-weight:900;font-size:22px}
 .choice-desc{display:block;color:var(--muted);font-size:18px;line-height:1.5;margin-top:5px}
 /* STEP 3(모드/난이도) 화면 글씨를 전체적으로 조금 키운다 */
-#settingsScreen .setting-block h3{font-size:29px}
+#settingsScreen .setting-block h3{font-size:25px}
 #settingsScreen .choice-title{font-size:25px}
-#settingsScreen .choice-desc{font-size:20px}
+#settingsScreen .choice-desc{font-size:18px}
 #settingsScreen .setting-summary strong{font-size:24px}
 #settingsScreen #settingsSummaryText{font-size:18px!important}
 /* STEP 3 화면만: 1280×800 무대 안에서 스크롤 없이 한 화면에 들어오도록 위아래 빈 곳을 덜어낸다
    (글씨 크기는 그대로 두고 여백만 줄인다) */
-#settingsScreen .panel{padding:18px 32px}
-#settingsScreen .hero-copy{margin-bottom:10px}
-#settingsScreen .eyebrow{padding:5px 14px;margin-bottom:6px}
-#settingsScreen h2{margin-bottom:6px}
+#settingsScreen .panel{padding:10px 32px}
+#settingsScreen .hero-copy{margin-bottom:6px}
+#settingsScreen .eyebrow{padding:4px 13px;margin-bottom:4px}
+#settingsScreen h2{margin-bottom:4px}
 #settingsScreen .lead{line-height:1.35}
 #settingsScreen .settings-grid{gap:16px}
-#settingsScreen .setting-block{padding:16px}
-#settingsScreen .setting-block h3{margin-bottom:10px}
-#settingsScreen .choice-stack{gap:10px}
-#settingsScreen .choice-card{padding:14px}
-#settingsScreen .setting-summary{margin-top:12px;padding:14px 22px}
+#settingsScreen .setting-block{padding:12px}
+#settingsScreen .setting-block h3{margin-bottom:8px}
+#settingsScreen .choice-stack{gap:8px}
+#settingsScreen .choice-card{padding:11px 14px}
+#settingsScreen .setting-summary{margin-top:8px;padding:10px 22px}
 /* STEP 3 여유 더 확보 (글꼴이 안 불러와진 환경에서도 스크롤이 안 생기도록) */
-#settingsScreen h2{font-size:40px}
-#settingsScreen .lead{font-size:20px}
+#settingsScreen h2{font-size:34px}
+#settingsScreen .lead{font-size:18px}
 
 /* How to Play 창: 표지에서 열면 버튼 2개가 더 붙어 세로로 넘쳤다. 빈 곳을 덜어낸다 */
-#helpModal .modal{padding:24px 32px}
-#helpModal h2{font-size:36px;margin-bottom:8px}
-#helpModal .htp-goal{padding:10px 16px;margin-bottom:10px}
-#helpModal .htp-goal p{font-size:20px}
-#helpModal .htp-section{margin-top:10px}
-#helpModal .htp-section h3{margin-bottom:7px}
-#helpModal .htp-list li{padding-top:7px;padding-bottom:7px}
-#helpModal .modal-actions{margin-top:14px}
+#helpModal .modal{padding:12px 32px 14px}
+#helpModal h2{font-size:30px;margin-bottom:4px}
+#helpModal .htp-goal{padding:8px 16px;margin-bottom:8px}
+#helpModal .htp-goal p{font-size:19px}
+#helpModal .htp-section{margin-top:7px}
+#helpModal .htp-section h3{font-size:21px;margin-bottom:5px}
+#helpModal .htp-list li{padding-top:5px;padding-bottom:5px}
+#helpModal .htp-list{gap:4px}
+#helpModal .eyebrow{padding:4px 13px;margin-bottom:4px}
+#helpModal .modal-actions{margin-top:8px}
 .setting-summary{
   margin-top:22px;background:linear-gradient(135deg,#fff5dc,#eef9ef);padding:18px 22px;
   border-radius:20px;display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap
@@ -353,7 +355,7 @@ h2{font-size:48px;margin-bottom:12px}
   background:#f2ecf7;color:#5c4a68;font-size:20px;font-weight:900;cursor:pointer
 }
 .modal-close:hover{background:#e6dcef}
-.modal-actions{display:flex;justify-content:center;margin-top:20px}
+.modal-actions{display:flex;justify-content:center;gap:12px;margin-top:20px}
 .modal-actions:empty{display:none}
 .exit-modal{text-align:center}
 .exit-mole{display:block;width:190px;height:auto;margin:0 auto 8px}
