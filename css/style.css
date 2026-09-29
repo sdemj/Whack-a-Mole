@@ -175,6 +175,32 @@ h2{font-size:48px;margin-bottom:12px}
 #settingsScreen .choice-desc{font-size:20px}
 #settingsScreen .setting-summary strong{font-size:24px}
 #settingsScreen #settingsSummaryText{font-size:18px!important}
+/* STEP 3 화면만: 1280×800 무대 안에서 스크롤 없이 한 화면에 들어오도록 위아래 빈 곳을 덜어낸다
+   (글씨 크기는 그대로 두고 여백만 줄인다) */
+#settingsScreen .panel{padding:18px 32px}
+#settingsScreen .hero-copy{margin-bottom:10px}
+#settingsScreen .eyebrow{padding:5px 14px;margin-bottom:6px}
+#settingsScreen h2{margin-bottom:6px}
+#settingsScreen .lead{line-height:1.35}
+#settingsScreen .settings-grid{gap:16px}
+#settingsScreen .setting-block{padding:16px}
+#settingsScreen .setting-block h3{margin-bottom:10px}
+#settingsScreen .choice-stack{gap:10px}
+#settingsScreen .choice-card{padding:14px}
+#settingsScreen .setting-summary{margin-top:12px;padding:14px 22px}
+/* STEP 3 여유 더 확보 (글꼴이 안 불러와진 환경에서도 스크롤이 안 생기도록) */
+#settingsScreen h2{font-size:40px}
+#settingsScreen .lead{font-size:20px}
+
+/* How to Play 창: 표지에서 열면 버튼 2개가 더 붙어 세로로 넘쳤다. 빈 곳을 덜어낸다 */
+#helpModal .modal{padding:24px 32px}
+#helpModal h2{font-size:36px;margin-bottom:8px}
+#helpModal .htp-goal{padding:10px 16px;margin-bottom:10px}
+#helpModal .htp-goal p{font-size:20px}
+#helpModal .htp-section{margin-top:10px}
+#helpModal .htp-section h3{margin-bottom:7px}
+#helpModal .htp-list li{padding-top:7px;padding-bottom:7px}
+#helpModal .modal-actions{margin-top:14px}
 .setting-summary{
   margin-top:22px;background:linear-gradient(135deg,#fff5dc,#eef9ef);padding:18px 22px;
   border-radius:20px;display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap
