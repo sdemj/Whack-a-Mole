@@ -1,0 +1,428 @@
+/* ===== 폰트: 학교안심 두 가지만 사용 (Jua 등 다른 폰트 사용하지 않음) ===== */
+@font-face{
+  font-family:"Hakgyoansim Boardmarker";
+  src:url("../fonts/Hakgyoansim_BoardmarkerR.ttf") format("truetype");
+  font-weight:100 900;font-style:normal;font-display:swap;
+}
+@font-face{
+  font-family:"Hakgyoansim Poster";
+  src:url("../fonts/Hakgyoansim_PosterB.ttf") format("truetype");
+  font-weight:100 900;font-style:normal;font-display:swap;
+}
+:root{
+  --ink:#413347;
+  --muted:#6d5f77;
+  --lav:#d9c8f1;
+  --lav-deep:#9d7bc6;
+  --pink:#f3b6ca;
+  --pink-deep:#df7197;
+  --blue:#bfe4f5;
+  --blue-deep:#6fb4d5;
+  --mint:#ccebcf;
+  --yellow:#ffe5a0;
+  --cream:#fffaf0;
+  --white:#ffffff;
+  --good:#1f8f5f;
+  --bad:#d94b58;
+  --shadow:0 14px 34px rgba(83,58,96,.18);
+  --soft-shadow:0 8px 20px rgba(83,58,96,.13);
+  --body-font:"Hakgyoansim Boardmarker","Malgun Gothic",sans-serif;
+  --title-font:"Hakgyoansim Poster","Hakgyoansim Boardmarker","Malgun Gothic",sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  font-family:var(--body-font);
+  color:var(--ink);
+  background:#eef1f5;
+  overflow:hidden;
+  -webkit-tap-highlight-color:transparent;
+}
+/* ===== 무대(고정 1280×720). 상단바 공통 부품(topnav.js)이 자리·배율을 잡는다 =====
+   화면 안의 vw·vh·cqw·cqh는 전부 이 고정 크기를 기준으로 계산되므로,
+   창 크기가 달라져도 무대를 통째로 늘였다 줄였다 할 뿐 안의 배치는 그대로다 */
+#app{
+  position:fixed;left:0;top:0;width:1280px;height:800px;
+  background:
+    radial-gradient(circle at 10% 8%,rgba(255,255,255,.95) 0 2px,transparent 3px),
+    radial-gradient(circle at 86% 12%,rgba(255,255,255,.8) 0 2px,transparent 3px),
+    linear-gradient(145deg,#eee3f6,#fff8e5 52%,#dff3e4);
+  overflow:hidden;
+}
+html,body,button,input,textarea,select,option,table,th,td,
+h1,h2,h3,h4,p,span,div,strong,small,label,li{font-family:var(--body-font)}
+h1,h2,h3,h4,.title-font,.stat-value,.score-big,.question-word,.word-board,
+.primary-btn,.secondary-btn,.soft-btn,.danger-btn,.category-ko,.sub-name,
+.choice-title,.kpi strong,.answer-word strong{font-family:var(--title-font)}
+button,input{font-size:inherit}
+button{touch-action:manipulation}
+.hidden{display:none!important}
+
+/* 두 줄 이상으로 넘어가는 문장은 이어지는 줄을 들여쓴다 */
+.wrap-indent{padding-left:1.4em;text-indent:-1.4em}
+
+.screen{
+  position:absolute;inset:0;
+  display:none;
+  overflow:hidden;
+  padding:18px;
+}
+.screen.active{display:flex}
+.screen:not(#introScreen) .app-shell{max-height:100%;min-height:0}
+.screen:not(#introScreen) .panel{max-height:100%;overflow:auto}
+
+/* ===== 표지 ===== */
+#introScreen{padding:0;background:#8fd0f0;align-items:center;justify-content:center;overflow:hidden}
+.cover-frame{
+  position:relative;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+}
+.cover-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;display:block}
+.cover-hotspot{
+  position:absolute;border:0;border-radius:999px;background:transparent;
+  cursor:pointer;outline:none;transition:transform .18s ease;
+}
+.cover-hotspot:hover,.cover-hotspot:focus-visible{
+  transform:scale(1.02);
+}
+#coverHelp{left:21.53%;top:79.89%;width:27.51%;height:12.98%}
+#coverStart{left:49.16%;top:80%;width:29.37%;height:11.38%}
+
+/* 상단바는 공통 부품(topnav.css / topnav.js)이 그린다. 무대는 index.html의
+   TopNav.fit() 호출로 상단바 띠 아래에 맞춰진다 */
+button:focus-visible,[tabindex]:focus-visible{
+  outline:3px solid #2563eb!important;outline-offset:2px!important;
+}
+
+.app-shell{
+  width:min(1160px,100%);margin:auto;
+  display:flex;flex-direction:column;gap:18px;
+}
+.panel{
+  background:rgba(255,255,255,.9);border:1px solid rgba(255,255,255,.96);
+  border-radius:32px;padding:32px;box-shadow:var(--shadow);
+}
+.hero-copy{text-align:center;margin:0 auto 24px;max-width:760px}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:7px;background:#efe5fb;color:#6c4a91;
+  border-radius:999px;padding:8px 16px;font-size:16px;font-weight:900;margin-bottom:12px
+}
+h1,h2,h3,p{margin-top:0}
+h1,h2{letter-spacing:-.03em}
+h1{font-size:58px;margin-bottom:12px}
+h2{font-size:48px;margin-bottom:12px}
+.lead{color:var(--muted);font-size:23px;line-height:1.6;margin-bottom:0}
+
+/* ===== 주제 선택 ===== */
+.category-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.category-card,.sub-card,.choice-card{
+  border:3px solid transparent;background:#fff;border-radius:24px;padding:20px;
+  cursor:pointer;box-shadow:var(--soft-shadow);transition:.18s ease;color:var(--ink);
+}
+.category-card:hover,.sub-card:hover,.choice-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+.category-card:focus-visible,.sub-card:focus-visible,.choice-card:focus-visible{outline:4px solid rgba(111,180,213,.45)}
+.category-icon{display:none}
+.category-ko{font-size:25px;font-weight:900;display:block}
+.category-en{font-size:18px;color:var(--muted);display:block;margin-top:6px;line-height:1.35}
+.count-pill{
+  display:inline-flex;margin-top:12px;background:#f4eff8;color:#6c5480;border-radius:999px;
+  padding:6px 13px;font-size:18px;font-weight:900
+}
+.section-actions{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;margin:18px 0 14px;flex-wrap:wrap
+}
+.soft-btn,.primary-btn,.secondary-btn,.danger-btn{
+  border:0;border-radius:18px;padding:16px 26px;font-weight:900;font-size:22px;
+  cursor:pointer;transition:.16s ease;box-shadow:var(--soft-shadow)
+}
+.soft-btn{background:#f0e8f7;color:#67487e}
+.secondary-btn{background:#dceffc;color:#2f5f7b}
+.primary-btn{background:linear-gradient(135deg,#ef9fbe,#e879a4);color:#fff}
+.danger-btn{background:#ffe2e5;color:#ab3e4a}
+.soft-btn:hover,.primary-btn:hover,.secondary-btn:hover,.danger-btn:hover{transform:translateY(-2px)}
+.primary-btn:disabled,.secondary-btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.sub-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.sub-card{text-align:left;position:relative;min-height:160px;padding:24px;z-index:1}
+.sub-card:hover{z-index:30}
+.sub-card.selected{border-color:#9f7ac9;background:linear-gradient(145deg,#fbf6ff,#f1e4fb)}
+.sub-check{
+  position:absolute;right:16px;top:16px;width:34px;height:34px;border-radius:50%;
+  background:#eee7f1;display:grid;place-items:center;font-weight:900;color:#fff;font-size:18px
+}
+.sub-card.selected .sub-check{background:#9d7bc6}
+.sub-name{display:block;font-size:27px;font-weight:900;margin:18px 0 8px}
+.select-all-btn{display:block;width:100%;min-height:0;text-align:center;margin-bottom:16px;font-size:22px;padding:16px 22px}
+.selection-summary{
+  background:linear-gradient(135deg,#f8effd,#eef8ff);border-radius:20px;padding:15px 20px;
+  font-weight:900;color:#5f4a6c;font-size:19px
+}
+
+/* ===== 모드/난이도 ===== */
+.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.setting-block{background:#fbf9fd;border-radius:24px;padding:22px}
+.setting-block h3{font-size:26px;margin-bottom:16px}
+.choice-stack{display:grid;gap:12px}
+.choice-card{display:flex;align-items:flex-start;gap:14px;text-align:left;padding:18px}
+.choice-card.selected{border-color:#9d7bc6;background:#f5edfc}
+.choice-icon{font-size:34px;line-height:1;flex:0 0 auto}
+.choice-title{font-weight:900;font-size:22px}
+.choice-desc{display:block;color:var(--muted);font-size:18px;line-height:1.5;margin-top:5px}
+/* STEP 3(모드/난이도) 화면 글씨를 전체적으로 조금 키운다 */
+#settingsScreen .setting-block h3{font-size:29px}
+#settingsScreen .choice-title{font-size:25px}
+#settingsScreen .choice-desc{font-size:20px}
+#settingsScreen .setting-summary strong{font-size:24px}
+#settingsScreen #settingsSummaryText{font-size:18px!important}
+.setting-summary{
+  margin-top:22px;background:linear-gradient(135deg,#fff5dc,#eef9ef);padding:18px 22px;
+  border-radius:20px;display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap
+}
+.setting-summary strong{font-size:21px}
+
+/* ===== 게임 화면 ===== */
+.game-shell{width:min(1320px,100%);height:100%;margin:auto;display:flex;flex-direction:column;gap:12px;min-height:0}
+/* 게임 진행 정보는 상단 버튼과 위계를 분리해 별도 패널로 크게 보여준다 */
+.status-bar{
+  background:rgba(255,255,255,.94);border:1px solid rgba(255,255,255,.98);
+  border-radius:26px;padding:12px 16px;box-shadow:var(--soft-shadow)
+}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.stat{min-width:0;background:#f6f1fa;border-radius:18px;padding:10px 12px;text-align:center}
+.stat-label{display:block;font-size:18px;color:var(--muted);font-weight:900}
+.stat-value{display:block;font-size:36px;font-weight:900;white-space:nowrap;line-height:1.15}
+.timer-danger{color:var(--bad);animation:pulse .7s infinite alternate}
+@keyframes pulse{to{transform:scale(1.08)}}
+.progress-wrap{height:12px;border-radius:99px;background:rgba(255,255,255,.7);overflow:hidden;margin-top:10px;box-shadow:inset 0 1px 3px rgba(70,48,80,.12)}
+.progress-bar{height:100%;width:0;background:linear-gradient(90deg,#8ad2ed,#bd8ed8,#f1a1bf);transition:width .25s}
+.question-card{
+  background:rgba(255,255,255,.94);border-radius:26px;padding:14px 20px;text-align:center;box-shadow:var(--soft-shadow)
+}
+.question-hint{font-size:20px;color:var(--muted);font-weight:900}
+.question-word{font-size:48px;font-weight:900;margin-top:2px;letter-spacing:-.03em}
+.question-instruction{font-size:20px;color:#61506c;margin-top:4px;font-weight:900}
+.mole-grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:19.2px;
+  grid-template-rows:repeat(2,minmax(0,1fr));flex:1;min-height:0;
+}
+
+/* ===== 두더지와 흙더미 (3겹) =====
+   맨 뒤   .mole-back    두더지. 흙더미 뒤에서 오르내린다 → 흙더미가 가려 주므로 몸이 네모로 잘려 보이지 않는다
+   가운데  .mound        흙더미 그림. 항상 보인다
+   맨 앞   .card-front   단어 카드. 흙더미 앞으로 나온다
+   그 위   .mole-button  칸 전체를 덮는 투명한 버튼(클릭 담당). 그림이 아니라 버튼이므로 보이지 않는다 */
+.mole-slot{
+  position:relative;width:100%;min-height:0;
+  overflow:hidden;              /* 완전히 내려간 두더지·카드를 칸 밖에서 잘라 준다 */
+  container-type:size;          /* 아래의 cqw·cqh = 이 칸의 폭·높이 */
+}
+.mole-slot > *{
+  /* 흙더미 그림을 바꾸면 이 숫자만 고친다 */
+  --mound-ratio:.1735;                    /* 그림 세로 ÷ 가로 (2127×369, 투명 여백 제거함) */
+  /* 흙더미 폭: 칸 폭을 넘지 않고, 올라온 두더지 머리끝이 칸 높이 안에 들어오는 크기 */
+  --mound-w:min(100cqw, calc((100cqh - 6px) / .7));
+  --mound-h:calc(var(--mound-w) * var(--mound-ratio));
+  --mole-w:calc(var(--mound-w) * .56);    /* 두더지 크기 */
+  --mole-sink:calc(var(--mound-h) * .42); /* 올라왔을 때 두더지가 흙더미에 잠긴 깊이 */
+  --card-bottom:calc(var(--mound-h) * .34); /* 올라왔을 때 카드가 서는 높이 */
+}
+.mole-back{
+  position:absolute;left:50%;bottom:var(--mole-sink);width:var(--mole-w);height:auto;display:block;z-index:1;
+  transform:translate(-50%,100%);        /* 숨은 상태: 자기 키만큼 내려가 흙더미 뒤에 완전히 들어간다 */
+  transition:transform .34s cubic-bezier(.25,1.2,.5,1);
+  filter:drop-shadow(0 4px 6px rgba(0,0,0,.15));
+  pointer-events:none;
+}
+.mound{
+  position:absolute;left:50%;bottom:0;width:var(--mound-w);height:auto;display:block;z-index:2;
+  transform:translateX(-50%);pointer-events:none;
+}
+.card-front{
+  position:absolute;left:50%;bottom:var(--card-bottom);width:calc(var(--mound-w) * .62);z-index:3;
+  transform:translate(-50%,calc(100% + var(--card-bottom) + 8px));  /* 숨은 상태: 칸 아래로 내려가 잘린다 */
+  transition:transform .34s cubic-bezier(.25,1.2,.5,1);
+  pointer-events:none;
+}
+.mole-button{
+  position:absolute;inset:0;z-index:4;border:0;background:transparent;padding:0;
+  cursor:pointer;outline:none;
+}
+/* 올라온 상태 / 내려가는 중 (버튼이 앞 형제라 ~ 로 짝을 찾는다) */
+.mole-button.visible ~ .mole-back,
+.mole-button.visible ~ .card-front{transform:translate(-50%,0)}
+.mole-button.ducking ~ .mole-back{transform:translate(-50%,100%);transition:transform .26s ease-in}
+.mole-button.ducking ~ .card-front{
+  transform:translate(-50%,calc(100% + var(--card-bottom) + 8px));transition:transform .26s ease-in;
+}
+
+/* 칸 번호 팻말(숫자키 1~6과 같은 번호). 흙더미 왼쪽 어깨에 꽂힌 것처럼 배치(새싹은 오른쪽).
+   흙더미 크기(--mound-w)를 기준으로 하므로 흙더미 그림을 바꿔도 같이 따라간다.
+   키보드가 없는 기기에서는 숨긴다 */
+.slot-no{
+  position:absolute;z-index:3;pointer-events:none;
+  left:calc(50% - var(--mound-w) * .42);
+  bottom:calc(var(--mound-h) * .58);
+  transform:translate(-50%,50%);
+  width:calc(var(--mound-w) * .117);aspect-ratio:1;
+  display:flex;align-items:center;justify-content:center;
+  background:#f3ddb8;border:calc(var(--mound-w) * .01) solid #b98a54;border-radius:22%;
+  box-shadow:0 2px 4px rgba(60,40,20,.25);
+  font:900 calc(var(--mound-w) * .065)/1 var(--title-font);color:#5b3b1e;
+}
+.slot-no::after{
+  content:"";position:absolute;left:50%;top:100%;
+  width:calc(var(--mound-w) * .0126);height:55%;
+  background:#b98a54;transform:translateX(-50%);
+}
+@media (hover:none){.slot-no{display:none}}
+
+/* 단어 카드 */
+.word-card{
+  width:100%;
+  background:#ffffff;
+  border:2.5px solid #e0d0c4;
+  border-radius:16px;
+  min-height:48px;padding:10px 12px 11px;
+  box-shadow:0 6px 16px rgba(60,40,20,.14);
+  display:flex;align-items:center;justify-content:center;text-align:center;
+}
+.wb-text{
+  font-family:var(--title-font);
+  display:inline-block;white-space:nowrap;font-weight:900;color:#3a1d05;line-height:1.1;
+  font-size:22px;
+}
+
+.mole-button:hover ~ .mole-back{filter:drop-shadow(0 6px 10px rgba(0,0,0,.22)) brightness(1.04)}
+.mole-button.correct ~ .mole-back,.mole-button.correct ~ .card-front{animation:bonk .5s ease}
+.mole-button.wrong ~ .mole-back,.mole-button.wrong ~ .card-front{animation:shake .42s ease}
+@keyframes bonk{35%{transform:translate(-50%,-8px) rotate(-4deg) scale(1.04)}65%{transform:translate(-50%,0px) rotate(4deg) scale(.98)}}
+@keyframes shake{20%,60%{transform:translate(-54%,0px) rotate(-3deg)}40%,80%{transform:translate(-46%,0px) rotate(-3deg)}}
+
+/* ===== 토스트 ===== */
+.toast-layer{position:absolute;inset:0;pointer-events:none;z-index:80}
+.toast{
+  position:absolute;left:50%;top:16%;transform:translate(-50%,-10px) scale(.94);
+  opacity:0;background:#fff;color:var(--ink);border-radius:999px;padding:14px 24px;
+  font-weight:900;font-size:24px;box-shadow:var(--shadow);transition:.25s ease;white-space:nowrap
+}
+.toast.show{opacity:1;transform:translate(-50%,0) scale(1)}
+.toast.good{background:#e7faef;color:#186c4a}.toast.bad{background:#ffe8ea;color:#a53b45}.toast.bonus{background:#fff2ba;color:#7a5a0d}
+
+/* ===== 팝업: 화면 한가운데. 내용이 길면 스크롤되고 위아래가 잘리지 않는다 =====
+   가운데 정렬은 align-items가 아니라 자식의 margin:auto로 한다.
+   align-items:center로 하면 내용이 화면보다 길 때 위쪽이 잘려 스크롤해도 못 본다 */
+.modal-backdrop{
+  position:absolute;inset:0;background:rgba(54,40,62,.58);backdrop-filter:blur(8px);
+  z-index:10050;display:none;padding:16px;overflow:auto;
+}
+.modal-backdrop.open{display:flex}
+.modal{
+  width:min(760px,100%);max-width:100%;margin:auto;
+  background:#fff;border-radius:30px;padding:38px 36px;
+  box-shadow:0 24px 70px rgba(38,23,47,.36);position:relative;
+}
+.modal-close{
+  position:absolute;right:14px;top:14px;width:46px;height:46px;border-radius:50%;border:0;
+  background:#f2ecf7;color:#5c4a68;font-size:20px;font-weight:900;cursor:pointer
+}
+.modal-close:hover{background:#e6dcef}
+.modal-actions{display:flex;justify-content:center;margin-top:20px}
+.modal-actions:empty{display:none}
+.exit-modal{text-align:center}
+.exit-mole{display:block;width:190px;height:auto;margin:0 auto 8px}
+.exit-modal h2{margin-bottom:10px}
+.exit-modal p{font-size:23px;line-height:1.5;color:var(--muted);margin-bottom:0}
+.exit-actions{display:flex;gap:10px;justify-content:center;margin-top:22px;flex-wrap:wrap}
+.htp-goal{
+  background:linear-gradient(135deg,#eef8ff,#f7edff);border-radius:20px;padding:14px 18px;margin-bottom:14px
+}
+.htp-goal b{display:block;font-size:19px;color:#5d4479;margin-bottom:4px}
+.htp-goal p{margin:0;font-size:22px;line-height:1.5}
+.htp-section{margin-top:14px}
+.htp-section h3{font-size:23px;margin-bottom:10px}
+.htp-list{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.htp-list li{
+  background:#f8f4fb;border-radius:14px;padding:9px 15px;font-size:20px;line-height:1.45;
+  padding-left:calc(15px + 1.4em);text-indent:-1.4em
+}
+.htp-section.score .htp-list li{background:linear-gradient(135deg,#fff8e6,#f5efff)}
+
+/* ===== 철자 입력 팝업 ===== */
+.spell-modal{text-align:center}
+.spell-clue{background:linear-gradient(135deg,#f7ecff,#eaf8ff);border-radius:20px;padding:16px;margin:16px 0}
+.spell-input{
+  width:100%;font-size:44px;font-weight:900;text-align:center;font-family:var(--title-font);
+  padding:16px 20px;border:4px solid #d9c9e6;border-radius:20px;outline:none;color:var(--ink)
+}
+.spell-input:focus{border-color:#9d7bc6;box-shadow:0 0 0 6px rgba(157,123,198,.14)}
+.spell-input.error{animation:inputShake .35s;border-color:var(--bad)}
+@keyframes inputShake{25%{transform:translateX(-8px)}50%{transform:translateX(8px)}75%{transform:translateX(-5px)}}
+.spell-actions{display:flex;gap:10px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+
+/* ===== 결과 ===== */
+.result-layout{display:grid;grid-template-columns:minmax(260px,.85fr) minmax(320px,1.15fr);gap:20px}
+.result-card{background:#fff;border-radius:26px;padding:24px;box-shadow:var(--soft-shadow)}
+.score-big{text-align:center;font-size:64px;font-weight:900;color:#815ea3;line-height:1}
+.result-kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:20px}
+.kpi{background:#f6f1fa;border-radius:16px;padding:14px;text-align:center}
+.kpi strong{display:block;font-size:28px}
+.kpi span{font-size:18px;color:var(--muted);font-weight:900}
+.answer-list{display:grid;gap:9px;max-height:374px;overflow:auto;padding-right:4px}
+.answer-row{
+  display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:12px;align-items:center;
+  padding:12px 14px;border-radius:16px;background:#f8f5fa
+}
+.answer-row.ok{background:#eaf8ef}.answer-row.pending{background:#fff1f2}
+.answer-mark{font-size:26px;font-weight:900;text-align:center}
+.answer-word{min-width:0}
+.answer-word-line{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.answer-word strong{font-size:32px;line-height:1.2;overflow-wrap:anywhere;min-width:0}
+.answer-word small{color:var(--muted);font-size:18px}
+.answer-meta{font-size:14px;color:var(--muted);text-align:right;font-weight:900;max-width:110px;word-break:keep-all}
+.answer-audio-button{
+  width:34px;height:34px;flex-shrink:0;border:0;border-radius:50%;background:#e8dcf5;cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;padding:0;text-indent:0;letter-spacing:0;
+  font-size:19px;line-height:1;transition:transform .16s ease,background .16s ease
+}
+.answer-audio-button:hover{transform:translateY(-2px);background:#dac4ee}
+.result-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+.confetti-piece{
+  position:absolute;top:-30px;width:12px;height:20px;border-radius:3px;z-index:200;pointer-events:none;
+  animation:fall var(--dur) linear forwards;transform:rotate(var(--rot))
+}
+@keyframes fall{to{transform:translate(var(--drift),880px) rotate(calc(var(--rot) + 720deg));opacity:.2}}
+
+/* ===== 주제 미리보기(영어 단어만) ===== */
+.word-preview-tooltip{
+  position:absolute;z-index:500;display:none;width:460px;
+  max-height:480px;overflow:auto;padding:16px 18px 15px;
+  border:2px solid rgba(214,191,236,.85);border-radius:22px;
+  background:rgba(255,255,255,.98);box-shadow:0 22px 55px rgba(73,49,88,.25);
+  color:var(--ink);pointer-events:none;backdrop-filter:blur(12px)
+}
+.word-preview-tooltip.show{display:block;animation:previewPop .16s ease-out}
+@keyframes previewPop{from{opacity:0;transform:translateY(7px) scale(.97)}to{opacity:1;transform:none}}
+.preview-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.preview-head strong{font-size:21px;color:#6b4a89}
+.preview-count{font-size:18px;background:#f4eafa;color:#71508b;border-radius:999px;padding:6px 11px;font-weight:900}
+.preview-word-list{font-size:20px;line-height:1.7;overflow-wrap:anywhere;color:#4b3a55}
+.preview-word{
+  min-width:0;padding:8px 8px;border-radius:12px;text-align:center;
+  background:linear-gradient(145deg,#fff8eb,#f5effd);border:1px solid #f0e5f8;
+  font-size:18px;font-weight:900;color:#4b3a55;overflow-wrap:anywhere
+}
+.preview-tip{margin-top:11px;text-align:center;font-size:18px;color:#8a6c9b}
+
+/* 반응형 @media(좁은 화면용)는 전부 지웠다. 무대(1280×720)를 통째로 스케일하는
+   방식이라 창이 좁아지면 무대 전체가 작아질 뿐, 안의 배치는 항상 그대로다 */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+
+/* 휴대폰 세로 화면 안내 애니메이션 */
+@keyframes rotateHintWAM {
+    0%, 15% { transform: rotate(0deg); }
+    45%, 60% { transform: rotate(-90deg); }
+    90%, 100% { transform: rotate(0deg); }
+}
