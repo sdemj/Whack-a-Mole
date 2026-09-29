@@ -1,7 +1,5 @@
 "use strict";
 
-const AUDIO_DIR = "audio_260824";
-
 const DIFFICULTIES = {
   /* exposure = 올라와 있는 시간, maxUp = 동시에 올라와 있는 최대 마릿수(칸은 6개) */
   easy:{label:"쉬움",exposure:7000,maxUp:6},
