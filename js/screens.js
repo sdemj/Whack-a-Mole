@@ -208,7 +208,6 @@ function renderSubcategories(){
       <span class="sub-name">${escapeHtml(sub.name)}</span>
       <span class="count-pill">${sub.words.length}개 단어</span>`;
     b.addEventListener("mouseenter",()=>showWordPreview(b,sub));
-    b.addEventListener("mousemove",()=>positionWordPreview(b));
     b.addEventListener("mouseleave",hideWordPreview);
     b.addEventListener("focus",()=>showWordPreview(b,sub));
     b.addEventListener("blur",hideWordPreview);
@@ -271,29 +270,17 @@ function showWordPreview(card,sub){
     <div class="preview-tip">카드를 클릭하면 이 단어 묶음이 선택돼요!</div>`;
   tooltip.classList.add("show");
   tooltip.setAttribute("aria-hidden","false");
-  positionWordPreview(card);
+  positionWordPreview();
 }
-function positionWordPreview(card){
+function positionWordPreview(){
   const tooltip=$("#wordPreviewTooltip");
   if(!tooltip.classList.contains("show"))return;
-  /* tooltip은 무대(#app, 1280×800) 안에 있어서 left/top이 무대 안 좌표 기준이다.
-     반면 getBoundingClientRect()는 실제 화면 픽셀(무대 배율 반영 후)을 주므로,
-     무대의 실제 화면 크기·위치로 나누고 빼서 무대 안 좌표로 되돌린다 */
-  const appRect=$("#app").getBoundingClientRect();
-  const scale=appRect.width/1280;
-  const r=card.getBoundingClientRect();
+  /* 카드 위치와 상관없이 항상 무대 위쪽 가운데에 띄운다 (마우스 위치에 따라 자리가 바뀌면 읽기 불편하다) */
   const margin=12;
   const tw=tooltip.offsetWidth||420;
-  const th=tooltip.offsetHeight||320;
-  const cardLeft=(r.left-appRect.left)/scale, cardTop=(r.top-appRect.top)/scale, cardW=r.width/scale, cardH=r.height/scale;
-  let left=cardLeft+(cardW-tw)/2;
-  left=Math.min(Math.max(margin,left),1280-tw-margin);
-  let top=cardTop+cardH+10;
-  if(top+th>800-margin)top=cardTop-th-10;
-  if(top<margin)top=margin;
-  if(top+th>800-margin)top=800-th-margin;
-  tooltip.style.left=`${Math.round(left)}px`;
-  tooltip.style.top=`${Math.round(top)}px`;
+  const left=Math.round(Math.max(margin,(1280-tw)/2));
+  tooltip.style.left=`${left}px`;
+  tooltip.style.top=`${margin}px`;
 }
 function hideWordPreview(){
   const tooltip=$("#wordPreviewTooltip");

@@ -83,3 +83,21 @@ if(document.fonts&&document.fonts.ready&&document.fonts.ready.then){
   document.fonts.ready.then(checkIconFont).catch(()=>{});
 }
 delay(checkIconFont,2500);
+/* ================= 모바일·태블릿 화면 고정 =================
+   아이패드·갤럭시탭에서 손가락으로 확대하면 고정 무대(1280×800)의 비율이 틀어져 화면이 깨진다.
+   viewport 설정만으로는 iOS에서 막히지 않으므로 확대 동작을 직접 막는다 */
+["gesturestart","gesturechange","gestureend"].forEach(type=>{
+  document.addEventListener(type,e=>e.preventDefault(),{passive:false});
+});
+document.addEventListener("touchmove",e=>{
+  if(e.touches.length>1)e.preventDefault();      /* 손가락 두 개 = 확대 */
+},{passive:false});
+let lastTouchEnd=0;
+document.addEventListener("touchend",e=>{
+  const now=Date.now();
+  if(now-lastTouchEnd<=350)e.preventDefault();   /* 두 번 빠르게 누르기 = 확대 */
+  lastTouchEnd=now;
+},{passive:false});
+document.addEventListener("wheel",e=>{
+  if(e.ctrlKey)e.preventDefault();               /* 트랙패드·Ctrl+휠 확대 */
+},{passive:false});

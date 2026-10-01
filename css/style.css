@@ -31,6 +31,10 @@
 }
 *{box-sizing:border-box}
 html,body{height:100%;margin:0}
+/* 모바일·태블릿에서 손가락으로 확대하거나 두 번 눌러 확대하면 고정 무대가 틀어진다 — 확대 자체를 막는다 */
+html{touch-action:manipulation;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{touch-action:manipulation;overscroll-behavior:none;-webkit-user-select:none;user-select:none}
+input,textarea{-webkit-user-select:text;user-select:text}   /* 철자 입력창은 선택·편집이 돼야 한다 */
 body{
   font-family:var(--body-font);
   color:var(--ink);
@@ -193,8 +197,9 @@ h2{font-size:48px;margin-bottom:12px}
 #helpModal .htp-goal p{font-size:20px}
 #helpModal .htp-section{margin-top:12px}
 #helpModal .htp-section h3{font-size:22px;margin-bottom:9px}
-#helpModal .htp-list{gap:8px}
-#helpModal .htp-list li{padding-top:9px;padding-bottom:9px}
+#helpModal .htp-list{background:#f8f4fb;border-radius:16px;padding:10px 18px;gap:3px}
+#helpModal .htp-section.score .htp-list{background:linear-gradient(135deg,#fff8e6,#f5efff)}
+#helpModal .htp-list li{background:none;border-radius:0;box-shadow:none;padding:4px 0 4px 1.4em;text-indent:-1.4em}
 #helpModal .modal-actions{margin-top:16px}
 .setting-summary{
   margin-top:22px;background:linear-gradient(135deg,#fff5dc,#eef9ef);padding:18px 22px;
