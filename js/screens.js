@@ -205,7 +205,8 @@ function renderSubcategories(){
     b.className="sub-card"+(state.selectedSubs.has(i)?" selected":"");
     b.dataset.subIndex=String(i);
     b.innerHTML=`<span class="sub-check">${state.selectedSubs.has(i)?"✓":""}</span>
-      <span class="sub-name">${escapeHtml(sub.name)}</span>
+      <span class="sub-name">${escapeHtml(sub.ko||sub.name)}</span>
+      <span class="sub-en">${escapeHtml(sub.name)}</span>
       <span class="count-pill">${sub.words.length}개 단어</span>`;
     b.addEventListener("mouseenter",()=>showWordPreview(b,sub));
     b.addEventListener("mouseleave",hideWordPreview);
@@ -265,7 +266,7 @@ function closeHelp(shouldResume=true){
 function showWordPreview(card,sub){
   if(!window.matchMedia("(hover:hover) and (pointer:fine)").matches && document.activeElement!==card)return;
   const tooltip=$("#wordPreviewTooltip");
-  tooltip.innerHTML=`<div class="preview-head"><strong>단어 미리보기: ${escapeHtml(sub.name)}</strong><span class="preview-count">${sub.words.length}개</span></div>
+  tooltip.innerHTML=`<div class="preview-head"><strong>단어 미리보기: ${escapeHtml(sub.ko||sub.name)} <span class="preview-en">${escapeHtml(sub.name)}</span></strong><span class="preview-count">${sub.words.length}개</span></div>
     <div class="preview-word-list">${sub.words.map(w=>escapeHtml(w.en)).join(", ")}</div>
     <div class="preview-tip">카드를 클릭하면 이 단어 묶음이 선택돼요!</div>`;
   tooltip.classList.add("show");

@@ -158,7 +158,10 @@ h2{font-size:48px;margin-bottom:12px}
   background:#eee7f1;display:grid;place-items:center;font-weight:900;color:#fff;font-size:18px
 }
 .sub-card.selected .sub-check{background:#9d7bc6}
-.sub-name{display:block;font-size:27px;font-weight:900;margin:18px 0 8px}
+.sub-name{display:block;font-size:27px;font-weight:900;margin:16px 0 1px}
+/* 소주제 카드: 한글 이름 아래에 영어 이름을 작게 둔다 */
+.sub-en{display:block;font-size:19px;color:var(--muted);font-weight:900;margin-bottom:8px}
+.preview-en{color:var(--muted);font-weight:900}
 .select-all-btn{display:block;width:100%;min-height:0;text-align:center;margin-bottom:16px;font-size:22px;padding:16px 22px}
 .selection-summary{
   background:linear-gradient(135deg,#f8effd,#eef8ff);border-radius:20px;padding:15px 20px;
