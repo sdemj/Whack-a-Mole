@@ -13,7 +13,11 @@
         return !dismissed && isPhoneSized() && window.innerHeight > window.innerWidth;
     }
     function updateRotateOverlay() {
-        overlay.style.display = shouldShow() ? 'flex' : 'none';
+        var show = shouldShow();
+        overlay.style.display = show ? 'flex' : 'none';
+        // 상단바는 안내창과 z-index가 같고 나중에 만들어져 안내창 위에 그려진다.
+        // 안내창이 떠 있는 동안에는 body 클래스로 상단바를 숨긴다 (css/style.css).
+        document.body.classList.toggle('rotate-overlay-on', show);
     }
     window.dismissRotateOverlay = function () {
         dismissed = true;

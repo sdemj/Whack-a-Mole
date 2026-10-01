@@ -35,6 +35,8 @@ html,body{height:100%;margin:0}
 html{touch-action:manipulation;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{touch-action:manipulation;overscroll-behavior:none;-webkit-user-select:none;user-select:none}
 input,textarea{-webkit-user-select:text;user-select:text}   /* 철자 입력창은 선택·편집이 돼야 한다 */
+/* "화면을 가로로 돌려 주세요" 안내창이 떠 있는 동안에는 상단바를 숨긴다 (js/rotate.js 가 켜고 끈다) */
+body.rotate-overlay-on #top-nav-bar{display:none!important}
 body{
   font-family:var(--body-font);
   color:var(--ink);
