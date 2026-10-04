@@ -271,17 +271,29 @@ function showWordPreview(card,sub){
     <div class="preview-tip">카드를 클릭하면 이 단어 묶음이 선택돼요!</div>`;
   tooltip.classList.add("show");
   tooltip.setAttribute("aria-hidden","false");
-  positionWordPreview();
+  positionWordPreview(card);
 }
-function positionWordPreview(){
+function positionWordPreview(card){
   const tooltip=$("#wordPreviewTooltip");
-  if(!tooltip.classList.contains("show"))return;
-  /* 카드 위치와 상관없이 항상 무대 위쪽 가운데에 띄운다 (마우스 위치에 따라 자리가 바뀌면 읽기 불편하다) */
-  const margin=12;
+  if(!tooltip.classList.contains("show")||!card)return;
+  /* 마우스 위치가 아니라 카드 위치를 기준으로, 그 카드 바로 위에 띄운다.
+     tooltip은 무대(#app, 1280×800) 안에 있어 좌표도 무대 기준이어야 하는데,
+     getBoundingClientRect()는 배율이 반영된 실제 화면 픽셀을 주므로 되돌려 계산한다 */
+  const appRect=$("#app").getBoundingClientRect();
+  const scale=appRect.width/1280;
+  const r=card.getBoundingClientRect();
+  const margin=12, gap=10;
   const tw=tooltip.offsetWidth||420;
-  const left=Math.round(Math.max(margin,(1280-tw)/2));
-  tooltip.style.left=`${left}px`;
-  tooltip.style.top=`${margin}px`;
+  const th=tooltip.offsetHeight||320;
+  const cardLeft=(r.left-appRect.left)/scale, cardTop=(r.top-appRect.top)/scale;
+  const cardW=r.width/scale, cardH=r.height/scale;
+  let left=cardLeft+(cardW-tw)/2;
+  left=Math.min(Math.max(margin,left),1280-tw-margin);
+  let top=cardTop-th-gap;                      /* 카드 바로 위 */
+  if(top<margin)top=cardTop+cardH+gap;         /* 위가 좁으면 카드 아래로 */
+  top=Math.min(Math.max(margin,top),800-th-margin);
+  tooltip.style.left=`${Math.round(left)}px`;
+  tooltip.style.top=`${Math.round(top)}px`;
 }
 function hideWordPreview(){
   const tooltip=$("#wordPreviewTooltip");
